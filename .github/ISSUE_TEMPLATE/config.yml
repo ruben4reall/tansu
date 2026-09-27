@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question
+    url: https://github.com/ruben4reall/tansu/discussions
+    about: Questions and layouts to share go to Discussions; issues are for bugs and ideas.
+  - name: Tansu's website
+    url: https://gettansu.vercel.app
+    about: What Tansu does, how it works on macOS 26 and 27, and the download.
+  - name: Report a security issue privately
+    url: https://github.com/ruben4reall/tansu/security/advisories/new
+    about: Please do not open a public issue for a vulnerability.

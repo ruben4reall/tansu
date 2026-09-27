@@ -1,0 +1,24 @@
+name: Idea
+description: Something that would make Tansu better
+labels: [idea]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem you have
+      description: For an app that Smart Sort puts in the wrong drawer, give its name and the drawer it belongs in.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What you would like Tansu to do
+    validations:
+      required: true
+  - type: checkboxes
+    id: promises
+    attributes:
+      label: Tansu's promises
+      options:
+        - label: My idea needs no permission beyond Accessibility, takes no picture of the screen, and adds no telemetry and no network connection.
+          required: true
