@@ -26,6 +26,18 @@
             "state": "translated",
             "value": "%@ copia"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ kopie"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cópia de %@"
+          }
         }
       }
     },
@@ -53,6 +65,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cassetto %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lade %@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gaveta %@"
           }
         }
       }
@@ -82,6 +106,18 @@
             "state": "translated",
             "value": "%@ in uso"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ in gebruik"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ em uso"
+          }
         }
       }
     },
@@ -109,6 +145,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ è in primo piano"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ op de voorgrond staat"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ estiver em primeiro plano"
           }
         }
       }
@@ -138,6 +186,18 @@
             "state": "translated",
             "value": "%@ è in esecuzione"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ geopend is"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ estiver aberto"
+          }
         }
       }
     },
@@ -162,6 +222,18 @@
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ s"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ s"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "%@ s"
@@ -194,6 +266,18 @@
             "state": "translated",
             "value": "%@, %@"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
         }
       }
     },
@@ -221,6 +305,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld cassetti"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld laden"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld gavetas"
           }
         }
       }
@@ -250,6 +346,18 @@
             "state": "translated",
             "value": "%lld icone"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld symbolen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ícones"
+          }
         }
       }
     },
@@ -277,6 +385,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Non è stato possibile spostare %lld icone. Puoi spostarle in Impostazioni > Layout."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld symbolen konden niet worden verplaatst. Je kunt ze verplaatsen in Instellingen onder 'Lay-out'."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível mover %lld ícones. Você pode movê-los em Ajustes > Layout."
           }
         }
       }
@@ -306,6 +426,18 @@
             "state": "translated",
             "value": "%lld icone non entrano accanto al notch."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld symbolen passen niet naast de notch."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ícones não cabem ao lado do notch."
+          }
         }
       }
     },
@@ -333,6 +465,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld icone escono dalla barra dei menu."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld symbolen verdwijnen uit de menubalk."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld ícones saem da barra de menus."
           }
         }
       }
@@ -362,6 +506,18 @@
             "state": "translated",
             "value": "%lld di %lld punti"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld van %lld punten"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld de %lld pontos"
+          }
         }
       }
     },
@@ -389,6 +545,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "1 cassetto"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 lade"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 gaveta"
           }
         }
       }
@@ -418,6 +586,18 @@
             "state": "translated",
             "value": "1 icona"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 symbool"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 ícone"
+          }
         }
       }
     },
@@ -445,6 +625,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Non è stato possibile spostare 1 icona. Puoi spostarla in Impostazioni > Layout."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 symbool kon niet worden verplaatst. Je kunt het verplaatsen in Instellingen onder 'Lay-out'."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível mover 1 ícone. Você pode movê-lo em Ajustes > Layout."
           }
         }
       }
@@ -474,6 +666,18 @@
             "state": "translated",
             "value": "1 icona non entra accanto al notch."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 symbool past niet naast de notch."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 ícone não cabe ao lado do notch."
+          }
         }
       }
     },
@@ -501,6 +705,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "1 icona esce dalla barra dei menu."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 symbool verdwijnt uit de menubalk."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 ícone sai da barra de menus."
           }
         }
       }
@@ -530,6 +746,18 @@
             "state": "translated",
             "value": "Un file per conservarne una copia o per configurare un altro Mac allo stesso modo."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Een bestand om een kopie te bewaren of om een andere Mac op dezelfde manier in te stellen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um arquivo para guardar uma cópia ou para configurar outro Mac da mesma forma."
+          }
         }
       }
     },
@@ -557,6 +785,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Un posto per ogni icona."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Een plek voor elk symbool."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um lugar para cada ícone."
           }
         }
       }
@@ -586,6 +826,18 @@
             "state": "translated",
             "value": "Un profilo conserva un’intera configurazione della barra dei menu: i cassetti, la posizione di ogni icona e l’aspetto."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Een profiel bewaart een volledige configuratie van de menubalk: de laden, de plek van elk symbool en de weergave."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um perfil guarda toda uma configuração da barra de menus: as gavetas, o lugar de cada ícone e a aparência."
+          }
         }
       }
     },
@@ -613,6 +865,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Un intervallo può superare la mezzanotte: ad esempio dalle %@ alle %@."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Een periode mag over middernacht gaan: bijvoorbeeld van %@ tot %@."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um intervalo pode passar da meia-noite: por exemplo, das %@ às %@."
           }
         }
       }
@@ -642,6 +906,18 @@
             "state": "translated",
             "value": "Un’abbreviazione apre il menu di un’icona, ovunque si trovi."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Een toetscombinatie opent het menu van een symbool, waar het symbool zich ook bevindt."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um atalho abre o menu de um ícone, onde quer que ele esteja."
+          }
         }
       }
     },
@@ -670,6 +946,18 @@
             "state": "translated",
             "value": "Un attivatore modifica la barra dei menu finché una condizione è vera e la ripristina quando non lo è più."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Een trigger wijzigt de menubalk zolang een voorwaarde geldt en zet hem terug zodra die niet meer geldt."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um acionador altera a barra de menus enquanto uma condição for verdadeira e a restaura quando ela deixar de ser."
+          }
         }
       }
     },
@@ -694,6 +982,18 @@
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IA"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AI"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "IA"
@@ -726,6 +1026,18 @@
             "state": "translated",
             "value": "IA e idee"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AI en ideeën"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IA e Ideias"
+          }
         }
       }
     },
@@ -753,6 +1065,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Informazioni"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Info"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sobre"
           }
         }
       }
@@ -782,6 +1106,18 @@
             "state": "translated",
             "value": "Informazioni su Tansu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Over Tansu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sobre o Tansu"
+          }
         }
       }
     },
@@ -809,6 +1145,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Accessibilità"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toegankelijkheid"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acessibilidade"
           }
         }
       }
@@ -838,6 +1186,18 @@
             "state": "translated",
             "value": "Accessibilità attivata."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toegankelijkheid is ingeschakeld."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acessibilidade ativada."
+          }
         }
       }
     },
@@ -865,6 +1225,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Attivo"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actief"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativo"
           }
         }
       }
@@ -894,6 +1266,18 @@
             "state": "translated",
             "value": "Attivo ora"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nu actief"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativo agora"
+          }
         }
       }
     },
@@ -921,6 +1305,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aggiungi abbreviazione per icona"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voeg toetscombinatie voor symbool toe"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar Atalho de Ícone"
           }
         }
       }
@@ -950,6 +1346,18 @@
             "state": "translated",
             "value": "Aggiungi abbreviazione…"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voeg toetscombinatie toe…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar Atalho…"
+          }
         }
       }
     },
@@ -977,6 +1385,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aggiungi attivatore"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voeg trigger toe"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar Acionador"
           }
         }
       }
@@ -1006,6 +1426,18 @@
             "state": "translated",
             "value": "Tutte le icone"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle symbolen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todos os Ícones"
+          }
         }
       }
     },
@@ -1033,6 +1465,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Consenti Tansu in Impostazioni di Sistema > Generali > Elementi login ed estensioni."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sta Tansu toe in Systeeminstellingen onder 'Algemeen' > 'Inlogonderdelen en extensies'."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permita o Tansu nos Ajustes do Sistema > Geral > Itens de Início de Sessão e Extensões."
           }
         }
       }
@@ -1062,6 +1506,18 @@
             "state": "translated",
             "value": "Sempre nella barra dei menu."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Altijd in de menubalk."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sempre na barra de menus."
+          }
         }
       }
     },
@@ -1089,6 +1545,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Un’app è in primo piano"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Een app staat op de voorgrond"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um app está em primeiro plano"
           }
         }
       }
@@ -1118,6 +1586,18 @@
             "state": "translated",
             "value": "Un’app è in esecuzione"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Een app is geopend"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um app está aberto"
+          }
         }
       }
     },
@@ -1145,6 +1625,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Un monitor esterno è collegato"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Er is een extern beeldscherm aangesloten"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uma tela externa está conectada"
           }
         }
       }
@@ -1174,6 +1666,18 @@
             "state": "translated",
             "value": "Un’icona aperta da un cassetto vi ritorna quando il suo menu resta chiuso per questo tempo."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Een symbool dat vanuit een lade is geopend, gaat terug zodra het menu zo lang gesloten is."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um ícone aberto de uma gaveta volta para ela quando o menu fica fechado por esse tempo."
+          }
         }
       }
     },
@@ -1202,6 +1706,18 @@
             "state": "translated",
             "value": "Un’altra app usa già questa abbreviazione."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Een andere app gebruikt deze toetscombinatie al."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outro app já usa este atalho."
+          }
         }
       }
     },
@@ -1226,6 +1742,18 @@
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "App"
@@ -1258,6 +1786,18 @@
             "state": "translated",
             "value": "Aspetto"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weergave"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aparência"
+          }
         }
       }
     },
@@ -1285,6 +1825,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Frecce"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pijlen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Setas"
           }
         }
       }
@@ -1314,6 +1866,18 @@
             "state": "translated",
             "value": "Indietro"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vorige"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voltar"
+          }
         }
       }
     },
@@ -1338,6 +1902,18 @@
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comportamento"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gedrag"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "Comportamento"
@@ -1370,6 +1946,18 @@
             "state": "translated",
             "value": "Accanto al notch, il cassetto “Tutte le icone” mostra ogni icona anche quando non entrano tutte."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Naast de notch toont de lade 'Alle symbolen' elk symbool, ook als ze niet allemaal passen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ao lado do notch, a gaveta “Todos os Ícones” mostra cada ícone mesmo quando nem todos cabem."
+          }
         }
       }
     },
@@ -1394,6 +1982,18 @@
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beta"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bèta"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "Beta"
@@ -1426,6 +2026,18 @@
             "state": "translated",
             "value": "Per sviluppatore"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Per ontwikkelaar"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Por Desenvolvedor"
+          }
         }
       }
     },
@@ -1453,6 +2065,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Per uso"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Per doel"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Por Finalidade"
           }
         }
       }
@@ -1482,6 +2106,18 @@
             "state": "translated",
             "value": "Annulla"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annuleer"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
+          }
         }
       }
     },
@@ -1509,6 +2145,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Verifica ora"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoek nu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscar Agora"
           }
         }
       }
@@ -1538,6 +2186,18 @@
             "state": "translated",
             "value": "Verifica aggiornamenti…"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoek naar updates…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscar Atualizações…"
+          }
         }
       }
     },
@@ -1565,6 +2225,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Verifica automaticamente gli aggiornamenti"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoek automatisch naar updates"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscar atualizações automaticamente"
           }
         }
       }
@@ -1594,6 +2266,18 @@
             "state": "translated",
             "value": "Scegli"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolher"
+          }
         }
       }
     },
@@ -1621,6 +2305,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scegli l’app che questo attivatore controlla."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies de app die deze trigger in de gaten houdt."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolha o app que este acionador observa."
           }
         }
       }
@@ -1650,6 +2346,18 @@
             "state": "translated",
             "value": "Scegli due orari diversi."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies twee verschillende tijden."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolha dois horários diferentes."
+          }
         }
       }
     },
@@ -1677,6 +2385,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scegli…"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kies…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escolher…"
           }
         }
       }
@@ -1706,6 +2426,18 @@
             "state": "translated",
             "value": "Cancella"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wis"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limpar"
+          }
         }
       }
     },
@@ -1733,6 +2465,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fai clic su un cassetto nella barra dei menu per aprirlo, e sull’icona di Tansu per vederli tutti."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klik op een lade in de menubalk om die te openen, en op het symbool van Tansu voor alle laden."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clique em uma gaveta na barra de menus para abri-la, e no ícone do Tansu para ver todas."
           }
         }
       }
@@ -1762,6 +2506,18 @@
             "state": "translated",
             "value": "Fai clic su un cassetto nella barra dei menu per aprirlo, e cerca qualsiasi icona con %@."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klik op een lade in de menubalk om die te openen, en zoek elk symbool met %@."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clique em uma gaveta na barra de menus para abri-la, e busque qualquer ícone com %@."
+          }
         }
       }
     },
@@ -1789,6 +2545,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fai clic per vedere tutti i cassetti, o clic con il tasto destro per altre opzioni."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klik voor alle laden. Klik met de rechtermuisknop voor meer."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clique para ver todas as gavetas ou clique com o botão direito para mais opções."
           }
         }
       }
@@ -1818,6 +2586,18 @@
             "state": "translated",
             "value": "Chiudi"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sluit"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fechar"
+          }
         }
       }
     },
@@ -1845,6 +2625,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Colore"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kleur"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cor"
           }
         }
       }
@@ -1874,6 +2666,18 @@
             "state": "translated",
             "value": "Compatto"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compact"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compacto"
+          }
         }
       }
     },
@@ -1901,6 +2705,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Continua"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ga door"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar"
           }
         }
       }
@@ -1930,6 +2746,18 @@
             "state": "translated",
             "value": "Copia"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopieer"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiar"
+          }
         }
       }
     },
@@ -1957,6 +2785,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Copia dati diagnostici"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopieer diagnose"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiar Diagnóstico"
           }
         }
       }
@@ -1986,6 +2826,18 @@
             "state": "translated",
             "value": "Taglia"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Knip"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cortar"
+          }
         }
       }
     },
@@ -2013,6 +2865,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Scuro"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Donker"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escuro"
           }
         }
       }
@@ -2042,6 +2906,18 @@
             "state": "translated",
             "value": "Ritardo"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vertraging"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atraso"
+          }
         }
       }
     },
@@ -2069,6 +2945,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Elimina"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verwijder"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apagar"
           }
         }
       }
@@ -2098,6 +2986,18 @@
             "state": "translated",
             "value": "Elimina cassetto"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verwijder lade"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apagar Gaveta"
+          }
         }
       }
     },
@@ -2125,6 +3025,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Eliminare il profilo “%@”? La barra dei menu resta com’è ora."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profiel '%@' verwijderen? De menubalk blijft zoals hij nu is."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apagar o perfil “%@”? A barra de menus fica como está."
           }
         }
       }
@@ -2154,6 +3066,18 @@
             "state": "translated",
             "value": "Eliminare questo attivatore?"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze trigger verwijderen?"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apagar este acionador?"
+          }
         }
       }
     },
@@ -2181,6 +3105,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Eliminare “%@”? Le sue icone tornano nella barra dei menu."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "'%@' verwijderen? De symbolen gaan terug naar de menubalk."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apagar “%@”? Os ícones dela voltam para a barra de menus."
           }
         }
       }
@@ -2210,6 +3146,18 @@
             "state": "translated",
             "value": "Demo: icone generiche, nulla si sposta nella barra dei menu."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demo: algemene symbolen, er verandert niets in je menubalk."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demonstração: ícones genéricos, nada se move na sua barra de menus."
+          }
         }
       }
     },
@@ -2234,6 +3182,18 @@
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Design"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ontwerp"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "Design"
@@ -2266,6 +3226,18 @@
             "state": "translated",
             "value": "Sviluppo"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ontwikkeling"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desenvolvimento"
+          }
         }
       }
     },
@@ -2293,6 +3265,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dispositivi"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apparaten"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dispositivos"
           }
         }
       }
@@ -2322,6 +3306,18 @@
             "state": "translated",
             "value": "Dati diagnostici copiati"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnose gekopieerd"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnóstico copiado"
+          }
         }
       }
     },
@@ -2349,6 +3345,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Stile diverso in modalità scura"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ander uiterlijk in donkere modus"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visual diferente no Modo Escuro"
           }
         }
       }
@@ -2378,6 +3386,18 @@
             "state": "translated",
             "value": "Schermi e dispositivi"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beeldschermen en apparaten"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Telas e Dispositivos"
+          }
         }
       }
     },
@@ -2405,6 +3425,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fine"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gereed"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
           }
         }
       }
@@ -2434,6 +3466,18 @@
             "state": "translated",
             "value": "Trascina un’icona in un altro cassetto. Fai clic sull’icona di un cassetto per cambiarla."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep een symbool naar een andere lade. Klik op het symbool van een lade om het te wijzigen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arraste um ícone para outra gaveta. Clique no ícone de uma gaveta para alterá-lo."
+          }
         }
       }
     },
@@ -2461,6 +3505,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Trascina le icone tra la barra dei menu, i tuoi cassetti e “Nascoste”."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep symbolen tussen de menubalk, je laden en 'Verborgen'."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arraste ícones entre a barra de menus, suas gavetas e “Ocultos”."
           }
         }
       }
@@ -2490,6 +3546,18 @@
             "state": "translated",
             "value": "Trascinaci delle icone in Impostazioni > Layout."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep er symbolen in via Instellingen onder 'Lay-out'."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arraste ícones para ela em Ajustes > Layout."
+          }
         }
       }
     },
@@ -2517,6 +3585,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Trascina per cambiare l’ordine."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep om de volgorde te wijzigen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arraste para mudar a ordem."
           }
         }
       }
@@ -2546,6 +3626,18 @@
             "state": "translated",
             "value": "Cassetto"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lade"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gaveta"
+          }
         }
       }
     },
@@ -2573,6 +3665,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cassetti"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laden"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gavetas"
           }
         }
       }
@@ -2602,6 +3706,18 @@
             "state": "translated",
             "value": "Duplica"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dupliceer"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duplicar"
+          }
         }
       }
     },
@@ -2629,6 +3745,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Modifica"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wijzig"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar"
           }
         }
       }
@@ -2658,6 +3786,18 @@
             "state": "translated",
             "value": "Modifica cassetto…"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wijzig lade…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar Gaveta…"
+          }
         }
       }
     },
@@ -2685,6 +3825,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Modifica attivatore"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wijzig trigger"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar Acionador"
           }
         }
       }
@@ -2714,6 +3866,18 @@
             "state": "translated",
             "value": "Modifica questo cassetto"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wijzig deze lade"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar esta gaveta"
+          }
         }
       }
     },
@@ -2742,6 +3906,18 @@
             "state": "translated",
             "value": "Modifica…"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wijzig…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar…"
+          }
         }
       }
     },
@@ -2766,6 +3942,18 @@
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emoji"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emoji"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "Emoji"
@@ -2798,6 +3986,18 @@
             "state": "translated",
             "value": "Esci dalla modalità Focus"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beëindig Focus"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sair do Modo Focus"
+          }
         }
       }
     },
@@ -2825,6 +4025,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tutto tranne l’orologio e Centro di Controllo esce dalla barra dei menu, per una presentazione o una condivisione dello schermo."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alles behalve de klok en het bedieningspaneel verdwijnt uit de menubalk, voor een presentatie of schermdeling."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tudo, exceto o relógio e a Central de Controle, sai da barra de menus, para uma apresentação ou um compartilhamento de tela."
           }
         }
       }
@@ -2854,6 +4066,18 @@
             "state": "translated",
             "value": "Esporta…"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exporteer…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exportar…"
+          }
         }
       }
     },
@@ -2882,6 +4106,18 @@
             "state": "translated",
             "value": "File e cloud"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bestanden en cloud"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arquivos e Nuvem"
+          }
         }
       }
     },
@@ -2906,6 +4142,18 @@
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filtro"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filter"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "Filtro"
@@ -2938,6 +4186,18 @@
             "state": "translated",
             "value": "Fluttuante"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zwevend"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Flutuante"
+          }
         }
       }
     },
@@ -2965,6 +4225,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Modalità Focus"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modo Focus"
           }
         }
       }
@@ -2994,6 +4266,18 @@
             "state": "translated",
             "value": "La modalità Focus è attiva: vengono mostrati solo l’orologio e Centro di Controllo. Fai clic per uscire."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus staat aan: alleen de klok en het bedieningspaneel worden getoond. Klik om te beëindigen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Modo Focus está ativado: somente o relógio e a Central de Controle aparecem. Clique para sair."
+          }
         }
       }
     },
@@ -3021,6 +4305,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Modalità Focus quando Keynote è in primo piano"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Focus wanneer Keynote op de voorgrond staat"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modo Focus quando o Keynote estiver em primeiro plano"
           }
         }
       }
@@ -3050,6 +4346,18 @@
             "state": "translated",
             "value": "Per una segnalazione di bug: il tuo Mac, la tua versione di macOS, ciò che Tansu vede nella barra dei menu e i suoi messaggi recenti. Non viene inviato nulla; scegli tu dove incollarlo."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voor een foutmelding: je Mac, je macOS-versie, wat Tansu in de menubalk ziet en de recente meldingen van Tansu. Er wordt niets verstuurd; jij kiest waar je het plakt."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Para relatar um erro: seu Mac, sua versão do macOS, o que o Tansu vê na barra de menus e as mensagens recentes dele. Nada é enviado; você escolhe onde colar."
+          }
         }
       }
     },
@@ -3077,6 +4385,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Per tutte le app di questo Mac. macOS lo applica all’apertura delle app, e a tutte le icone dopo un logout e un nuovo accesso."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voor alle apps op deze Mac. macOS past de afstand toe wanneer apps worden geopend, en op alle symbolen nadat je uitlogt en weer inlogt."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Para todos os apps deste Mac. O macOS aplica o espaçamento à medida que os apps são abertos e em todos os ícones depois que você finaliza a sessão e inicia-a novamente."
           }
         }
       }
@@ -3106,6 +4426,18 @@
             "state": "translated",
             "value": "Gratuito e open source, con licenza MIT."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gratis en opensource, onder de MIT-licentie."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gratuito e de código aberto, sob a Licença MIT."
+          }
         }
       }
     },
@@ -3133,6 +4465,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Da"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Van"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De"
           }
         }
       }
@@ -3162,6 +4506,18 @@
             "state": "translated",
             "value": "Larghezza intera"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Volle breedte"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Largura Total"
+          }
         }
       }
     },
@@ -3189,6 +4545,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Giochi"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Games"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jogos"
           }
         }
       }
@@ -3218,6 +4586,18 @@
             "state": "translated",
             "value": "Giochi e svago"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Games en plezier"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jogos e Diversão"
+          }
         }
       }
     },
@@ -3245,6 +4625,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Generali"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Algemeen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geral"
           }
         }
       }
@@ -3274,6 +4666,18 @@
             "state": "translated",
             "value": "Gradiente"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verlooptint"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Degradê"
+          }
         }
       }
     },
@@ -3301,6 +4705,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fine del gradiente"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einde verlooptint"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fim do degradê"
           }
         }
       }
@@ -3330,6 +4746,18 @@
             "state": "translated",
             "value": "Bordo sottile"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dunne rand"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Borda fina"
+          }
         }
       }
     },
@@ -3357,6 +4785,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aiuto"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Help"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajuda"
           }
         }
       }
@@ -3386,6 +4826,18 @@
             "state": "translated",
             "value": "Nascoste"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verborgen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ocultos"
+          }
         }
       }
     },
@@ -3413,6 +4865,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nascondi"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verberg"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ocultar"
           }
         }
       }
@@ -3442,6 +4906,18 @@
             "state": "translated",
             "value": "Nascondi di nuovo"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verberg ze weer"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ocultar Novamente"
+          }
         }
       }
     },
@@ -3469,6 +4945,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nascondile di nuovo automaticamente"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verberg ze automatisch weer"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voltar a ocultá-los automaticamente"
           }
         }
       }
@@ -3498,6 +4986,18 @@
             "state": "translated",
             "value": "Casa e luoghi"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thuis en plaatsen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Casa e Lugares"
+          }
         }
       }
     },
@@ -3525,6 +5025,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Icona"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Symbool"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ícone"
           }
         }
       }
@@ -3554,6 +5066,18 @@
             "state": "translated",
             "value": "Icone"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Symbolen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ícones"
+          }
         }
       }
     },
@@ -3581,6 +5105,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Importa…"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importeer…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importar…"
           }
         }
       }
@@ -3610,6 +5146,18 @@
             "state": "translated",
             "value": "In Impostazioni di Sistema, attiva Tansu in Privacy e sicurezza > Accessibilità."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schakel Tansu in Systeeminstellingen in onder 'Privacy en beveiliging' > 'Toegankelijkheid'."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nos Ajustes do Sistema, ative o Tansu em Privacidade e Segurança > Acessibilidade."
+          }
         }
       }
     },
@@ -3637,6 +5185,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nel cassetto “Tutte le icone”"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In de lade 'Alle symbolen'"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Na Gaveta “Todos os Ícones”"
           }
         }
       }
@@ -3666,6 +5226,18 @@
             "state": "translated",
             "value": "Nella barra dei menu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In de menubalk"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Na Barra de Menus"
+          }
         }
       }
     },
@@ -3693,6 +5265,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "L’ora è compresa in un intervallo"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het is tussen twee tijdstippen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O horário está em um intervalo"
           }
         }
       }
@@ -3722,6 +5306,18 @@
             "state": "translated",
             "value": "Parte dalla configurazione attuale e segue le tue modifiche finché è attivo."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het begint met je huidige configuratie en volgt je wijzigingen zolang het actief is."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ele começa com a configuração atual e acompanha suas alterações enquanto estiver ativo."
+          }
         }
       }
     },
@@ -3749,6 +5345,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Il suo cassetto non fa parte della configurazione attuale, quindi per ora non ha effetto."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De lade ervan zit niet in de huidige configuratie, dus de trigger doet voorlopig niets."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A gaveta dele não está na configuração atual, então ele não faz nada por enquanto."
           }
         }
       }
@@ -3778,6 +5386,18 @@
             "state": "translated",
             "value": "Il suo profilo non esiste più, quindi non ha effetto."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het profiel ervan bestaat niet meer, dus de trigger doet niets."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O perfil dele não existe mais, então ele não faz nada."
+          }
         }
       }
     },
@@ -3805,6 +5425,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mantieni Tansu aggiornato"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Houd Tansu up-to-date"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manter o Tansu Atualizado"
           }
         }
       }
@@ -3834,6 +5466,18 @@
             "state": "translated",
             "value": "Mantieni le icone di Tansu accanto a Centro di Controllo"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Houd de symbolen van Tansu naast het bedieningspaneel"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manter os ícones do Tansu ao lado da Central de Controle"
+          }
         }
       }
     },
@@ -3862,6 +5506,18 @@
             "state": "translated",
             "value": "Mantieni nella barra dei menu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permanent in menubalk"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manter na Barra de Menus"
+          }
         }
       }
     },
@@ -3886,6 +5542,18 @@
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Layout"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lay-out"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "Layout"
@@ -3918,6 +5586,18 @@
             "state": "translated",
             "value": "Livello"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niveau"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nível"
+          }
         }
       }
     },
@@ -3945,6 +5625,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Chiaro"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Licht"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claro"
           }
         }
       }
@@ -3974,6 +5666,18 @@
             "state": "translated",
             "value": "Esegui il logout e accedi di nuovo per applicarlo a tutte le icone."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log uit en weer in om de afstand op alle symbolen te zien."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finalize a sessão e inicie-a novamente para ver o espaçamento em todos os ícones."
+          }
         }
       }
     },
@@ -4001,6 +5705,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Stile"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uiterlijk"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visual"
           }
         }
       }
@@ -4030,6 +5746,18 @@
             "state": "translated",
             "value": "Crea prima un cassetto, in Cassetti."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maak eerst een lade aan, in 'Laden'."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crie uma gaveta primeiro, em Gavetas."
+          }
         }
       }
     },
@@ -4057,6 +5785,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Simbolo"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Embleem"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Símbolo"
           }
         }
       }
@@ -4086,6 +5826,18 @@
             "state": "translated",
             "value": "Memoria"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geheugen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Memória"
+          }
         }
       }
     },
@@ -4113,6 +5865,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Barra dei menu"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menubalk"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barra de Menus"
           }
         }
       }
@@ -4142,6 +5906,18 @@
             "state": "translated",
             "value": "Motore della barra dei menu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menubalktechniek"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mecanismo da barra de menus"
+          }
         }
       }
     },
@@ -4169,6 +5945,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tinta della barra dei menu"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menubalktint"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tonalidade da barra de menus"
           }
         }
       }
@@ -4198,6 +5986,18 @@
             "state": "translated",
             "value": "Messaggi"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Berichten"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mensagens"
+          }
         }
       }
     },
@@ -4225,6 +6025,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Messaggi e persone"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Berichten en mensen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mensagens e Pessoas"
           }
         }
       }
@@ -4254,6 +6066,18 @@
             "state": "translated",
             "value": "Contrai"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minimaliseer"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minimizar"
+          }
         }
       }
     },
@@ -4281,6 +6105,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Altro"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meer"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mais"
           }
         }
       }
@@ -4310,6 +6146,18 @@
             "state": "translated",
             "value": "Altre emoji…"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meer emoji…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mais Emoji…"
+          }
         }
       }
     },
@@ -4337,6 +6185,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sposta in basso"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Omlaag"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mover para Baixo"
           }
         }
       }
@@ -4366,6 +6226,18 @@
             "state": "translated",
             "value": "Sposta Tansu nella cartella Applicazioni: macOS 27 consente solo alle app che si trovano lì di modificare la barra dei menu."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verplaats Tansu naar de map 'Apps': in macOS 27 kunnen alleen apps in die map de menubalk wijzigen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mova o Tansu para a pasta Aplicativos: o macOS 27 só permite que os apps dessa pasta alterem a barra de menus."
+          }
         }
       }
     },
@@ -4393,6 +6265,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Spostare Tansu nella cartella Applicazioni?"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu naar de map 'Apps' verplaatsen?"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mover o Tansu para a pasta Aplicativos?"
           }
         }
       }
@@ -4422,6 +6306,18 @@
             "state": "translated",
             "value": "Spostale in un cassetto"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verplaats ze naar een lade"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mover para uma Gaveta"
+          }
         }
       }
     },
@@ -4449,6 +6345,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sposta in"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verplaats naar"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mover para"
           }
         }
       }
@@ -4478,6 +6386,18 @@
             "state": "translated",
             "value": "Sposta in alto"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Omhoog"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mover para Cima"
+          }
         }
       }
     },
@@ -4505,6 +6425,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sposta automaticamente in un cassetto le icone che non entrano più"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verplaats symbolen die niet meer passen automatisch naar een lade"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mover automaticamente para uma gaveta os ícones que deixarem de caber"
           }
         }
       }
@@ -4534,6 +6466,18 @@
             "state": "translated",
             "value": "Sposta in Applicazioni"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verplaats naar 'Apps'"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mover para Aplicativos"
+          }
         }
       }
     },
@@ -4562,6 +6506,18 @@
             "state": "translated",
             "value": "Musica e video"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muziek en video"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Música e Vídeo"
+          }
         }
       }
     },
@@ -4586,6 +6542,18 @@
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nome"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Naam"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "Nome"
@@ -4618,6 +6586,18 @@
             "state": "translated",
             "value": "Natura e meteo"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Natuur en weer"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Natureza e Clima"
+          }
         }
       }
     },
@@ -4645,6 +6625,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nuovo cassetto"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieuwe lade"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nova Gaveta"
           }
         }
       }
@@ -4674,6 +6666,18 @@
             "state": "translated",
             "value": "Nuovo profilo"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieuw profiel"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Novo Perfil"
+          }
         }
       }
     },
@@ -4701,6 +6705,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nuovo attivatore"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieuwe trigger"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Novo Acionador"
           }
         }
       }
@@ -4730,6 +6746,18 @@
             "state": "translated",
             "value": "Nuove icone"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nieuwe symbolen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Novos ícones"
+          }
         }
       }
     },
@@ -4757,6 +6785,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ancora nessun cassetto. Creane uno o lascia che Smart Sort te li proponga."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nog geen laden. Maak er een aan of laat Smart Sort ze voorstellen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhuma gaveta ainda. Crie uma ou deixe o Smart Sort sugerir algumas."
           }
         }
       }
@@ -4786,6 +6826,18 @@
             "state": "translated",
             "value": "Nessuna icona ha ancora un’abbreviazione."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nog geen enkel symbool heeft een toetscombinatie."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum ícone tem atalho ainda."
+          }
         }
       }
     },
@@ -4813,6 +6865,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nessuna icona corrisponde a “%@”."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen symbool komt overeen met '%@'."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum ícone corresponde a “%@”."
           }
         }
       }
@@ -4842,6 +6906,18 @@
             "state": "translated",
             "value": "Ancora nessun profilo. Salva la configurazione attuale per tornarci con un clic, dal menu di Tansu o con un’abbreviazione."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nog geen profielen. Bewaar je huidige configuratie om er met één klik naar terug te gaan, via het menu van Tansu of een toetscombinatie."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum perfil ainda. Salve a configuração atual para voltar a ela com um clique, pelo menu do Tansu ou por um atalho."
+          }
         }
       }
     },
@@ -4869,6 +6945,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ancora nessun attivatore: parti da uno di questi o aggiungine uno tuo."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nog geen triggers: begin met een van deze of voeg je eigen trigger toe."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhum acionador ainda: comece com um destes ou adicione o seu."
           }
         }
       }
@@ -4898,6 +6986,18 @@
             "state": "translated",
             "value": "Nessuna"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nenhuma"
+          }
         }
       }
     },
@@ -4925,6 +7025,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Non ora"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niet nu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agora Não"
           }
         }
       }
@@ -4954,6 +7066,18 @@
             "state": "translated",
             "value": "Non in esecuzione"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niet actief"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não está em execução"
+          }
         }
       }
     },
@@ -4981,6 +7105,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nulla di nascosto e ancora nessun cassetto."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niets verborgen en nog geen laden."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nada oculto e nenhuma gaveta ainda."
           }
         }
       }
@@ -5010,6 +7146,18 @@
             "state": "translated",
             "value": "Disattivata"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uit"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desativada"
+          }
         }
       }
     },
@@ -5037,6 +7185,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Attivata"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aan"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativada"
           }
         }
       }
@@ -5066,6 +7226,18 @@
             "state": "translated",
             "value": "Su uno schermo senza notch, “Divisa” segue i menu dell’app e le icone. Finché Tansu non riesce a misurarli, la barra resta fluttuante."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Op een beeldscherm zonder notch volgt 'Gesplitst' de appmenu's en de symbolen. Totdat Tansu ze kan meten, zweeft de balk."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Em uma tela sem notch, “Dividida” acompanha os menus do app e os ícones. Até que o Tansu consiga medi-los, a barra fica flutuante."
+          }
         }
       }
     },
@@ -5093,6 +7265,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Su macOS 26, Tansu dispone le icone trascinandole con il tasto Comando premuto, come faresti tu: il puntatore potrebbe lampeggiare mentre lavora."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In macOS 26 rangschikt Tansu symbolen door ze te slepen met de Command-toets ingedrukt, zoals jij zou doen: de aanwijzer kan daarbij knipperen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No macOS 26, o Tansu organiza os ícones arrastando-os com a tecla Command pressionada, como você faria: o cursor pode piscar enquanto ele trabalha."
           }
         }
       }
@@ -5122,6 +7306,18 @@
             "state": "translated",
             "value": "Su macOS 27, le icone di Apple non possono essere nascoste."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In macOS 27 kunnen de symbolen van Apple niet worden verborgen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No macOS 27, os ícones da própria Apple não podem ser ocultados."
+          }
         }
       }
     },
@@ -5149,6 +7345,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Su macOS 27, Tansu nasconde intere app: %@ ha icone in due punti, quindi resta nella barra dei menu."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In macOS 27 verbergt Tansu hele apps: %@ heeft symbolen op twee plekken en blijft daarom in de menubalk."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No macOS 27, o Tansu oculta apps inteiros: %@ tem ícones em dois lugares, por isso fica na barra de menus."
           }
         }
       }
@@ -5178,6 +7386,18 @@
             "state": "translated",
             "value": "Quando il puntatore è fuori dalla barra dei menu da questo tempo e nessun menu è aperto."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zodra de aanwijzer zo lang buiten de menubalk is en er geen menu open is."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quando o cursor estiver fora da barra de menus por esse tempo e nenhum menu estiver aberto."
+          }
         }
       }
     },
@@ -5205,6 +7425,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Un solo cassetto"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eén lade"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uma Só Gaveta"
           }
         }
       }
@@ -5234,6 +7466,18 @@
             "state": "translated",
             "value": "Un solo permesso"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eén toestemming"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uma permissão"
+          }
         }
       }
     },
@@ -5261,6 +7505,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Solo sullo spazio vuoto: le icone e i menu dell’app continuano a ricevere i clic."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alleen op lege ruimte: de symbolen en de appmenu's blijven op klikken reageren."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Só em espaço vazio: os ícones e os menus do app continuam recebendo os cliques."
           }
         }
       }
@@ -5290,6 +7546,18 @@
             "state": "translated",
             "value": "Apri"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir"
+          }
         }
       }
     },
@@ -5317,6 +7585,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "App aperte"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geopende apps"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apps Abertos"
           }
         }
       }
@@ -5346,6 +7626,18 @@
             "state": "translated",
             "value": "Apri Impostazioni di Sistema"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Systeeminstellingen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir Ajustes do Sistema"
+          }
         }
       }
     },
@@ -5373,6 +7665,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apri tutti i cassetti"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open alle laden"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir todas as gavetas"
           }
         }
       }
@@ -5402,6 +7706,18 @@
             "state": "translated",
             "value": "Apri al login"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open bij inloggen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir no Início da Sessão"
+          }
         }
       }
     },
@@ -5429,6 +7745,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apri i cassetti al passaggio del puntatore"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open laden bij aanwijzen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir gavetas ao passar o cursor"
           }
         }
       }
@@ -5458,6 +7786,18 @@
             "state": "translated",
             "value": "Mostra tutte le icone con Opzione-clic sull’icona di Tansu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Option-klik op het symbool van Tansu om alle symbolen te tonen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar todos os ícones com Option + clique no ícone do Tansu"
+          }
         }
       }
     },
@@ -5485,6 +7825,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Altro"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Overig"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outros"
           }
         }
       }
@@ -5514,6 +7866,18 @@
             "state": "translated",
             "value": "Altra app…"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Andere app…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outro App…"
+          }
         }
       }
     },
@@ -5541,6 +7905,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fuori dalla barra dei menu. Raggiungile dalla ricerca o dall’icona di Tansu."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niet in de menubalk. Bereikbaar via de zoekfunctie of het symbool van Tansu."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fora da barra de menus. Acesse-os pela busca ou pelo ícone do Tansu."
           }
         }
       }
@@ -5570,6 +7946,18 @@
             "state": "translated",
             "value": "Incolla"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plak"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colar"
+          }
         }
       }
     },
@@ -5597,6 +7985,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Con o senza alimentatore collegato."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Met of zonder lichtnetadapter."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conectado à energia ou não."
           }
         }
       }
@@ -5626,6 +8026,18 @@
             "state": "translated",
             "value": "Premi un’abbreviazione…"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Druk op een toetscombinatie…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pressione um atalho…"
+          }
         }
       }
     },
@@ -5653,6 +8065,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Premila di nuovo per nasconderle."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Druk er nogmaals op om ze te verbergen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pressione-o novamente para ocultá-los."
           }
         }
       }
@@ -5682,6 +8106,18 @@
             "state": "translated",
             "value": "Anteprima"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voorvertoning"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pré-visualização"
+          }
         }
       }
     },
@@ -5709,6 +8145,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Produttività"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Productiviteit"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Produtividade"
           }
         }
       }
@@ -5738,6 +8186,18 @@
             "state": "translated",
             "value": "Profilo"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profiel"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfil"
+          }
         }
       }
     },
@@ -5765,6 +8225,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Profilo %lld"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profiel %lld"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfil %lld"
           }
         }
       }
@@ -5794,6 +8266,18 @@
             "state": "translated",
             "value": "Profili"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profielen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfis"
+          }
         }
       }
     },
@@ -5821,6 +8305,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rimetti a posto le icone aperte dopo"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zet geopende symbolen terug na"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardar os ícones abertos após"
           }
         }
       }
@@ -5850,6 +8346,18 @@
             "state": "translated",
             "value": "Esci da Tansu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop Tansu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encerrar Tansu"
+          }
         }
       }
     },
@@ -5877,6 +8385,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tutto pronto"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klaar"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tudo Pronto"
           }
         }
       }
@@ -5906,6 +8426,18 @@
             "state": "translated",
             "value": "Registra abbreviazione"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neem toetscombinatie op"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gravar Atalho"
+          }
         }
       }
     },
@@ -5933,6 +8465,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ripristina"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opnieuw"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Refazer"
           }
         }
       }
@@ -5962,6 +8506,18 @@
             "state": "translated",
             "value": "Rimuovi abbreviazione"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verwijder toetscombinatie"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remover Atalho"
+          }
         }
       }
     },
@@ -5989,6 +8545,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rinomina"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wijzig naam"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renomear"
           }
         }
       }
@@ -6018,6 +8586,18 @@
             "state": "translated",
             "value": "Rinomina profilo"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wijzig naam van profiel"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renomear Perfil"
+          }
         }
       }
     },
@@ -6045,6 +8625,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rinomina…"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wijzig naam…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renomear…"
           }
         }
       }
@@ -6074,6 +8666,18 @@
             "state": "translated",
             "value": "Sostituisci"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vervang"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Substituir"
+          }
         }
       }
     },
@@ -6101,6 +8705,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sostituire la configurazione con “%@”?"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je configuratie vervangen door '%@'?"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Substituir sua configuração por “%@”?"
           }
         }
       }
@@ -6130,6 +8746,18 @@
             "state": "translated",
             "value": "Segnala un problema"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meld een probleem"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Relatar um problema"
+          }
         }
       }
     },
@@ -6157,6 +8785,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Segnala un problema"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meld een probleem"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comunicar Problema"
           }
         }
       }
@@ -6186,6 +8826,18 @@
             "state": "translated",
             "value": "Inizializza"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stel opnieuw in"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redefinir"
+          }
         }
       }
     },
@@ -6213,6 +8865,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Inizializza layout…"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stel lay-out opnieuw in…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redefinir Layout…"
           }
         }
       }
@@ -6242,6 +8906,18 @@
             "state": "translated",
             "value": "Inizializzare il layout? Tutte le icone tornano nella barra dei menu e Tansu mostra di nuovo il benvenuto."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je lay-out opnieuw instellen? Alle symbolen gaan terug naar de menubalk en Tansu toont het welkomstscherm opnieuw."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redefinir seu layout? Todos os ícones voltam para a barra de menus e o Tansu mostra as boas-vindas novamente."
+          }
         }
       }
     },
@@ -6269,6 +8945,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Spazio accanto al notch"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ruimte naast de notch"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espaço ao lado do notch"
           }
         }
       }
@@ -6298,6 +8986,18 @@
             "state": "translated",
             "value": "Spazio nella barra dei menu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ruimte in de menubalk"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espaço na barra de menus"
+          }
         }
       }
     },
@@ -6325,6 +9025,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Salva"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bewaar"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salvar"
           }
         }
       }
@@ -6354,6 +9066,18 @@
             "state": "translated",
             "value": "Salva configurazione attuale come profilo"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bewaar huidige configuratie als profiel"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salvar Configuração Atual como Perfil"
+          }
         }
       }
     },
@@ -6381,6 +9105,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Salva prima un profilo, in Profili."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bewaar eerst een profiel, in 'Profielen'."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salve um perfil primeiro, em Perfis."
           }
         }
       }
@@ -6410,6 +9146,18 @@
             "state": "translated",
             "value": "Scorri di nuovo per nasconderle."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scrol opnieuw om ze te verbergen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Role novamente para ocultá-los."
+          }
         }
       }
     },
@@ -6437,6 +9185,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cerca icone…"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoek symbolen…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscar Ícones…"
           }
         }
       }
@@ -6466,6 +9226,18 @@
             "state": "translated",
             "value": "Cerca icone"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoek symbolen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscar ícones"
+          }
         }
       }
     },
@@ -6493,6 +9265,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cerca le icone della barra dei menu"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zoek menubalksymbolen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Buscar ícones da barra de menus"
           }
         }
       }
@@ -6522,6 +9306,18 @@
             "state": "translated",
             "value": "Sicurezza e privacy"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beveiliging en privacy"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Segurança e Privacidade"
+          }
         }
       }
     },
@@ -6549,6 +9345,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sicurezza e VPN"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beveiliging en VPN"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Segurança e VPN"
           }
         }
       }
@@ -6578,6 +9386,18 @@
             "state": "translated",
             "value": "Seleziona tutto"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecteer alles"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selecionar Tudo"
+          }
         }
       }
     },
@@ -6605,6 +9425,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "File delle impostazioni"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instellingenbestand"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arquivo de ajustes"
           }
         }
       }
@@ -6634,6 +9466,18 @@
             "state": "translated",
             "value": "Impostazioni…"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instellingen…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajustes…"
+          }
         }
       }
     },
@@ -6658,6 +9502,18 @@
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Forma"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vorm"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "Forma"
@@ -6690,6 +9546,18 @@
             "state": "translated",
             "value": "Forme"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vormen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Formas"
+          }
         }
       }
     },
@@ -6717,6 +9585,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Abbreviazione"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toetscombinatie"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atalho de Teclado"
           }
         }
       }
@@ -6746,6 +9626,18 @@
             "state": "translated",
             "value": "Abbreviazioni"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toetscombinaties"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atalhos de Teclado"
+          }
         }
       }
     },
@@ -6773,6 +9665,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mostra di nuovo"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon opnieuw"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar Novamente"
           }
         }
       }
@@ -6802,6 +9706,18 @@
             "state": "translated",
             "value": "Mostra Batteria quando scende sotto il %@"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon Batterij als die onder %@ komt"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar Bateria quando ficar abaixo de %@"
+          }
         }
       }
     },
@@ -6829,6 +9745,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mostra tutte le icone"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon alle symbolen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar Todos os Ícones"
           }
         }
       }
@@ -6858,6 +9786,18 @@
             "state": "translated",
             "value": "Mostra l’icona di Tansu nella barra dei menu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon het symbool van Tansu in de menubalk"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar o ícone do Tansu na barra de menus"
+          }
         }
       }
     },
@@ -6885,6 +9825,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mostra le icone di un cassetto nella barra dei menu"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon de symbolen van een lade in de menubalk"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar os ícones de uma gaveta na barra de menus"
           }
         }
       }
@@ -6914,6 +9866,18 @@
             "state": "translated",
             "value": "Mostra un’icona nella barra dei menu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon een symbool in de menubalk"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar um ícone na barra de menus"
+          }
         }
       }
     },
@@ -6941,6 +9905,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mostra tutte le icone"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon alle symbolen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar todos os ícones"
           }
         }
       }
@@ -6970,6 +9946,18 @@
             "state": "translated",
             "value": "Mostra tutte le icone e metti in pausa Tansu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon alle symbolen en pauzeer Tansu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar todos os ícones e pausar o Tansu"
+          }
         }
       }
     },
@@ -6997,6 +9985,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mostra quante icone contiene"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon hoeveel symbolen de lade bevat"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar quantos ícones ela contém"
           }
         }
       }
@@ -7026,6 +10026,18 @@
             "state": "translated",
             "value": "Mostra nel Finder"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon in Finder"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar no Finder"
+          }
         }
       }
     },
@@ -7053,6 +10065,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mostra nella barra dei menu"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon in de menubalk"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar na barra de menus"
           }
         }
       }
@@ -7082,6 +10106,18 @@
             "state": "translated",
             "value": "Mostra il cassetto “%@” mentre la fotocamera o il microfono è in uso"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon de lade '%@' zolang de camera of microfoon aan staat"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar a gaveta “%@” enquanto a câmera ou o microfone estiver em uso"
+          }
         }
       }
     },
@@ -7109,6 +10145,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mostra il cassetto delle app di chat mentre la fotocamera o il microfono è in uso"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon de lade met je chatapps zolang de camera of microfoon aan staat"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar a gaveta dos seus apps de conversa enquanto a câmera ou o microfone estiver em uso"
           }
         }
       }
@@ -7138,6 +10186,18 @@
             "state": "translated",
             "value": "Mostra il nome nella barra dei menu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon de naam in de menubalk"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar o nome na barra de menus"
+          }
         }
       }
     },
@@ -7165,6 +10225,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mostrale"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toon ze"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar"
           }
         }
       }
@@ -7194,6 +10266,18 @@
             "state": "translated",
             "value": "Salta per ora"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sla voorlopig over"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ignorar por Enquanto"
+          }
         }
       }
     },
@@ -7218,6 +10302,18 @@
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Sort"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Sort"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "Smart Sort"
@@ -7250,6 +10346,18 @@
             "state": "translated",
             "value": "Smart Sort…"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Sort…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smart Sort…"
+          }
         }
       }
     },
@@ -7277,6 +10385,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ridotto"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Smal"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reduzido"
           }
         }
       }
@@ -7306,6 +10426,18 @@
             "state": "translated",
             "value": "Ombra morbida"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zachte schaduw"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sombra suave"
+          }
         }
       }
     },
@@ -7333,6 +10465,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Riordina la barra dei menu"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ruim mijn menubalk op"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organizar Minha Barra de Menus"
           }
         }
       }
@@ -7362,6 +10506,18 @@
             "state": "translated",
             "value": "Metti nel loro cassetto"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sorteer in hun lade"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colocar na gaveta correspondente"
+          }
         }
       }
     },
@@ -7389,6 +10545,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Riordino della barra dei menu…"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je menubalk wordt opgeruimd…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Organizando sua barra de menus…"
           }
         }
       }
@@ -7418,6 +10586,18 @@
             "state": "translated",
             "value": "Codice sorgente"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Broncode"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Código-Fonte"
+          }
         }
       }
     },
@@ -7445,6 +10625,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Spazio tra le icone"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ruimte tussen symbolen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espaço entre ícones"
           }
         }
       }
@@ -7474,6 +10666,18 @@
             "state": "translated",
             "value": "Divisa"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gesplitst"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dividida"
+          }
         }
       }
     },
@@ -7501,6 +10705,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Standard"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standaard"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Padrão"
           }
         }
       }
@@ -7530,6 +10746,18 @@
             "state": "translated",
             "value": "Inizia da zero"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Begin leeg"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Começar do Zero"
+          }
         }
       }
     },
@@ -7557,6 +10785,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Intensità"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sterkte"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Intensidade"
           }
         }
       }
@@ -7586,6 +10826,18 @@
             "state": "translated",
             "value": "Attiva"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activeer"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativar"
+          }
         }
       }
     },
@@ -7614,6 +10866,18 @@
             "state": "translated",
             "value": "Passa a un profilo"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schakel over naar een profiel"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mudar para um perfil"
+          }
         }
       }
     },
@@ -7638,6 +10902,18 @@
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sistema"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Systeem"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "Sistema"
@@ -7670,6 +10946,18 @@
             "state": "translated",
             "value": "Tansu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu"
+          }
         }
       }
     },
@@ -7697,6 +10985,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Impostazioni Tansu"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instellingen voor Tansu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajustes do Tansu"
           }
         }
       }
@@ -7726,6 +11026,18 @@
             "state": "translated",
             "value": "Tansu non riesce a spostare %@. Riprova, oppure sposta l’icona trascinandola con il tasto Comando premuto."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu kon %@ niet verplaatsen. Probeer het opnieuw of sleep het symbool met de Command-toets ingedrukt."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Tansu não conseguiu mover %@. Tente novamente ou arraste o ícone com a tecla Command pressionada."
+          }
         }
       }
     },
@@ -7753,6 +11065,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tansu non riesce ad aprire %@."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu kon %@ niet openen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Tansu não conseguiu abrir %@."
           }
         }
       }
@@ -7782,6 +11106,18 @@
             "state": "translated",
             "value": "Tansu non vede ancora nessuna icona da riordinare. I cassetti si riempiranno man mano che le app aggiungeranno le loro."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu ziet nog geen symbolen om te sorteren. Je laden vullen zich zodra apps hun symbolen toevoegen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Tansu ainda não vê nenhum ícone para organizar. Suas gavetas vão se encher à medida que os apps adicionarem os deles."
+          }
         }
       }
     },
@@ -7809,6 +11145,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tansu ha trovato %lld icone. Ecco una barra dei menu più ordinata."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu heeft %lld symbolen gevonden. Hier is een opgeruimdere menubalk."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Tansu encontrou %lld ícones. Aqui está uma barra de menus mais organizada."
           }
         }
       }
@@ -7838,6 +11186,18 @@
             "state": "translated",
             "value": "Tansu non ha alcuna affiliazione con Apple."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu is niet gelieerd aan Apple."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Tansu não tem vínculo com a Apple."
+          }
         }
       }
     },
@@ -7865,6 +11225,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tansu ha bisogno dell’accesso ad Accessibilità per aprire le icone."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu heeft toegang tot 'Toegankelijkheid' nodig om symbolen te openen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Tansu precisa de acesso à Acessibilidade para abrir os ícones."
           }
         }
       }
@@ -7894,6 +11266,18 @@
             "state": "translated",
             "value": "Tansu ha bisogno dell’accesso ad Accessibilità per vedere e disporre le tue icone."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu heeft toegang tot 'Toegankelijkheid' nodig om je symbolen te zien en te rangschikken."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Tansu precisa de acesso à Acessibilidade para ver e organizar seus ícones."
+          }
         }
       }
     },
@@ -7921,6 +11305,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tansu ha bisogno dell’accesso ad Accessibilità per sapere a quale app appartiene ogni icona e per aprirle al posto tuo. Non registra mai lo schermo e non si connette mai a internet, se non per verificare gli aggiornamenti."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu heeft toegang tot 'Toegankelijkheid' nodig om te zien bij welke app elk symbool hoort en om symbolen voor je te openen. Tansu neemt nooit je scherm op en gaat nooit online, behalve om naar updates te zoeken."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Tansu precisa de acesso à Acessibilidade para saber a qual app pertence cada ícone e para abri-los para você. Ele nunca grava sua tela e nunca se conecta à internet, exceto para buscar atualizações."
           }
         }
       }
@@ -7950,6 +11346,18 @@
             "state": "translated",
             "value": "Tansu rileva solo se una fotocamera o un microfono è in funzione; non registra mai nulla e non richiede alcun permesso."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu kijkt alleen of een camera of microfoon actief is; er wordt nooit iets opgenomen en er is geen toestemming nodig."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Tansu só verifica se uma câmera ou um microfone está funcionando; ele nunca grava nada e não precisa de permissão."
+          }
         }
       }
     },
@@ -7977,6 +11385,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tansu non vede ancora nessuna icona da mostrare."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu ziet nog geen symbool om te tonen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Tansu ainda não vê nenhum ícone para mostrar."
           }
         }
       }
@@ -8006,6 +11426,18 @@
             "state": "translated",
             "value": "Tansu riordina le icone della barra dei menu in cassetti, ognuno ridotto a una sola icona. La barra dei menu tiene ciò che guardi tutto il giorno; il resto aspetta in un cassetto, a portata di clic."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu sorteert de symbolen in je menubalk in laden, die elk één symbool zijn. De menubalk houdt wat je de hele dag bekijkt; al het andere wacht in een lade, één klik verderop."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Tansu organiza os ícones da barra de menus em gavetas, cada uma reduzida a um único ícone. A barra de menus fica com o que você vê o dia todo; todo o resto espera em uma gaveta, a um clique de distância."
+          }
         }
       }
     },
@@ -8033,6 +11465,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tansu funziona meglio dalla cartella Applicazioni: da lì può aprirsi al login e aggiornarsi automaticamente, e macOS 27 consente solo alle app che si trovano lì di modificare la barra dei menu."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tansu werkt het best vanuit de map 'Apps': daar kan Tansu openen bij het inloggen en zichzelf bijwerken, en in macOS 27 kunnen alleen apps in die map de menubalk wijzigen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Tansu funciona melhor na pasta Aplicativos: lá ele pode abrir no início da sessão e se atualizar, e o macOS 27 só permite que os apps dessa pasta alterem a barra de menus."
           }
         }
       }
@@ -8062,6 +11506,18 @@
             "state": "translated",
             "value": "L’icona di Tansu, poi i tuoi cassetti nell’ordine impostato in Cassetti. Disattiva l’opzione per posizionarli tu trascinandoli con il tasto Comando premuto."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Het symbool van Tansu, dan je laden in de volgorde die in 'Laden' is ingesteld. Schakel dit uit om ze zelf te plaatsen door te slepen met de Command-toets ingedrukt."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O ícone do Tansu e, depois, suas gavetas na ordem definida em Gavetas. Desative para posicioná-los você mesmo arrastando com a tecla Command pressionada."
+          }
         }
       }
     },
@@ -8089,6 +11545,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Testo"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tekst"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Texto"
           }
         }
       }
@@ -8118,6 +11586,18 @@
             "state": "translated",
             "value": "Il Mac è alimentato a batteria"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De Mac werkt op de batterij"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Mac está usando a bateria"
+          }
         }
       }
     },
@@ -8145,6 +11625,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "La batteria è pari o inferiore a un livello"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De batterij staat op of onder een niveau"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A bateria está em um nível ou abaixo dele"
           }
         }
       }
@@ -8174,6 +11666,18 @@
             "state": "translated",
             "value": "La fotocamera o il microfono è in uso"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De camera of de microfoon is in gebruik"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A câmera ou o microfone está em uso"
+          }
         }
       }
     },
@@ -8201,6 +11705,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "La breve presentazione, Accessibilità e Smart Sort, come al primo avvio."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De korte rondleiding, Toegankelijkheid en Smart Sort, zoals bij de eerste keer openen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O tour rápido, a Acessibilidade e o Smart Sort, como na primeira abertura."
           }
         }
       }
@@ -8230,6 +11746,18 @@
             "state": "translated",
             "value": "La tinta appare quando la barra dei menu non ha uno sfondo proprio (Impostazioni di Sistema > Barra dei menu)."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De tint is zichtbaar zolang de menubalk geen eigen achtergrond heeft (Systeeminstellingen > 'Menubalk')."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A tonalidade aparece enquanto a barra de menus não tiver um fundo próprio (Ajustes do Sistema > Barra de Menus)."
+          }
         }
       }
     },
@@ -8257,6 +11785,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Allora"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dan"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Então"
           }
         }
       }
@@ -8286,6 +11826,18 @@
             "state": "translated",
             "value": "Finiscono nel cassetto “Altro” non appena lo spazio si esaurisce."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ze gaan naar de lade 'Overig' zodra de ruimte op is."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eles vão para a gaveta “Outros” assim que o espaço acabar."
+          }
         }
       }
     },
@@ -8313,6 +11865,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Questo cassetto è vuoto."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze lade is leeg."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta gaveta está vazia."
           }
         }
       }
@@ -8342,6 +11906,18 @@
             "state": "translated",
             "value": "Questo file proviene da una versione più recente di Tansu. Aggiorna Tansu, poi importalo di nuovo."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dit bestand komt van een nieuwere versie van Tansu. Werk Tansu bij en importeer het daarna opnieuw."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este arquivo é de uma versão mais recente do Tansu. Atualize o Tansu e importe-o novamente."
+          }
         }
       }
     },
@@ -8369,6 +11945,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Questo file non è un file di impostazioni di Tansu."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dit bestand is geen instellingenbestand van Tansu."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este arquivo não é um arquivo de ajustes do Tansu."
           }
         }
       }
@@ -8398,6 +11986,18 @@
             "state": "translated",
             "value": "Questa versione di macOS ha modificato ciò su cui si basa Tansu (%@). Tutto resta nella barra dei menu."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deze versie van macOS heeft gewijzigd waar Tansu op steunt (%@). Alles blijft in de menubalk."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta versão do macOS alterou algo de que o Tansu depende (%@). Tudo fica na barra de menus."
+          }
         }
       }
     },
@@ -8425,6 +12025,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Stretto"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nauw"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apertado"
           }
         }
       }
@@ -8454,6 +12066,18 @@
             "state": "translated",
             "value": "A"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tot"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Até"
+          }
         }
       }
     },
@@ -8481,6 +12105,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Attivatori"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Triggers"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acionadores"
           }
         }
       }
@@ -8510,6 +12146,18 @@
             "state": "translated",
             "value": "Riprova"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Probeer opnieuw"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tentar Novamente"
+          }
         }
       }
     },
@@ -8537,6 +12185,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Attiva la modalità Focus"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zet Focus aan"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativar o Modo Focus"
           }
         }
       }
@@ -8566,6 +12226,18 @@
             "state": "translated",
             "value": "Annulla"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herstel"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desfazer"
+          }
         }
       }
     },
@@ -8593,6 +12265,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Profilo senza nome"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Naamloos profiel"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perfil Sem Título"
           }
         }
       }
@@ -8622,6 +12306,18 @@
             "state": "translated",
             "value": "Fino a 3 lettere"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maximaal 3 letters"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Até 3 letras"
+          }
         }
       }
     },
@@ -8649,6 +12345,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aggiornamenti"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updates"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atualizações"
           }
         }
       }
@@ -8678,6 +12386,18 @@
             "state": "translated",
             "value": "Aggiornamenti tramite Sparkle. Tecniche da Hidden Bar, MenuBarHider ed Ellipsis, riscritte per Tansu."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Updates via Sparkle. Technieken uit Hidden Bar, MenuBarHider en Ellipsis, herschreven voor Tansu."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atualizações pelo Sparkle. Técnicas do Hidden Bar, MenuBarHider e Ellipsis, reescritas para o Tansu."
+          }
         }
       }
     },
@@ -8705,6 +12425,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Usa ⌘, ⌥ o ⌃ con il tasto."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gebruik ⌘, ⌥ of ⌃ met de toets."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use ⌘, ⌥ ou ⌃ com a tecla."
           }
         }
       }
@@ -8734,6 +12466,18 @@
             "state": "translated",
             "value": "Utility"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hulpprogramma's"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utilitários"
+          }
         }
       }
     },
@@ -8761,6 +12505,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Versione %@"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versie %@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Versão %@"
           }
         }
       }
@@ -8790,6 +12546,18 @@
             "state": "translated",
             "value": "In attesa di Accessibilità…"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wachten op Toegankelijkheid…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aguardando a Acessibilidade…"
+          }
         }
       }
     },
@@ -8817,6 +12585,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sito web"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Website"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Site"
           }
         }
       }
@@ -8846,6 +12626,18 @@
             "state": "translated",
             "value": "Schermata di benvenuto"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welkom"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boas-vindas"
+          }
         }
       }
     },
@@ -8874,6 +12666,18 @@
             "state": "translated",
             "value": "Tansu ti dà il benvenuto"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welkom bij Tansu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Boas-vindas ao Tansu"
+          }
         }
       }
     },
@@ -8898,6 +12702,18 @@
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quando"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wanneer"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "Quando"
@@ -8930,6 +12746,18 @@
             "state": "translated",
             "value": "Quando %@, %@"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wanneer %@, %@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quando %@, %@"
+          }
         }
       }
     },
@@ -8957,6 +12785,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Quando la condizione termina, torna il profilo precedente."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wanneer de voorwaarde niet meer geldt, komt het vorige profiel terug."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quando a condição termina, o perfil anterior volta."
           }
         }
       }
@@ -8986,6 +12826,18 @@
             "state": "translated",
             "value": "Quando il puntatore si ferma sulla barra dei menu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wanneer de aanwijzer op de menubalk rust"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quando o cursor para sobre a barra de menus"
+          }
         }
       }
     },
@@ -9013,6 +12865,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Quando fai clic su una parte vuota della barra dei menu"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wanneer je op een leeg deel van de menubalk klikt"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quando você clica em uma parte vazia da barra de menus"
           }
         }
       }
@@ -9042,6 +12906,18 @@
             "state": "translated",
             "value": "Quando scorri con il mouse o il trackpad nella barra dei menu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wanneer je in de menubalk scrolt of veegt"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quando você rola ou desliza na barra de menus"
+          }
         }
       }
     },
@@ -9069,6 +12945,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mentre alcune icone sono nascoste, macOS 27 nasconde anche Full immersion e gli indicatori della fotocamera e del microfono."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zolang er symbolen verborgen zijn, verbergt macOS 27 ook Focus en de camera- en microfoonindicators."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enquanto houver ícones ocultos, o macOS 27 também oculta o Foco e os indicadores da câmera e do microfone."
           }
         }
       }
@@ -9098,6 +12986,18 @@
             "state": "translated",
             "value": "Finestra"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Venster"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Janela"
+          }
         }
       }
     },
@@ -9125,6 +13025,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Senza l’icona, fai clic con il tasto destro su un cassetto per aprire le impostazioni."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zonder dit symbool klik je met de rechtermuisknop op een lade voor de instellingen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sem ele, clique com o botão direito em qualquer gaveta para abrir os Ajustes."
           }
         }
       }
@@ -9154,6 +13066,18 @@
             "state": "translated",
             "value": "I tuoi cassetti e le tue impostazioni vengono sostituiti da quelli del file. Esportali prima per conservarne una copia."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je laden en instellingen worden vervangen door die in het bestand. Exporteer ze eerst om een kopie te bewaren."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suas gavetas e ajustes serão substituídos pelos do arquivo. Exporte-os antes para guardar uma cópia."
+          }
         }
       }
     },
@@ -9181,6 +13105,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cassetti, profili e impostazioni"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je laden, profielen en instellingen"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suas gavetas, perfis e ajustes"
           }
         }
       }
@@ -9210,6 +13146,18 @@
             "state": "translated",
             "value": "La tua barra dei menu, in cassetti."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je menubalk, in laden."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sua barra de menus, em gavetas."
+          }
         }
       }
     },
@@ -9237,6 +13185,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "un monitor esterno è collegato"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "er een extern beeldscherm is aangesloten"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "uma tela externa estiver conectada"
           }
         }
       }
@@ -9266,6 +13226,18 @@
             "state": "translated",
             "value": "l’ora è compresa tra le %@ e le %@"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "het tussen %@ en %@ is"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "o horário estiver entre %@ e %@"
+          }
         }
       }
     },
@@ -9293,6 +13265,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "macOS 26: Tansu sposta le icone dietro un separatore invisibile."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS 26: Tansu verplaatst symbolen achter een onzichtbare scheidingslijn."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS 26: o Tansu move os ícones para trás de um divisor invisível."
           }
         }
       }
@@ -9322,6 +13306,18 @@
             "state": "translated",
             "value": "macOS 27 consente solo alle app nella cartella Applicazioni di modificare la barra dei menu."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In macOS 27 kunnen alleen apps in de map 'Apps' de menubalk wijzigen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O macOS 27 só permite que os apps da pasta Aplicativos alterem a barra de menus."
+          }
         }
       }
     },
@@ -9349,6 +13345,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "macOS 27: Tansu chiede a macOS di nascondere intere app."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS 27: Tansu vraagt macOS om hele apps te verbergen."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS 27: o Tansu pede ao macOS para ocultar apps inteiros."
           }
         }
       }
@@ -9378,6 +13386,18 @@
             "state": "translated",
             "value": "macOS mantiene al loro posto l’orologio e Centro di Controllo."
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS houdt de klok en het bedieningspaneel op hun plek."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O macOS mantém o relógio e a Central de Controle no lugar."
+          }
         }
       }
     },
@@ -9405,6 +13425,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "mostra %@ nella barra dei menu"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "toon %@ in de menubalk"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "mostrar %@ na barra de menus"
           }
         }
       }
@@ -9434,6 +13466,18 @@
             "state": "translated",
             "value": "mostra un cassetto eliminato nella barra dei menu"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "toon een verwijderde lade in de menubalk"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "mostrar uma gaveta apagada na barra de menus"
+          }
         }
       }
     },
@@ -9461,6 +13505,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "mostra il cassetto “%@” nella barra dei menu"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "toon de lade '%@' in de menubalk"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "mostrar a gaveta “%@” na barra de menus"
           }
         }
       }
@@ -9490,6 +13546,18 @@
             "state": "translated",
             "value": "passa a un profilo eliminato"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "schakel over naar een verwijderd profiel"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "mudar para um perfil apagado"
+          }
         }
       }
     },
@@ -9517,6 +13585,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "passa al profilo “%@”"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "schakel over naar profiel '%@'"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "mudar para o perfil “%@”"
           }
         }
       }
@@ -9546,6 +13626,18 @@
             "state": "translated",
             "value": "il Mac è alimentato a batteria"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "de Mac op de batterij werkt"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "o Mac estiver usando a bateria"
+          }
         }
       }
     },
@@ -9573,6 +13665,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "la batteria è al %@ o meno"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "de batterij op %@ of lager staat"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "a bateria estiver em %@ ou menos"
           }
         }
       }
@@ -9602,6 +13706,18 @@
             "state": "translated",
             "value": "la fotocamera o il microfono è in uso"
           }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "de camera of de microfoon in gebruik is"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "a câmera ou o microfone estiver em uso"
+          }
         }
       }
     },
@@ -9629,6 +13745,18 @@
           "stringUnit": {
             "state": "translated",
             "value": "attiva la modalità Focus"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "zet Focus aan"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ativar o Modo Focus"
           }
         }
       }
