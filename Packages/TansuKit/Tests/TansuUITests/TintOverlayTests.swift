@@ -66,4 +66,10 @@ import TansuCore
         #expect(sublayers.count == 1)
         #expect(sublayers[0] is CAShapeLayer)
     }
+
+    @Test func everyShapeHasItsOwnName() {
+        let names = Appearance.Shape.allCases.map(Strings.shapeName)
+        #expect(Set(names).count == names.count)
+        #expect(!names.contains(""))
+    }
 }
