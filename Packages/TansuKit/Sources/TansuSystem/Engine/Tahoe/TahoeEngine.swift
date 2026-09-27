@@ -98,6 +98,18 @@ public final class TahoeEngine: MenuBarEngine {
             result.append(icon)
             presses[entry.id] = entry.found.press
         }
+        // An app that did not answer in time keeps the icons it had, as long as their windows are still listed: the
+        // window list does not depend on the app. Without this, a busy app's hidden icon would come back.
+        let seen = Set(result.compactMap(\.windowID))
+        for previous in lastSnapshot.icons {
+            guard let windowID = previous.windowID, !seen.contains(windowID), let window = windowsByID[windowID],
+                  !result.contains(where: { $0.id == previous.id }) else { continue }
+            var carried = previous
+            carried.frame = window.frame
+            carried.isOnScreen = isOnScreen(window.frame)
+            result.append(carried)
+            presses[previous.id] = pressers[previous.id]
+        }
         pressers = presses
         lastSnapshot = MenuBarSnapshot(icons: result)
         return lastSnapshot

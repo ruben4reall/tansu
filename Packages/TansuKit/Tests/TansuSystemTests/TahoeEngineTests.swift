@@ -107,6 +107,27 @@ import TansuCore
         #expect(bar.drags.count == drags)
     }
 
+    /// Seen on a real menu bar: Pli, busy right after its move, missed the Accessibility timeout; its icon dropped out
+    /// of the scan, nothing was left to hide, and the divider let it come back.
+    @Test func anAppThatDoesNotAnswerKeepsItsIconsHidden() async {
+        await engine.start()
+        _ = await engine.apply(plan(hiding: ["ch.rubencatalao.pli"]))
+        #expect(divider.isExpanded)
+        icons.silent = ["ch.rubencatalao.pli"]
+        let snapshot = await engine.scan()
+        #expect(snapshot.icon(IconID(bundleID: "ch.rubencatalao.pli")) != nil, "known from its window")
+        _ = await engine.apply(plan(hiding: ["ch.rubencatalao.pli"]))
+        #expect(divider.isExpanded)
+    }
+
+    @Test func anIconWhoseWindowIsGoneIsGone() async {
+        await engine.start()
+        _ = await engine.scan()
+        icons.silent = ["ch.rubencatalao.pli"]
+        bar.entries.removeAll { $0.bundleID == "ch.rubencatalao.pli" }
+        #expect(await engine.scan().icon(IconID(bundleID: "ch.rubencatalao.pli")) == nil)
+    }
+
     @Test func showingEveryIconMovesNothing() async {
         await engine.start()
         _ = await engine.apply(plan(hiding: ["com.google.drivefs", "com.protonmail.bridge"]))

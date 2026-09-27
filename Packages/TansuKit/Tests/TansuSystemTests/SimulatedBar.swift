@@ -121,13 +121,15 @@ final class SimulatedIcons: IconSource {
     var refusesPress: Set<String> = []
     /// Icons an app describes without a window: the ones macOS keeps out of the menu bar.
     var windowless: [FoundIcon] = []
+    /// Apps that do not answer Accessibility in time.
+    var silent: Set<String> = []
 
     init(bar: SimulatedBar) { self.bar = bar }
 
     func find() async -> [FoundIcon] {
         guard isTrusted else { return [] }
         let frames = bar.frames()
-        return bar.entries.filter { $0.windowID != SimulatedBar.dividerWindow }.map { entry in
+        return bar.entries.filter { $0.windowID != SimulatedBar.dividerWindow && !silent.contains($0.bundleID) }.map { entry in
             let bundleID = entry.bundleID
             let refuses = refusesPress.contains(bundleID)
             let recorder = PressRecorder(icons: self)
