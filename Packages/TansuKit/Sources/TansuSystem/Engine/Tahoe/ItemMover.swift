@@ -40,7 +40,7 @@ public final class ItemMover {
     /// How long the pointer must rest before a move.
     static let stillness: TimeInterval = 0.15
     /// How long a move may take to show in the window list.
-    static let settleChecks = 10
+    static let settleChecks = 15
     static let settleInterval: Duration = .milliseconds(40)
     /// Points of slack when checking where an icon landed.
     static let slack: CGFloat = 3
@@ -72,14 +72,21 @@ public final class ItemMover {
             let end = Self.dropPoint(for: destination, target: target, moving: current, variant: variant)
             await poster.commandDrag(windowID: windowID, ownerPID: ownerPID, from: start, to: end,
                                      destinationWindowID: destination.windowID, route: route)
+            // macOS animates a drop into place: judge where the icon landed once it stops moving.
+            var previous: CGRect?
             for _ in 0..<Self.settleChecks {
                 await pause(Self.settleInterval)
-                if let now = frame(of: windowID), landed(now, at: destination) {
+                guard let now = frame(of: windowID) else { continue }
+                defer { previous = now }
+                guard now == previous else { continue }
+                if landed(now, at: destination) {
                     workingRoute = route
                     workingVariant = variant
                     Log.engine.notice("moved window \(windowID) through \(route.rawValue, privacy: .public), variant \(variant)")
                     return now
                 }
+                // Settled somewhere else: the next attempt starts from there.
+                break
             }
         }
         Log.engine.error("could not move window \(windowID)")

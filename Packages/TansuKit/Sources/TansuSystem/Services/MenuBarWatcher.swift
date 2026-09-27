@@ -32,18 +32,21 @@ public final class MenuBarWatcher {
         stop()
         guard hover || click || scroll else { return }
         self.hoverDelay = .milliseconds(Int(hoverDelay * 1000))
-        if hover, let monitor = NSEvent.addGlobalMonitorForEvents(matching: .mouseMoved, handler: { [weak self] _ in
+        if hover, let monitor = NSEvent.addGlobalMonitorForEvents(matching: .mouseMoved, handler: { [weak self] event in
+            guard !Self.isTansus(event) else { return }
             Task { @MainActor in self?.pointerMoved() }
         }) {
             monitors.append(monitor)
         }
-        if click, let monitor = NSEvent.addGlobalMonitorForEvents(matching: .leftMouseDown, handler: { [weak self] _ in
+        if click, let monitor = NSEvent.addGlobalMonitorForEvents(matching: .leftMouseDown, handler: { [weak self] event in
+            guard !Self.isTansus(event) else { return }
             let point = NSEvent.mouseLocation
             Task { @MainActor in self?.clicked(at: point) }
         }) {
             monitors.append(monitor)
         }
         if scroll, let monitor = NSEvent.addGlobalMonitorForEvents(matching: .scrollWheel, handler: { [weak self] event in
+            guard !Self.isTansus(event) else { return }
             let point = NSEvent.mouseLocation
             let isGesture = event.deltaY != 0 || event.scrollingDeltaY != 0
             Task { @MainActor in if isGesture { self?.scrolled(at: point) } }
@@ -69,6 +72,11 @@ public final class MenuBarWatcher {
     }
 
     // MARK: Events
+
+    /// Tansu's own Command-drags carry its mark: they are never the person asking for every icon.
+    nonisolated static func isTansus(_ event: NSEvent) -> Bool {
+        event.cgEvent?.getIntegerValueField(.eventSourceUserData) == SystemEventPoster.userDataMarker
+    }
 
     private func pointerMoved() {
         let point = NSEvent.mouseLocation

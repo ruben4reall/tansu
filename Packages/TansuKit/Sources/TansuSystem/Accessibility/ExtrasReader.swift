@@ -63,7 +63,7 @@ public final class ExtrasReader: @unchecked Sendable {
                     let (items, answered) = Self.items(of: app, timeout: timeout)
                     if !answered {
                         lock.withLock { $0[app.pid] = Date() }
-                        Log.accessibility.notice("\(app.bundleID, privacy: .public) did not answer in time")
+                        Log.accessibility.debug("\(app.bundleID, privacy: .public) did not answer in time")
                     }
                     return items
                 }
