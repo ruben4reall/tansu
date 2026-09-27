@@ -2,9 +2,9 @@ import Foundation
 
 /// What a drawer shows in the menu bar.
 public enum DrawerMark: Codable, Hashable, Sendable {
-    /// One emoji, the default.
+    /// One emoji.
     case emoji(String)
-    /// An SF Symbol, drawn as a template image like the system's own icons.
+    /// An SF Symbol, drawn as a template image like the system's own menu bar icons: the default.
     case symbol(String)
     /// Up to three characters, for people who prefer letters.
     case text(String)
@@ -50,9 +50,12 @@ public enum DrawerMark: Codable, Hashable, Sendable {
         } else if let value = try container.decodeIfPresent(String.self, forKey: .text) {
             self = .text(value)
         } else {
-            self = .emoji("📦")
+            self = .fallback
         }
     }
+
+    /// The mark of a drawer whose own mark was lost or invalid.
+    public static let fallback = DrawerMark.symbol("shippingbox.fill")
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
@@ -100,19 +103,19 @@ public struct Drawer: Codable, Hashable, Identifiable, Sendable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
         name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
-        mark = try container.decodeIfPresent(DrawerMark.self, forKey: .mark) ?? .emoji("📦")
+        mark = try container.decodeIfPresent(DrawerMark.self, forKey: .mark) ?? .fallback
         category = try? container.decodeIfPresent(CategoryID.self, forKey: .category)
         showsName = try container.decodeIfPresent(Bool.self, forKey: .showsName) ?? false
         showsCount = try container.decodeIfPresent(Bool.self, forKey: .showsCount) ?? false
         shortcut = try? container.decodeIfPresent(Shortcut.self, forKey: .shortcut)
     }
 
-    /// Name trimmed and shortened, mark normalized; an invalid mark becomes 📦.
+    /// Name trimmed and shortened, mark normalized; an invalid mark becomes the fallback box.
     public var clamped: Drawer {
         var copy = self
         copy.name = String(name.trimmingCharacters(in: .whitespacesAndNewlines).prefix(Self.maximumNameLength))
         copy.mark = mark.normalized
-        if !copy.mark.isValid { copy.mark = .emoji("📦") }
+        if !copy.mark.isValid { copy.mark = .fallback }
         return copy
     }
 }

@@ -130,20 +130,20 @@ import Testing
 
     @Test func anInvalidMarkBecomesABox() {
         let drawer = Drawer(name: "x", mark: .emoji("not an emoji")).clamped
-        #expect(drawer.mark == .emoji("📦"))
+        #expect(drawer.mark == .fallback)
     }
 
     @Test func marksEncodeReadably() throws {
         let data = try JSONEncoder().encode(DrawerMark.symbol("cloud.fill"))
         #expect(String(decoding: data, as: UTF8.self) == #"{"symbol":"cloud.fill"}"#)
         #expect(try JSONDecoder().decode(DrawerMark.self, from: Data(#"{"emoji":"🎧"}"#.utf8)) == .emoji("🎧"))
-        #expect(try JSONDecoder().decode(DrawerMark.self, from: Data("{}".utf8)) == .emoji("📦"))
+        #expect(try JSONDecoder().decode(DrawerMark.self, from: Data("{}".utf8)) == .fallback)
     }
 
     @Test func aDrawerWithMissingFieldsStillDecodes() throws {
         let drawer = try JSONDecoder().decode(Drawer.self, from: Data(#"{"name": "Old", "category": "nonsense"}"#.utf8))
         #expect(drawer.name == "Old")
         #expect(drawer.category == nil)
-        #expect(drawer.mark == .emoji("📦"))
+        #expect(drawer.mark == .fallback)
     }
 }
