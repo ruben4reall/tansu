@@ -225,10 +225,16 @@ test('macOS 27 is called beta, with what it hides, wherever it is described', ()
   assert.match(visible, /Support for macOS 27 is in beta/);
 });
 
-test('the appcast is a valid, empty Sparkle feed', async () => {
+test('the appcast is a valid Sparkle feed: empty before the first release, every item signed after', async () => {
   const feed = await read('appcast.xml');
-  assert.match(feed, /^<\?xml version="1\.0" encoding="utf-8"\?>/);
-  assert.match(feed, /<rss version="2\.0" xmlns:sparkle="http:\/\/www\.andymatuschak\.org\/xml-namespaces\/sparkle">/);
+  assert.match(feed, /^<\?xml version="1\.0" encoding="utf-8"( standalone="yes")?\?>/);
+  assert.match(feed, /<rss (version="2\.0" xmlns:sparkle="http:\/\/www\.andymatuschak\.org\/xml-namespaces\/sparkle"|xmlns:sparkle="http:\/\/www\.andymatuschak\.org\/xml-namespaces\/sparkle" version="2\.0")>/);
   assert.match(feed, /<channel>\s*<title>Tansu<\/title>\s*<link>https:\/\/gettansu\.vercel\.app\/<\/link>\s*<description>[^<]+<\/description>/);
-  assert.doesNotMatch(feed, /<item>/);
+  const items = [...feed.matchAll(/<item>([\s\S]*?)<\/item>/g)].map((match) => match[1]);
+  for (const item of items) {
+    // Each update comes from a GitHub release, with its size and its EdDSA signature.
+    assert.match(item, /<enclosure url="https:\/\/github\.com\/ruben4reall\/tansu\/releases\/download\/v\d+\.\d+\.\d+\/Tansu-\d+\.\d+\.\d+\.dmg" length="\d+" type="application\/octet-stream" sparkle:edSignature="[A-Za-z0-9+/]{86}=="/);
+  }
+  // With items, the whole feed is signed too: the app requires a signed feed.
+  if (items.length > 0) assert.match(feed, /<!-- sparkle-signatures:\nedSignature: [A-Za-z0-9+/]{86}==\nlength: \d+\n-->\s*$/);
 });

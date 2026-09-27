@@ -69,18 +69,6 @@ const DRAW = {
     return svg(w, h, body, windowGrad);
   },
 
-  // A drawer up close with the menu of one icon open.
-  drawerCloseup: (w, h) => {
-    let body = rect(16.5, 16.5, 379, 225, 16, 'url(#glass)', `stroke="${C.edge}"`);
-    body += rect(36, 34, 96, 9, 4.5, C.strong) + tiles(36, 60, 7, { cols: 5, cell: 68, row: 78, size: 38 });
-    body += rect(96, 136, 48, 48, 12, 'none', `stroke="${C.mid}" stroke-width="2"`);
-    body += rect(236, 152, 206, 168, 12, '#2C2722', `stroke="${C.edge}"`);
-    [[176, 104], [208, 134], [240, 58], [284, 118]].forEach(([y, wd]) => { body += rect(254, y, wd, 8, 4, C.light, 'fill-opacity="0.8"'); });
-    body += `<path d="M420 176l5 4-5 4" fill="none" stroke="${C.mid}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`;
-    body += rect(250, 264, 178, 1, 0, C.faint);
-    return svg(w, h, body, glass);
-  },
-
   // The search field with two letters typed and three results.
   search: (w, h) => {
     let body = frame(w, h, 18, 'url(#glass)');
@@ -174,7 +162,6 @@ async function ogHtml() {
 const JOBS = [
   { path: 'assets/app/drawer-files', w: 360, h: 200, draw: DRAW.drawerFiles, retina: true },
   { path: 'assets/app/welcome-sort', w: 640, h: 560, draw: DRAW.welcomeSort, retina: true },
-  { path: 'assets/app/drawer-closeup', w: 520, h: 340, draw: DRAW.drawerCloseup, retina: true },
   { path: 'assets/app/search', w: 600, h: 280, draw: DRAW.search, retina: true },
   { path: 'assets/app/settings-layout', w: 820, h: 600, draw: DRAW.settingsLayout, retina: true },
   { path: 'assets/app/settings-appearance', w: 820, h: 600, draw: DRAW.settingsAppearance, retina: true },
