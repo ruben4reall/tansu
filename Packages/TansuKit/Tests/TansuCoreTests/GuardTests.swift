@@ -23,6 +23,9 @@ import Testing
         sources(in: "Sources") + sources(in: "App", under: repositoryRoot)
     }
 
+    /// The frameworks the core may use: no interface, nothing that needs a window server.
+    static let coreFrameworks: Set<String> = ["import Foundation", "import CoreGraphics"]
+
     /// Every import declaration in `text` other than a plain `import Foundation`, whatever its attributes or
     /// access level (`@preconcurrency public import Darwin` counts).
     static func importsOtherThanFoundation(in text: String) -> [String] {
@@ -56,11 +59,13 @@ import Testing
         ])
     }
 
-    @Test func coreStaysFoundationOnly() {
+    /// The rules run under `swift test` alone: Foundation and CoreGraphics's geometry, never AppKit or SwiftUI.
+    @Test func coreStaysFoundationAndGeometryOnly() {
         let files = Self.sources(in: "Sources/TansuCore")
         #expect(files.contains { $0.text.contains("import Foundation") })
         for file in files {
-            #expect(Self.importsOtherThanFoundation(in: file.text).isEmpty, "\(file.path) imports more than Foundation")
+            let others = Self.importsOtherThanFoundation(in: file.text).filter { !Self.coreFrameworks.contains($0) }
+            #expect(others.isEmpty, "\(file.path) imports \(others)")
         }
     }
 
