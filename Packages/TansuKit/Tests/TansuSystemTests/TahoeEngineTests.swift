@@ -228,10 +228,11 @@ import TansuCore
         _ = await engine.apply(plan(hiding: ["com.google.drivefs"]))
         try await Task.sleep(for: .milliseconds(60))
         #expect(nextToItsDrawer(), "still there while its menu is open")
-        // The menu closes: the icon goes back behind the divider.
+        // The menu closes: the icon goes back behind the divider, which widens again.
         bar.openMenuOwners = []
-        let deadline = ContinuousClock.now + .seconds(3)
-        while bar.order.firstIndex(of: "com.google.drivefs")! > bar.order.firstIndex(of: "|")!, ContinuousClock.now < deadline {
+        let deadline = ContinuousClock.now + .seconds(5)
+        while !(bar.order.firstIndex(of: "com.google.drivefs")! < bar.order.firstIndex(of: "|")! && divider.isExpanded),
+              ContinuousClock.now < deadline {
             try await Task.sleep(for: .milliseconds(10))
         }
         #expect(bar.order.firstIndex(of: "com.google.drivefs")! < bar.order.firstIndex(of: "|")!)
@@ -256,8 +257,10 @@ import TansuCore
         try await engine.open(IconID(bundleID: "ch.rubencatalao.pli"), anchor: bar.frame(50)!)
         #expect(bar.order.firstIndex(of: "ch.rubencatalao.pli")! > bar.order.firstIndex(of: "|")!, "shown next to its drawer")
         bar.openMenuOwners = []
-        let deadline = ContinuousClock.now + .seconds(3)
-        while bar.order.firstIndex(of: "ch.rubencatalao.pli")! > bar.order.firstIndex(of: "|")!, ContinuousClock.now < deadline {
+        // Done once the divider is wide again: the icon goes behind it first, the icons that show come back after.
+        let deadline = ContinuousClock.now + .seconds(5)
+        while !(bar.order.firstIndex(of: "ch.rubencatalao.pli")! < bar.order.firstIndex(of: "|")! && divider.isExpanded),
+              ContinuousClock.now < deadline {
             try await Task.sleep(for: .milliseconds(10))
         }
         let order = bar.order
