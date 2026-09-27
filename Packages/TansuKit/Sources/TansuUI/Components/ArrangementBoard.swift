@@ -28,28 +28,35 @@ public struct BoardSection: Identifiable {
 }
 
 /// Cards of icons that can be dragged from one card to another: the welcome's Smart Sort step and Settings, Layout.
+/// A right-click on an icon does the same without dragging (Move To), and more where the board allows it.
 public struct ArrangementBoard: View {
     let sections: [BoardSection]
     let columns: Int
     let onDrop: (IconID, Placement) -> Void
     var onMarkTap: ((UUID) -> Void)?
     var lockReason: (IconRow) -> String? = { _ in nil }
+    var onOpen: ((IconID) -> Void)?
+    var onAddShortcut: ((IconID) -> Void)?
 
     public init(
         sections: [BoardSection], columns: Int = 2, onDrop: @escaping (IconID, Placement) -> Void,
-        onMarkTap: ((UUID) -> Void)? = nil, lockReason: @escaping (IconRow) -> String? = { _ in nil }
+        onMarkTap: ((UUID) -> Void)? = nil, lockReason: @escaping (IconRow) -> String? = { _ in nil },
+        onOpen: ((IconID) -> Void)? = nil, onAddShortcut: ((IconID) -> Void)? = nil
     ) {
         self.sections = sections
         self.columns = columns
         self.onDrop = onDrop
         self.onMarkTap = onMarkTap
         self.lockReason = lockReason
+        self.onOpen = onOpen
+        self.onAddShortcut = onAddShortcut
     }
 
     public var body: some View {
         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12, alignment: .top), count: columns), spacing: 12) {
             ForEach(sections) { section in
-                BoardCard(section: section, onDrop: onDrop, onMarkTap: onMarkTap, lockReason: lockReason, allRows: allRows)
+                BoardCard(section: section, onDrop: onDrop, onMarkTap: onMarkTap, lockReason: lockReason, allRows: allRows,
+                          destinations: sections.map { ($0.placement, $0.title) }, onOpen: onOpen, onAddShortcut: onAddShortcut)
             }
         }
     }
@@ -63,6 +70,10 @@ struct BoardCard: View {
     let onMarkTap: ((UUID) -> Void)?
     let lockReason: (IconRow) -> String?
     let allRows: [IconRow]
+    /// Every card, for Move To.
+    let destinations: [(placement: Placement, title: String)]
+    let onOpen: ((IconID) -> Void)?
+    let onAddShortcut: ((IconID) -> Void)?
     @State private var isTargeted = false
 
     var body: some View {
@@ -128,6 +139,7 @@ struct BoardCard: View {
         .frame(height: 28)
         .background(Capsule().fill(Color.white.opacity(0.07)))
         .help(reason ?? row.subtitle ?? row.appName)
+        .contextMenu { chipMenu(row, movable: row.isMovable && reason == nil) }
         if row.isMovable && reason == nil {
             content.draggable(row.id.description) {
                 HStack(spacing: 6) {
@@ -138,6 +150,26 @@ struct BoardCard: View {
             }
         } else {
             content
+        }
+    }
+}
+
+extension BoardCard {
+    @ViewBuilder
+    func chipMenu(_ row: IconRow, movable: Bool) -> some View {
+        if let onOpen {
+            Button(Strings.open) { onOpen(row.id) }
+        }
+        if movable {
+            Menu(Strings.moveTo) {
+                ForEach(destinations.filter { $0.placement != section.placement }, id: \.placement) { destination in
+                    Button(destination.title) { onDrop(row.id, destination.placement) }
+                }
+            }
+        }
+        if let onAddShortcut {
+            Divider()
+            Button(Strings.addShortcutMenuItem) { onAddShortcut(row.id) }
         }
     }
 }

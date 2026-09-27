@@ -25,13 +25,16 @@ public final class Coordinator {
     private let permission = AccessibilityPermission()
     private let appObserver = AppObserver()
     private let displayObserver = DisplayObserver()
+    private let reveal = RevealController()
     private let loginItem = LoginItem()
     private var shortcuts: ShortcutCenter?
     private var updater: UpdateChecking?
 
     private var snapshot = MenuBarSnapshot.empty
     private var categories: [IconID: CategoryID] = [:]
-    private var mode: LayoutPlanner.Mode = .normal
+    private var mode: LayoutPlanner.Mode = .normal {
+        didSet { if mode != oldValue { reveal.everythingShows(mode == .showEverything) } }
+    }
     private var saved: TansuSettings
     private var pendingApply: Task<Void, Never>?
     private var isApplyingNow = false
@@ -64,6 +67,7 @@ public final class Coordinator {
         NSApp.mainMenu = MainMenu.make { [weak self] in self?.openSettings(nil) }
         wireActions()
         wireMenuBar()
+        wireReveal()
         shortcuts = ShortcutCenter { [weak self] action in self?.handle(action) }
         permission.onChange = { [weak self] trusted in
             self?.interface.accessibilityTrusted = trusted
@@ -158,6 +162,7 @@ public final class Coordinator {
         rememberNewIcons()
         updateCapacity()
         syncStatusItems()
+        reveal.watcher.occupied = occupiedFrames()
         if apply { scheduleApply() }
     }
 
@@ -192,7 +197,13 @@ public final class Coordinator {
         if interface.settings.behavior.showsTansuIcon {
             items.append(NotchCapacity.Item(id: IconID(bundleID: TansuInfo.bundleIdentifier, key: "main"), width: 30))
         }
-        interface.capacity = NotchCapacity.evaluate(room: room, items: items)
+        let capacity = NotchCapacity.evaluate(room: room, items: items)
+        interface.capacity = capacity
+        // Automatic only in the ordinary menu bar, never while every icon shows or Focus is on.
+        if interface.settings.behavior.movesOverflowAutomatically, interface.settings.hasCompletedWelcome, mode == .normal,
+           !capacity.fits {
+            interface.moveOverflowIntoDrawer()
+        }
     }
 
     // MARK: Making the menu bar match
@@ -259,6 +270,7 @@ public final class Coordinator {
         statusItems.hoverDelay = behavior.opensOnHover ? behavior.hoverDelay : nil
         (engine as? TahoeEngine)?.rehideDelay = behavior.rehideDelay
         (engine as? GoldenGateEngine)?.rehideDelay = behavior.rehideDelay
+        reveal.configure(behavior)
     }
 
     private func registerShortcuts() {
@@ -269,7 +281,9 @@ public final class Coordinator {
             case .search: "search"
             case .allDrawer: "allDrawer"
             case .focus: "focus"
+            case .showEverything: "showEverything"
             case .drawer(let id): id.uuidString
+            case .icon(let id): "icon:\(id.description)"
             }
         })
     }
@@ -279,7 +293,9 @@ public final class Coordinator {
         case .search: openSearch()
         case .allDrawer: openDrawer(.all)
         case .focus: toggleFocus()
+        case .showEverything: toggleReveal()
         case .drawer(let id): openDrawer(.drawer(id))
+        case .icon(let id): open(id, from: drawerTarget(of: id))
         }
     }
 
@@ -315,7 +331,7 @@ public final class Coordinator {
             panels.close()
             return
         }
-        guard let anchor = statusItems.anchor(for: target) else { return }
+        guard let anchor = statusItems.anchor(for: target) ?? (target == .all ? statusItems.fallbackAnchor() : nil) else { return }
         let view = DrawerView(model: interface, target: target, onOpen: { [weak self] id in
             self?.open(id, from: target)
         }, onClose: { [weak self] in self?.panels.close() })
@@ -331,11 +347,7 @@ public final class Coordinator {
         }
         let view = SearchView(model: interface, initialQuery: query, onOpen: { [weak self] id in
             guard let self else { return }
-            let target: StatusItemsController.Target? = interface.row(id).flatMap { row in
-                if case .drawer(let drawer) = interface.placement(of: row) { return .drawer(drawer) }
-                return interface.placement(of: row) == .hidden ? .all : nil
-            }
-            open(id, from: target)
+            open(id, from: drawerTarget(of: id))
         }, onClose: { [weak self] in self?.panels.close() })
         panels.showCentered(view, width: 560)
     }
@@ -370,6 +382,52 @@ public final class Coordinator {
         interface.isFocusOn = false
         syncStatusItems()
         Task { await applyNow() }
+    }
+
+    /// The drawer an icon opens from: its own, the All drawer for a hidden icon, none in the menu bar.
+    private func drawerTarget(of id: IconID) -> StatusItemsController.Target? {
+        guard let row = interface.row(id) else { return nil }
+        switch interface.placement(of: row) {
+        case .drawer(let drawer): return .drawer(drawer)
+        case .hidden: return .all
+        case .menuBar: return nil
+        }
+    }
+
+    // MARK: Show every icon from the menu bar
+
+    private func wireReveal() {
+        reveal.onReveal = { [weak self] in self?.revealEveryIcon() }
+        reveal.onToggle = { [weak self] in self?.toggleReveal() }
+        reveal.onHideAgain = { [weak self] in
+            guard let self, mode == .showEverything else { return }
+            toggleShowEverything()
+        }
+    }
+
+    /// Shows every icon where the person chose, unless they already show. Focus keeps the menu bar quiet.
+    private func revealEveryIcon() {
+        guard mode != .focus else { return }
+        switch interface.settings.behavior.revealPlace {
+        case .menuBar:
+            if mode != .showEverything { toggleShowEverything() }
+        case .allDrawer:
+            if !(panels.isOpen && panels.openTarget == .all) { openDrawer(.all) }
+        }
+    }
+
+    /// Shows every icon, or hides them again.
+    private func toggleReveal() {
+        guard mode != .focus else { return }
+        switch interface.settings.behavior.revealPlace {
+        case .menuBar: toggleShowEverything()
+        case .allDrawer: openDrawer(.all)
+        }
+    }
+
+    /// Everything on the menu bar that is not empty room, in AppKit coordinates.
+    private func occupiedFrames() -> [CGRect] {
+        snapshot.icons.filter(\.isOnScreen).map { ScreenCoordinates.appKitRect(fromWindowServer: $0.frame) } + statusItems.itemFrames
     }
 
     // MARK: Windows
@@ -440,6 +498,18 @@ public final class Coordinator {
         return await applyNow()
     }
 
+    /// A settings file replaces the current setup; the menu bar follows at once.
+    private func importSettings(_ imported: TansuSettings) {
+        var settings = imported
+        settings.hasCompletedWelcome = true
+        mode = .normal
+        interface.isFocusOn = false
+        interface.isShowingEverything = false
+        interface.update { $0 = settings }
+        syncChrome()
+        scheduleApply(after: .milliseconds(50))
+    }
+
     private func resetLayout() {
         store.reset()
         mode = .normal
@@ -490,6 +560,25 @@ public final class Coordinator {
         }
         actions.refreshMemory = { [weak self] in self?.interface.memoryBytes = MemoryUse.footprintBytes() }
         actions.quit = { NSApp.terminate(nil) }
+        actions.exportSettings = { [weak self] in
+            guard let self else { return }
+            SettingsFile.export(interface.settings)
+        }
+        actions.importSettings = { [weak self] in
+            guard let settings = SettingsFile.chooseAndRead() else { return }
+            self?.importSettings(settings)
+        }
+        actions.showWelcomeAgain = { [weak self] in
+            self?.windows.closeAll()
+            self?.showWelcome(step: .hello)
+        }
+        actions.copyDiagnostics = { [weak self] in
+            guard let self else { return }
+            let pasteboard = NSPasteboard.general
+            pasteboard.clearContents()
+            pasteboard.setString(Diagnostics.report(interface: interface, engine: engine, snapshot: snapshot), forType: .string)
+            toast.show(Strings.diagnosticsCopied, near: nil)
+        }
         interface.actions = actions
     }
 }

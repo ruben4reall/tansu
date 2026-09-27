@@ -245,7 +245,7 @@ public final class TahoeEngine: MenuBarEngine {
                 await pause(.milliseconds(220))
                 if let frame = divider.frame, let again = await scan().icon(icon.id), let id = again.windowID {
                     let window = windows.statusWindows().first { Self.sameWindow($0.frame, frame) }?.id
-                    try? await mover.move(windowID: id, ownerPID: windowOwners[id] ?? again.pid, to: .leftOf(frame, windowID: window))
+                    _ = try? await mover.move(windowID: id, ownerPID: windowOwners[id] ?? again.pid, to: .leftOf(frame, windowID: window))
                 }
             }
         }

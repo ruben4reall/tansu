@@ -71,6 +71,10 @@ public struct InterfaceActions {
     public var showInFinder: (IconID) -> Void = { _ in }
     public var refreshMemory: () -> Void = {}
     public var quit: () -> Void = {}
+    public var exportSettings: () -> Void = {}
+    public var importSettings: () -> Void = {}
+    public var showWelcomeAgain: () -> Void = {}
+    public var copyDiagnostics: () -> Void = {}
 
     public init() {}
 }
@@ -107,10 +111,13 @@ public final class InterfaceModel {
     public var isInApplications = true
     public var appVersion = "1.0.0"
     public var settingsPane: SettingsPane = .layout
-    /// Shortcuts macOS refused because another app holds them: "search", "allDrawer", "focus", or a drawer's id.
+    /// Shortcuts macOS refused because another app holds them: "search", "allDrawer", "focus", "showEverything", a
+    /// drawer's id, or "icon:" and an icon's description.
     public var refusedShortcuts: Set<String> = []
     /// The drawer Settings shows in the Drawers pane.
     public var selectedDrawer: UUID?
+    /// An icon about to get a shortcut: the Shortcuts pane shows its recorder, waiting for the keys.
+    public var pendingIconShortcut: IconID?
     public var actions = InterfaceActions()
 
     public init(settings: TansuSettings = .defaults) {

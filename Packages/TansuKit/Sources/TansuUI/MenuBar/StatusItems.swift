@@ -64,6 +64,24 @@ public final class StatusItemsController {
         return (frame, ScreenCoordinates.windowServerRect(fromAppKit: frame))
     }
 
+    /// The frames of Tansu's own items on screen, in AppKit coordinates.
+    public var itemFrames: [CGRect] {
+        ([main].compactMap { $0 } + Array(drawerItems.values)).compactMap { item in
+            guard item.isVisible, let frame = item.button?.window?.frame, frame.width > 0 else { return nil }
+            return frame
+        }
+    }
+
+    /// Where to hang the All drawer when Tansu's icon is not in the menu bar: under the leftmost drawer.
+    public func fallbackAnchor() -> (appKit: CGRect, windowServer: CGRect)? {
+        let frames = drawerItems.values.compactMap { item -> CGRect? in
+            guard item.isVisible, let frame = item.button?.window?.frame, frame.width > 0 else { return nil }
+            return frame
+        }
+        guard let frame = frames.min(by: { $0.minX < $1.minX }) else { return nil }
+        return (frame, ScreenCoordinates.windowServerRect(fromAppKit: frame))
+    }
+
     /// Removes every item (on quit), keeping their places for the next launch.
     public func removeAll() {
         for item in drawerItems.values { NSStatusBar.system.removeStatusItem(item) }

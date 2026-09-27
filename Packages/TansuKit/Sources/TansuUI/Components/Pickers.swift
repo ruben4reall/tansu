@@ -7,13 +7,16 @@ import TansuSystem
 public struct ShortcutRecorder: View {
     @Binding var shortcut: Shortcut?
     var problem: String?
+    /// Starts listening for keys as soon as it shows (a shortcut just asked for).
+    var startsRecording = false
     @State private var isRecording = false
     @State private var hint: String?
     @State private var monitor: Any?
 
-    public init(shortcut: Binding<Shortcut?>, problem: String? = nil) {
+    public init(shortcut: Binding<Shortcut?>, problem: String? = nil, startsRecording: Bool = false) {
         _shortcut = shortcut
         self.problem = problem
+        self.startsRecording = startsRecording
     }
 
     public var body: some View {
@@ -36,6 +39,7 @@ public struct ShortcutRecorder: View {
                 Text(verbatim: message).font(.system(size: 11)).foregroundStyle(Theme.warning)
             }
         }
+        .onAppear { if startsRecording, shortcut == nil { start() } }
         .onDisappear { stop() }
     }
 
@@ -86,7 +90,7 @@ public struct MarkPicker: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Picker("", selection: $tab) {
+            Picker(Strings.mark, selection: $tab) {
                 Text(verbatim: Strings.icon).tag(Tab.icon)
                 Text(verbatim: Strings.emoji).tag(Tab.emoji)
                 Text(verbatim: Strings.text).tag(Tab.text)
@@ -133,11 +137,12 @@ public struct MarkPicker: View {
                             .textCase(.uppercase)
                         LazyVGrid(columns: Array(repeating: GridItem(.fixed(32), spacing: 4), count: 11), spacing: 4) {
                             ForEach(section.symbols, id: \.self) { name in
-                                choice(isSelected: mark == .symbol(name)) {
+                                choice(isSelected: mark == .symbol(name), label: name.replacingOccurrences(of: ".", with: " ")) {
+                                    mark = .symbol(name)
+                                } content: {
                                     Image(systemName: name).font(.system(size: 14, weight: .medium))
                                 }
                                 .help(name)
-                                .onTapGesture { mark = .symbol(name) }
                             }
                         }
                     }
@@ -154,14 +159,18 @@ public struct MarkPicker: View {
         VStack(alignment: .leading, spacing: 8) {
             LazyVGrid(columns: Array(repeating: GridItem(.fixed(30), spacing: 4), count: 12), spacing: 4) {
                 ForEach(MarkLibrary.emoji, id: \.self) { emoji in
-                    choice(isSelected: mark == .emoji(emoji)) { Text(verbatim: emoji).font(.system(size: 18)) }
-                        .onTapGesture { mark = .emoji(emoji) }
+                    choice(isSelected: mark == .emoji(emoji), label: emoji) {
+                        mark = .emoji(emoji)
+                    } content: {
+                        Text(verbatim: emoji).font(.system(size: 18))
+                    }
                 }
             }
             HStack(spacing: 8) {
                 TextField("", text: $custom)
                     .textFieldStyle(.roundedBorder)
                     .frame(width: 44)
+                    .accessibilityLabel(Text(verbatim: Strings.emoji))
                     .onChange(of: custom) { _, value in
                         guard let last = value.last else { return }
                         let candidate = DrawerMark.emoji(String(last))
@@ -176,11 +185,18 @@ public struct MarkPicker: View {
         }
     }
 
-    private func choice<Content: View>(isSelected: Bool, @ViewBuilder content: () -> Content) -> some View {
-        content()
-            .frame(width: 30, height: 30)
-            .background(RoundedRectangle(cornerRadius: 7, style: .continuous).fill(isSelected ? Theme.selection : Color.white.opacity(0.04)))
-            .overlay(RoundedRectangle(cornerRadius: 7, style: .continuous).strokeBorder(isSelected ? Theme.accent : .clear, lineWidth: 1.5))
-            .contentShape(Rectangle())
+    /// One choice of the grid: a real button, so the keyboard and VoiceOver reach it too.
+    private func choice<Content: View>(isSelected: Bool, label: String, action: @escaping () -> Void,
+                                       @ViewBuilder content: () -> Content) -> some View {
+        Button(action: action) {
+            content()
+                .frame(width: 30, height: 30)
+                .background(RoundedRectangle(cornerRadius: 7, style: .continuous).fill(isSelected ? Theme.selection : Color.white.opacity(0.04)))
+                .overlay(RoundedRectangle(cornerRadius: 7, style: .continuous).strokeBorder(isSelected ? Theme.accent : .clear, lineWidth: 1.5))
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text(verbatim: label))
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }
