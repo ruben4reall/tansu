@@ -4,7 +4,7 @@ import TansuCore
 
 /// Moves one icon on macOS 26 and checks that it landed (spec 4.3, Arranging).
 ///
-/// A move waits until the person pauses (no button held, no modifier, the pointer still for 50 ms) so it never
+/// A move waits until the person pauses (no button held, no modifier, the pointer still for 0.15 s) so it never
 /// fights them, then posts one Command-drag and reads the window list until the icon settles. A move that did not
 /// land is tried again through the next posting route; the route that worked is remembered.
 @MainActor
@@ -37,6 +37,8 @@ public final class ItemMover {
 
     /// Longest wait for the person to pause.
     static let patience: Duration = .seconds(2)
+    /// How long the pointer must rest before a move.
+    static let stillness: TimeInterval = 0.15
     /// How long a move may take to show in the window list.
     static let settleChecks = 10
     static let settleInterval: Duration = .milliseconds(40)
@@ -123,7 +125,7 @@ public final class ItemMover {
 
     func waitForPause() async throws {
         let deadline = ContinuousClock.now + Self.patience
-        while activity.isMouseButtonDown || activity.areModifiersDown || activity.secondsSincePointerMoved < 0.05 {
+        while activity.isMouseButtonDown || activity.areModifiersDown || activity.secondsSincePointerMoved < Self.stillness {
             if ContinuousClock.now > deadline { throw EngineError.personIsBusy }
             await pause(.milliseconds(25))
         }

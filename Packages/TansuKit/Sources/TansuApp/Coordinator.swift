@@ -37,6 +37,7 @@ public final class Coordinator {
     private var isApplyingNow = false
     private var needsAnotherApply = false
     private var welcome: WelcomeModel?
+    private var backdrop: NSWindow?
 
     public init(options: LaunchOptions, updater: UpdateChecking?) {
         self.options = options
@@ -59,6 +60,7 @@ public final class Coordinator {
     // MARK: Launch
 
     public func start() async {
+        if options.demo, let path = options.backdrop { backdrop = Backdrop.show(imageAt: path) }
         NSApp.mainMenu = MainMenu.make { [weak self] in self?.openSettings(nil) }
         wireActions()
         wireMenuBar()
