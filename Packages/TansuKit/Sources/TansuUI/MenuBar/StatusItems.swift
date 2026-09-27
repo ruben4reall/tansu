@@ -45,9 +45,12 @@ public final class StatusItemsController {
             NSStatusBar.system.removeStatusItem(main)
             self.main = nil
         }
+        // macOS stores each item's place as its distance from the right end of the menu bar, and rewrites Tansu's own
+        // after the first launch: new drawers start just left of wherever Tansu's icon is now.
+        let base = UserDefaults.standard.double(forKey: Self.positionKey(Self.mainAutosaveName))
         for (offset, drawer) in drawers.reversed().enumerated() {
             let item = drawerItems[drawer.id]
-                ?? makeItem(autosaveName: Self.autosaveName(for: drawer.id), position: Double(offset + 1), target: .drawer(drawer.id))
+                ?? makeItem(autosaveName: Self.autosaveName(for: drawer.id), position: base + Double(offset + 1), target: .drawer(drawer.id))
             drawerItems[drawer.id] = item
             item.isVisible = !isFocusOn
             if let button = item.button { StatusMark.apply(drawer, count: counts[drawer.id] ?? 0, to: button) }
@@ -90,9 +93,11 @@ public final class StatusItemsController {
         main = nil
     }
 
+    static func positionKey(_ autosaveName: String) -> String { "NSStatusItem Preferred Position \(autosaveName)" }
+
     private func makeItem(autosaveName: String, position: Double, target: Target) -> NSStatusItem {
         let defaults = UserDefaults.standard
-        let key = "NSStatusItem Preferred Position \(autosaveName)"
+        let key = Self.positionKey(autosaveName)
         // The first time only: macOS keeps the place after that, including where the person drags the item.
         if defaults.object(forKey: key) == nil { defaults.set(position, forKey: key) }
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)

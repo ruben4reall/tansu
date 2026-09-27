@@ -89,6 +89,7 @@ public final class Coordinator {
         interface.isInApplications = GoldenGateEngine.runsFromApplications()
         interface.appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0.0"
         interface.loginItemStatus = loginItem.status
+        interface.iconSpacing = IconSpacing.current()
         interface.automaticUpdates = updater?.automaticallyChecksForUpdates ?? false
         interface.canCheckForUpdates = updater?.canCheckForUpdates ?? false
         applyBehavior()
@@ -571,6 +572,13 @@ public final class Coordinator {
         actions.showWelcomeAgain = { [weak self] in
             self?.windows.closeAll()
             self?.showWelcome(step: .hello)
+        }
+        actions.setIconSpacing = { [weak self] spacing in
+            guard let self, spacing != interface.iconSpacing else { return }
+            // Demo mode never writes outside its own settings.
+            if !options.demo { spacing.apply() }
+            interface.iconSpacing = spacing
+            interface.iconSpacingChanged = true
         }
         actions.copyDiagnostics = { [weak self] in
             guard let self else { return }

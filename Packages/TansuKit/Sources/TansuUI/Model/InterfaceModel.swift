@@ -75,6 +75,7 @@ public struct InterfaceActions {
     public var importSettings: () -> Void = {}
     public var showWelcomeAgain: () -> Void = {}
     public var copyDiagnostics: () -> Void = {}
+    public var setIconSpacing: (IconSpacing) -> Void = { _ in }
 
     public init() {}
 }
@@ -118,6 +119,9 @@ public final class InterfaceModel {
     public var selectedDrawer: UUID?
     /// An icon about to get a shortcut: the Shortcuts pane shows its recorder, waiting for the keys.
     public var pendingIconShortcut: IconID?
+    /// The room macOS leaves between icons, and whether it changed since the last login.
+    public var iconSpacing: IconSpacing = .standard
+    public var iconSpacingChanged = false
     public var actions = InterfaceActions()
 
     public init(settings: TansuSettings = .defaults) {

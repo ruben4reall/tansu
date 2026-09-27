@@ -22,6 +22,14 @@ extension Strings {
     public static let moveOverflowAutomatically = String(localized: "Move icons that stop fitting into a drawer automatically", bundle: .module)
     public static let moveOverflowAutomaticallyNote = String(localized: "They join Other as soon as the room runs out.", bundle: .module)
 
+    public static let iconSpacingRow = String(localized: "Space between icons", bundle: .module)
+    public static let iconSpacingNote = String(localized: "For every app on this Mac. macOS uses it as apps open, and on every icon once you log out and back in.", bundle: .module)
+    public static let iconSpacingPending = String(localized: "Log out and back in to see it on every icon.", bundle: .module)
+    public static let spacingStandard = String(localized: "Standard", bundle: .module)
+    public static let spacingSnug = String(localized: "Snug", bundle: .module)
+    public static let spacingCompact = String(localized: "Compact", bundle: .module)
+    public static let spacingTight = String(localized: "Tight", bundle: .module)
+
     // MARK: Shortcuts
 
     public static let showEveryIconShortcut = String(localized: "Show every icon", bundle: .module)

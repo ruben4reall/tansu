@@ -159,6 +159,20 @@ struct RoomGauge: View {
                     }
                 }
                 Divider().opacity(0.4)
+                if model.engineKind != .goldenGate {
+                    SettingRow(title: Strings.iconSpacingRow,
+                               note: model.iconSpacingChanged ? Strings.iconSpacingPending : Strings.iconSpacingNote) {
+                        Picker(Strings.iconSpacingRow, selection: Binding(get: { model.iconSpacing }, set: { model.actions.setIconSpacing($0) })) {
+                            Text(verbatim: Strings.spacingStandard).tag(IconSpacing.standard)
+                            Text(verbatim: Strings.spacingSnug).tag(IconSpacing.snug)
+                            Text(verbatim: Strings.spacingCompact).tag(IconSpacing.compact)
+                            Text(verbatim: Strings.spacingTight).tag(IconSpacing.tight)
+                        }
+                        .pickerStyle(.segmented)
+                        .labelsHidden()
+                        .fixedSize()
+                    }
+                }
                 SettingRow(title: Strings.moveOverflowAutomatically, note: Strings.moveOverflowAutomaticallyNote) {
                     Toggle(Strings.moveOverflowAutomatically, isOn: Binding(get: { model.settings.behavior.movesOverflowAutomatically }, set: { value in
                         model.update { $0.behavior.movesOverflowAutomatically = value }
