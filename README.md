@@ -101,7 +101,12 @@ icons (Standard, Snug, Compact or Tight) lets more of them fit.
 
 A tint for the menu bar (a color or a gradient), a hairline and a soft shadow, previewed live, in three shapes: edge to
 edge, a floating bar, or split in two, one piece behind the app menus and one behind the icons, on each side of the
-notch. Dark Mode can have a look of its own.
+notch. Dark Mode can have a look of its own. The tint shows while the menu bar has no background of its own (System
+Settings, Menu Bar).
+
+<p align="center">
+  <img src="docs/images/appearance.webp" alt="Settings, Appearance: a live preview of a floating menu bar with a honey gradient, and the shape, tint, hairline and shadow controls" width="640">
+</p>
 
 ### Profiles and triggers
 
