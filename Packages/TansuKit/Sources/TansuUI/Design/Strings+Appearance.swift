@@ -19,7 +19,7 @@ extension Strings {
 
     // MARK: Dark Mode
 
-    public static let differentLookInDarkMode = String(localized: "Different Look in Dark Mode", bundle: .module)
+    public static let differentLookInDarkMode = String(localized: "Different look in Dark Mode", bundle: .module)
     public static let look = String(localized: "Look", bundle: .module)
     public static let lightMode = String(localized: "Light", bundle: .module)
     public static let darkMode = String(localized: "Dark", bundle: .module)

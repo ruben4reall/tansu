@@ -21,6 +21,8 @@ struct ProfilesPane: View {
         VStack(alignment: .leading, spacing: 18) {
             if model.settings.profiles.isEmpty {
                 VStack(alignment: .leading, spacing: 12) {
+                    Text(verbatim: Strings.profilesSubtitle).font(.system(size: 13)).foregroundStyle(Theme.secondaryText)
+                        .fixedSize(horizontal: false, vertical: true)
                     Text(verbatim: Strings.noProfilesYet).font(.system(size: 13)).foregroundStyle(Theme.secondaryText)
                         .fixedSize(horizontal: false, vertical: true)
                     Button(Strings.saveCurrentAsProfile) { startNaming(.new) }.buttonStyle(PillButtonStyle(.primary))

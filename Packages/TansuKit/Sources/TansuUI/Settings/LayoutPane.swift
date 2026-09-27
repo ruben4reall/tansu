@@ -104,12 +104,20 @@ struct MenuBarPreview: View {
                     Image(nsImage: TansuGlyph.image(.closed)).renderingMode(.template).foregroundStyle(Theme.text)
                 }
                 ForEach(model.menuBarRows.filter(\.isMovable).reversed()) { row in
-                    Image(nsImage: row.appIcon).resizable().interpolation(.high).frame(width: 18, height: 18)
-                        .help(row.name)
+                    Group {
+                        if row.kind == .system {
+                            Image(systemName: SystemIcons.symbol(for: row.id)).font(.system(size: 13, weight: .medium)).foregroundStyle(Theme.text)
+                        } else {
+                            Image(nsImage: row.appIcon).resizable().interpolation(.high)
+                        }
+                    }
+                    .frame(width: 18, height: 18)
+                    .help(row.name)
                 }
                 ForEach(model.menuBarRows.filter { !$0.isMovable }.reversed()) { row in
-                    Image(nsImage: row.appIcon).resizable().interpolation(.high).frame(width: 18, height: 18)
-                        .opacity(0.7)
+                    Image(systemName: SystemIcons.symbol(for: row.id)).font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(Theme.text)
+                        .frame(width: 18, height: 18)
                         .help(row.name)
                 }
             }

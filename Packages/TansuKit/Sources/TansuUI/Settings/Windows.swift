@@ -34,7 +34,7 @@ public final class WindowPresenter: NSObject, NSWindowDelegate {
             present(settings)
             return
         }
-        let window = makeWindow(content: SettingsView(model: model), title: Strings.settingsWindowTitle, size: CGSize(width: 900, height: 660), resizable: true)
+        let window = makeWindow(content: SettingsView(model: model), title: Strings.settingsWindowTitle, size: CGSize(width: 960, height: 700), resizable: true)
         window.setFrameAutosaveName("TansuSettings")
         settings = window
         present(window)

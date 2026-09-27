@@ -5,7 +5,7 @@ extension Strings {
     // MARK: Behavior, Tansu's own icons
 
     public static let keepItemsAtRightEnd = String(localized: "Keep Tansu's icons next to Control Center", bundle: .module)
-    public static let keepItemsAtRightEndNote = String(localized: "Its icon, then the drawers in the order of Drawers. Turn it off to place them yourself with a Command-drag.", bundle: .module)
+    public static let keepItemsAtRightEndNote = String(localized: "Tansu's icon, then your drawers in the order set in Drawers. Turn it off to place them yourself with a Command-drag.", bundle: .module)
 
     // MARK: Behavior, Show every icon
 
