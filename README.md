@@ -46,6 +46,11 @@ in one click, and asks for one permission.
 - **Beside the notch.** Settings draws your menu bar with the notch, measures the room left, says when icons no longer
   fit, and moves the overflow into a drawer in one click.
 - **Appearance.** A tint for the menu bar, a color or a gradient, a hairline and a soft shadow.
+- **Profiles.** Save the whole setup of your menu bar (the drawers, where each icon goes, the appearance) under a
+  name, and switch from Tansu's menu or with a shortcut: one for work, one for a talk.
+- **Triggers.** While an app is open or in front, on battery or below a battery level, with an external display, during
+  the hours you choose, or while the camera or microphone is on: switch to a profile, show a drawer or one icon, or
+  turn on Focus. When the condition ends, the menu bar goes back.
 - **Nothing lost.** Quit Tansu, or let it crash, and every icon is back in the menu bar.
 
 <p align="center">
