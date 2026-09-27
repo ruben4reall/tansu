@@ -115,7 +115,8 @@ extension Strings {
     }
 
     public static let app = String(localized: "App", bundle: .module)
-    public static let chooseApp = String(localized: "Choose…", bundle: .module)
+    /// What a picker shows until something is chosen.
+    public static let chooseOne = String(localized: "Choose…", bundle: .module)
     public static let openNow = String(localized: "Open Now", bundle: .module)
     public static let otherApp = String(localized: "Other App…", bundle: .module)
     public static let choose = String(localized: "Choose", bundle: .module)

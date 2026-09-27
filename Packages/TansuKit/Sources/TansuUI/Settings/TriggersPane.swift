@@ -207,6 +207,7 @@ struct TriggerEditor: View {
             } else {
                 SettingRow(title: Strings.profile, note: Strings.profileEndsNote) {
                     Picker("", selection: $draft.profile) {
+                        if draft.profile == nil { Text(verbatim: Strings.chooseOne).tag(UUID?.none) }
                         ForEach(model.settings.profiles) { profile in
                             Text(verbatim: Strings.name(of: profile)).tag(Optional(profile.id))
                         }
@@ -221,6 +222,7 @@ struct TriggerEditor: View {
             } else {
                 SettingRow(title: Strings.drawer) {
                     Picker("", selection: $draft.drawer) {
+                        if draft.drawer == nil { Text(verbatim: Strings.chooseOne).tag(UUID?.none) }
                         ForEach(model.settings.layout.drawers) { drawer in
                             Text(verbatim: drawer.name).tag(Optional(drawer.id))
                         }
@@ -236,6 +238,7 @@ struct TriggerEditor: View {
             } else {
                 SettingRow(title: Strings.icon) {
                     Picker("", selection: $draft.icon) {
+                        if draft.icon == nil { Text(verbatim: Strings.chooseOne).tag(IconID?.none) }
                         ForEach(choices) { choice in
                             Text(verbatim: choice.name).tag(Optional(choice.id))
                         }

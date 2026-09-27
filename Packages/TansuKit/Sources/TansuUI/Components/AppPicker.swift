@@ -23,7 +23,7 @@ struct AppPicker: View {
             if let bundleID {
                 Label { Text(verbatim: AppLookup.name(of: bundleID)) } icon: { Image(nsImage: AppLookup.icon(of: bundleID)) }
             } else {
-                Text(verbatim: Strings.chooseApp)
+                Text(verbatim: Strings.chooseOne)
             }
         }
         .fixedSize()
