@@ -1,0 +1,363 @@
+/* The menu bar drawn in the page: the hero's close-up of the top-right corner of a Mac, and the small drawings of
+   How it works. Every glyph is the page's own (the sprite in index.html); the only picture is the drawer panel, a
+   real capture of Tansu. The drawers show as filled template glyphs (d-*), the icons of other apps as outlines (g-*).
+   Everything is measured in points of the Mac's screen: --pt is one point at the scene's
+   current width, so the drawing scales as one piece.
+
+   States of the scene (data-phase, set by js/hero.js):
+     crowded   the row of icons runs into the notch
+     sorting   each icon slides into its drawer; the three drawer icons appear
+     open      the cloud drawer is open under its icon (the final state, also the state without script or motion)
+     sorted    the drawer has closed again
+   Without data-phase the scene shows the final state; boot.js marks pages that will animate (data-motion="full"),
+   and those start crowded, so the final state never flashes first. */
+
+.scene-wrap { position: relative; margin-top: clamp(24px, 4vh, 44px); }
+
+.scene {
+  --view: 680;     /* points of the screen across the scene */
+  --scene-h: 230;  /* the bar, the drawer capture (125 points) under it, and room for its shadow */
+  --pt: calc(100cqw / var(--view));
+  position: relative;
+  aspect-ratio: var(--view) / var(--scene-h);
+  container-type: inline-size;
+  overflow: hidden;
+  /* A close-up: the screen runs on past the left and bottom edges. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 14%), linear-gradient(0deg, transparent 0, #000 10%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent 0, #000 14%), linear-gradient(0deg, transparent 0, #000 10%);
+  mask-composite: intersect;
+}
+@media (max-width: 734px) {
+  .scene { --view: 360; }
+}
+
+/* The lid: a black bezel along the top and the right, and the aluminium edge catching the light. */
+.lid {
+  position: absolute;
+  inset: 0;
+  border-top-right-radius: calc(var(--pt) * 30);
+  background: #060606;
+  box-shadow: inset -1px 1px 0 rgb(255 255 255 / 0.16), inset -2px 2px 0 rgb(0 0 0 / 0.6);
+}
+
+/* The screen, with a warm desktop of the page's own: never an Apple wallpaper. */
+.display {
+  position: absolute;
+  top: calc(var(--pt) * 16);
+  right: calc(var(--pt) * 16);
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  border-top-right-radius: calc(var(--pt) * 12);
+  background:
+    radial-gradient(55% 80% at 80% 8%, rgb(255 185 56 / 0.50), rgb(255 185 56 / 0) 70%),
+    radial-gradient(60% 90% at 14% 100%, rgb(255 138 31 / 0.40), rgb(255 138 31 / 0) 70%),
+    radial-gradient(70% 55% at 58% 105%, rgb(143 86 0 / 0.55), rgb(143 86 0 / 0) 70%),
+    linear-gradient(160deg, #3B2415 0%, #1F140D 48%, #140D09 100%);
+}
+
+.bar {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: calc(var(--pt) * 37);
+  background: rgb(20 15 11 / 0.46);
+  -webkit-backdrop-filter: saturate(150%) blur(18px);
+  backdrop-filter: saturate(150%) blur(18px);
+  box-shadow: inset 0 -1px 0 rgb(255 255 255 / 0.05);
+  color: rgb(245 241 234 / 0.95);
+}
+
+/* One slot is 30 points wide; --r is the distance from the slot's right edge to the screen's right edge. */
+.item {
+  position: absolute;
+  top: 50%;
+  right: calc(var(--pt) * var(--r));
+  width: calc(var(--pt) * 30);
+  height: calc(var(--pt) * 22);
+  margin-top: calc(var(--pt) * -11);
+}
+.bar svg.item {
+  right: calc(var(--pt) * (var(--r) + 6.5));
+  width: calc(var(--pt) * 17);
+  height: calc(var(--pt) * 17);
+  margin-top: calc(var(--pt) * -8.5);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.i0 { --r: 172; --to: 232; --i: 0; }  /* cloud     to the cloud drawer */
+.i1 { --r: 202; --to: 172; --i: 1; }  /* chat      to messages */
+.i2 { --r: 232; --to: 202; --i: 2; }  /* lock      to security */
+.i3 { --r: 262; --to: 172; --i: 3; }  /* sparkle   to messages: an assistant you talk to */
+.i4 { --r: 292; --to: 172; --i: 4; }  /* envelope  to messages */
+.i5 { --r: 322; --to: 232; --i: 5; }  /* chart     to the cloud drawer */
+.i6 { --r: 352; --to: 202; --i: 6; }  /* key       to security */
+.i7 { --r: 382; --to: 232; --i: 7; }  /* box       to the cloud drawer */
+.i8 { --r: 412; --to: 202; --i: 8; }  /* terminal  to security */
+.i9 { --r: 442; --to: 232; --i: 9; }  /* note      to the cloud drawer, half behind the notch */
+.glyph { --dx: calc(var(--pt) * (var(--r) - var(--to))); }
+
+.d0 { --r: 172; --arrive: 0.66s; }
+.d1 { --r: 202; --arrive: 0.71s; }
+.d2 { --r: 232; --arrive: 0.62s; }
+.drawer {
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+.drawer svg { width: calc(var(--pt) * 17); height: calc(var(--pt) * 17); }
+/* The pressed look of an open drawer's icon. */
+.drawer::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--pt) * -2) calc(var(--pt) * 1);
+  z-index: -1;
+  border-radius: calc(var(--pt) * 6);
+  background: rgb(245 241 234 / 0.22);
+  opacity: 0;
+}
+
+.s-toggles { --r: 76; }
+.s-wifi { --r: 142; }
+.bar svg.s-battery { --r: 106; right: calc(var(--pt) * 113); width: calc(var(--pt) * 22); height: calc(var(--pt) * 22); margin-top: calc(var(--pt) * -11); }
+
+.clock {
+  position: absolute;
+  inset: 0 calc(var(--pt) * 14) 0 auto;
+  display: flex;
+  align-items: center;
+  font-size: calc(var(--pt) * 13);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* The notch: part of the bezel, hanging into the menu bar. Icons that run into it are lost behind it. */
+.notch {
+  position: absolute;
+  top: 0;
+  right: calc(var(--pt) * 457);
+  width: calc(var(--pt) * 210);
+  height: calc(var(--pt) * 37);
+  border-radius: 0 0 calc(var(--pt) * 11) calc(var(--pt) * 11);
+  background: #060606;
+}
+
+/* The drawer's panel, a capture of the app: centred under the cloud drawer and kept on the screen. */
+.drawer-shot {
+  --pw: min(280, var(--view) - 32);
+  --pl: clamp(8, var(--view) - 263 - var(--pw) / 2, var(--view) - 24 - var(--pw));
+  position: absolute;
+  top: calc(var(--pt) * 44);
+  left: calc(var(--pt) * var(--pl));
+  width: calc(var(--pt) * var(--pw));
+  max-width: none;
+  transform-origin: calc(var(--pt) * (var(--view) - 263 - var(--pl))) 0;
+  filter: blur(0) drop-shadow(0 calc(var(--pt) * 10) calc(var(--pt) * 18) rgb(0 0 0 / 0.42));
+}
+
+/* ----- The final state (default): every icon in a drawer, the cloud drawer open. ----- */
+
+.glyph { opacity: 0; transform: translateX(var(--dx)) scale(0.3); }
+.d2::before { opacity: 1; }
+
+/* ----- Crowded ----- */
+
+html[data-motion="full"] .scene:not([data-phase]) .glyph,
+.scene[data-phase="crowded"] .glyph { opacity: 1; transform: none; }
+
+html[data-motion="full"] .scene:not([data-phase]) .drawer,
+.scene[data-phase="crowded"] .drawer { opacity: 0; }
+
+html[data-motion="full"] .scene:not([data-phase]) .drawer::before,
+.scene:is([data-phase="crowded"], [data-phase="sorting"], [data-phase="sorted"]) .drawer::before { opacity: 0; }
+
+html[data-motion="full"] .scene:not([data-phase]) .drawer-shot,
+.scene:is([data-phase="crowded"], [data-phase="sorting"], [data-phase="sorted"]) .drawer-shot {
+  opacity: 0;
+  transform: translateY(calc(var(--pt) * -8)) scale(0.97);
+  filter: blur(calc(var(--pt) * 3)) drop-shadow(0 calc(var(--pt) * 10) calc(var(--pt) * 18) rgb(0 0 0 / 0.42));
+}
+
+/* ----- Sorting: every icon slides into its drawer, each drawer appears as its first icon arrives. ----- */
+
+.scene[data-phase="sorting"] .glyph { animation: tansu-fly 0.95s var(--tansu-ease-sort) calc(var(--i) * 45ms) both; }
+.scene[data-phase="sorting"] .drawer { animation: tansu-pop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1) var(--arrive) both; }
+@supports (animation-timing-function: linear(0, 1)) {
+  .scene[data-phase="sorting"] .drawer { animation-timing-function: var(--tansu-spring-drawer); }
+}
+
+/* Each icon glides to its drawer at nearly full size, then the drawer takes it in. */
+@keyframes tansu-fly {
+  0% { opacity: 1; transform: none; }
+  70% { opacity: 1; transform: translateX(calc(var(--dx) * 0.94)) scale(0.82); }
+  100% { opacity: 0; transform: translateX(var(--dx)) scale(0.3); }
+}
+
+@keyframes tansu-pop {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ----- Open and close: the drawer drops with the brand's spring, and closes quickly. ----- */
+
+.drawer-shot { transition: opacity 0.2s ease-in, transform 0.2s ease-in, filter 0.2s ease-in; }
+.drawer::before { transition: opacity 0.15s ease-out; }
+.scene[data-phase="open"] .drawer-shot {
+  transition: opacity 0.18s ease-out, transform var(--tansu-spring-drawer-duration) cubic-bezier(0.2, 0.9, 0.3, 1), filter 0.24s ease-out;
+}
+@supports (transition-timing-function: linear(0, 1)) {
+  .scene[data-phase="open"] .drawer-shot {
+    transition: opacity 0.18s ease-out, transform var(--tansu-spring-drawer-duration) var(--tansu-spring-drawer), filter 0.24s ease-out;
+  }
+}
+
+/* The pause button also freezes a sort in flight. */
+.scene[data-paused] .item { animation-play-state: paused; }
+
+/* ----- Back to the crowd: a slow cross-fade, never a movement backwards. ----- */
+
+.scene[data-reset] .drawer { transition: opacity 0.5s ease; }
+.scene[data-reset] .glyph { transition: opacity 0.6s ease 0.2s; }
+
+/* Under Reduce Transparency the bar is solid. */
+@media (prefers-reduced-transparency: reduce) {
+  .bar { background: #1B140F; -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
+/* ----- The pause button: any animation that loops can be stopped. ----- */
+
+.scene-toggle {
+  position: absolute;
+  right: calc(16px + 1.5%);
+  bottom: 16px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(245 241 234 / 0.14);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  color: var(--text);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.scene-toggle:hover { background: rgb(245 241 234 / 0.24); }
+.scene-toggle svg { width: 14px; height: 14px; fill: currentColor; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.scene-toggle .icon-play { display: none; }
+.scene-toggle[data-paused="true"] .icon-play { display: block; }
+.scene-toggle[data-paused="true"] .icon-pause { display: none; }
+
+/* ---------- How it works: three small drawings ---------- */
+
+.step-art {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: 0 0 0 1px var(--edge);
+}
+.step-art svg { fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+
+.mini-mark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: rgb(245 241 234 / 0.08);
+  color: var(--text);
+}
+.mini-mark > svg { width: 17px; height: 17px; }
+.mini-tile {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: rgb(245 241 234 / 0.09);
+  color: var(--text);
+}
+.mini-tile svg { width: 21px; height: 21px; }
+
+/* 1. The proposal */
+.mini-list { display: grid; gap: 8px; width: min(86%, 300px); }
+.mini-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px 8px 8px;
+  border-radius: 12px;
+  background: var(--card-2);
+  box-shadow: inset 0 0 0 1px var(--edge);
+}
+.mini-name { color: var(--text); font-size: 14px; font-weight: 500; white-space: nowrap; }
+.mini-glyphs { display: flex; gap: 6px; margin-left: auto; color: var(--text-2); }
+.mini-glyphs svg { width: 16px; height: 16px; }
+
+/* 2. Moving an icon between drawers */
+.art-adjust { grid-auto-flow: column; gap: 10px; justify-content: center; align-items: center; }
+.mini-drawer { padding: 10px 10px 12px; border-radius: 14px; background: var(--card-2); box-shadow: inset 0 0 0 1px var(--edge); }
+.mini-title { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; color: var(--text); font-size: 13px; font-weight: 600; }
+.mini-title .mini-mark { width: 22px; height: 22px; border-radius: 7px; }
+.mini-title .mini-mark > svg { width: 13px; height: 13px; }
+.mini-tiles { display: flex; gap: 8px; }
+.mini-slot { background: none; box-shadow: inset 0 0 0 1.5px rgb(255 185 56 / 0.55); }
+.mini-lifted {
+  transform: translateY(-22px) rotate(-8deg);
+  background: #3A332A;
+  box-shadow: 0 0 0 1.5px var(--accent), 0 14px 28px rgb(0 0 0 / 0.5);
+}
+
+/* 3. A drawer open under its icon */
+.art-open {
+  align-content: start;
+  justify-items: stretch;
+  background:
+    radial-gradient(70% 90% at 85% 0%, rgb(255 185 56 / 0.32), rgb(255 185 56 / 0) 65%),
+    radial-gradient(70% 80% at 10% 100%, rgb(255 138 31 / 0.26), rgb(255 138 31 / 0) 65%),
+    linear-gradient(160deg, #33200F 0%, #1A110B 60%, #140D09 100%);
+}
+.mini-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  height: 34px;
+  padding: 0 14px;
+  background: rgb(20 15 11 / 0.55);
+  color: var(--text);
+}
+.mini-bar .mini-mark { position: relative; width: 26px; height: 24px; border-radius: 6px; background: none; }
+.mini-bar .mini-mark > svg { width: 15px; height: 15px; }
+.mini-bar .mini-mark.is-open { background: rgb(245 241 234 / 0.22); }
+.mini-sys { width: 15px; height: 15px; margin-left: 6px; }
+.mini-clock { margin-left: 8px; font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; }
+/* The panel hangs from its drawer's icon, centred under it. */
+.mini-panel {
+  position: absolute;
+  top: calc(100% + 11px);
+  left: 50%;
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px 12px;
+  border-radius: 14px;
+  background: rgb(30 26 21 / 0.92);
+  box-shadow: inset 0 0 0 1px rgb(245 241 234 / 0.1), 0 16px 32px rgb(0 0 0 / 0.45);
+  font-family: var(--font);
+  transform: translateX(-50%);
+}
+.mini-app { display: grid; justify-items: center; gap: 6px; }
+.mini-label { color: var(--text); font-size: 11px; font-weight: 500; letter-spacing: 0; }

@@ -1,0 +1,128 @@
+/* Copied from brand/tokens/tokens.css by tools/sync-brand.mjs. Do not edit: change brand/tokens/tokens.json and run both scripts. */
+
+/* Tansu brand tokens.
+ * Generated from brand/tokens/tokens.json by brand/scripts/tokens/build.mjs:
+ * edit the JSON and run the script, never this file.
+ */
+
+:root {
+  /* Dark palette: the website and the dark appearance */
+  --tansu-night: #0C0B0A; /* Warm black: dark backgrounds */
+  --tansu-lacquer: #17150F; /* Raised dark surfaces: cards, panels, sidebars */
+  --tansu-rice: #F5F1EA; /* Text on dark */
+  --tansu-ash: #9D968B; /* Secondary text on dark */
+  --tansu-honey: #FFB938; /* The single accent on dark: a lamp inside a drawer */
+  --tansu-ember: #FF8A1F; /* The second stop of the glow; never text */
+
+  /* Light palette */
+  --tansu-paper: #FAF8F4; /* Light backgrounds */
+  --tansu-ink: #1C1A17; /* Text on light */
+  --tansu-graphite: #6E6A63; /* Secondary text on light */
+  --tansu-deep-honey: #8F5600; /* The accent on light: links and buttons */
+  --tansu-hairline: #DAD5CC; /* Separators and outlines on light; never text */
+
+  /* The lamp's glow, honey to ember: the icon, the website hero and key moments only, never for text */
+  --tansu-glow-1: #FFB938;
+  --tansu-glow-2: #FF8A1F;
+  --tansu-glow: linear-gradient(135deg, var(--tansu-glow-1) 0%, var(--tansu-glow-2) 100%);
+
+  /* Type: SF Pro through the system names, never shipped; Inter as the only webfont.
+     --tansu-<style> is a font shorthand (weight size/line family); set letter-spacing
+     with --tansu-<style>-tracking. */
+  --tansu-font-sans: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+  --tansu-weight-regular: 400;
+  --tansu-weight-medium: 500;
+  --tansu-weight-semibold: 600;
+  --tansu-weight-bold: 700;
+  --tansu-display-1-size: 64px;
+  --tansu-display-1-line: 68px;
+  --tansu-display-1-weight: 600;
+  --tansu-display-1-tracking: -0.009em;
+  --tansu-display-1: 600 64px/68px var(--tansu-font-sans);
+  --tansu-display-2-size: 56px;
+  --tansu-display-2-line: 60px;
+  --tansu-display-2-weight: 600;
+  --tansu-display-2-tracking: -0.005em;
+  --tansu-display-2: 600 56px/60px var(--tansu-font-sans);
+  --tansu-display-3-size: 48px;
+  --tansu-display-3-line: 52px;
+  --tansu-display-3-weight: 600;
+  --tansu-display-3-tracking: -0.003em;
+  --tansu-display-3: 600 48px/52px var(--tansu-font-sans);
+  --tansu-title-1-size: 32px;
+  --tansu-title-1-line: 36px;
+  --tansu-title-1-weight: 600;
+  --tansu-title-1-tracking: 0.004em;
+  --tansu-title-1: 600 32px/36px var(--tansu-font-sans);
+  --tansu-title-2-size: 28px;
+  --tansu-title-2-line: 32px;
+  --tansu-title-2-weight: 600;
+  --tansu-title-2-tracking: 0.007em;
+  --tansu-title-2: 600 28px/32px var(--tansu-font-sans);
+  --tansu-title-3-size: 22px;
+  --tansu-title-3-line: 28px;
+  --tansu-title-3-weight: 600;
+  --tansu-title-3-tracking: 0.01em;
+  --tansu-title-3: 600 22px/28px var(--tansu-font-sans);
+  --tansu-body-1-size: 17px;
+  --tansu-body-1-line: 25px;
+  --tansu-body-1-weight: 400;
+  --tansu-body-1-tracking: -0.022em;
+  --tansu-body-1: 400 17px/25px var(--tansu-font-sans);
+  --tansu-body-2-size: 15px;
+  --tansu-body-2-line: 22px;
+  --tansu-body-2-weight: 400;
+  --tansu-body-2-tracking: -0.018em;
+  --tansu-body-2: 400 15px/22px var(--tansu-font-sans);
+  --tansu-caption-size: 13px;
+  --tansu-caption-line: 18px;
+  --tansu-caption-weight: 400;
+  --tansu-caption-tracking: -0.012em;
+  --tansu-caption: 400 13px/18px var(--tansu-font-sans);
+
+  /* Radii */
+  --tansu-radius-s: 8px; /* Buttons, small controls */
+  --tansu-radius-m: 12px; /* Inputs, tiles in a drawer */
+  --tansu-radius-l: 20px; /* Cards, previews */
+  --tansu-radius-xl: 28px; /* Large panels, hero frames */
+
+  /* Spacing: 4-point scale, the key is the multiple of 4 */
+  --tansu-space-1: 4px;
+  --tansu-space-2: 8px;
+  --tansu-space-3: 12px;
+  --tansu-space-4: 16px;
+  --tansu-space-5: 20px;
+  --tansu-space-6: 24px;
+  --tansu-space-8: 32px;
+  --tansu-space-10: 40px;
+  --tansu-space-12: 48px;
+  --tansu-space-16: 64px;
+  --tansu-space-20: 80px;
+  --tansu-space-24: 96px;
+  --tansu-space-32: 128px;
+
+  /* Motion. The drawer spring: response 0.32, damping 0.86, settled in 0.45s. */
+  --tansu-spring-drawer: linear(0, 0.0215, 0.0758, 0.1502, 0.2355, 0.3248, 0.4131, 0.4972, 0.5751, 0.6455, 0.708, 0.7626, 0.8095, 0.8493, 0.8826, 0.9101, 0.9326, 0.9506, 0.965, 0.9762, 0.9849, 0.9914, 0.9962, 0.9997, 1.002, 1.0036, 1.0045, 1.0049, 1.005, 1.0049, 1.0046, 1.0042, 1.0038, 1.0033, 1.0029, 1.0025, 1.0021, 1.0017, 1.0014, 1.0012, 1);
+  --tansu-spring-drawer-duration: 0.45s;
+  --tansu-ease-sort: cubic-bezier(0.45, 0, 0.2, 1); /* Icons slide to their drawer in Smart Sort */
+  --tansu-ease-fade: cubic-bezier(0, 0, 0.58, 1); /* The fade that replaces every movement under Reduce Motion (ease out) */
+  --tansu-duration-fade: 0.16s; /* The Reduce Motion fade */
+
+  /* Roles, dark appearance (the default) */
+  --tansu-background: var(--tansu-night);
+  --tansu-surface: var(--tansu-lacquer);
+  --tansu-text: var(--tansu-rice);
+  --tansu-text-secondary: var(--tansu-ash);
+  --tansu-separator: #F5F1EA24; /* Rice at 14% opacity: quiet, and visible on Night and on Lacquer */
+  --tansu-accent: var(--tansu-honey);
+}
+
+/* Roles, light appearance: opt in with data-tansu-theme="light" on any element. */
+[data-tansu-theme="light"] {
+  --tansu-background: var(--tansu-paper);
+  --tansu-surface: #FFFFFF; /* White: raised surfaces on Paper */
+  --tansu-text: var(--tansu-ink);
+  --tansu-text-secondary: var(--tansu-graphite);
+  --tansu-separator: var(--tansu-hairline);
+  --tansu-accent: var(--tansu-deep-honey);
+}
