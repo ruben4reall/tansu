@@ -54,10 +54,11 @@ public final class Coordinator {
     public init(options: LaunchOptions, updater: UpdateChecking?) {
         self.options = options
         self.updater = updater
-        // Demo mode never reads or writes the person's settings.
+        // Demo mode never reads or writes the person's settings. A suite also searches the app's own domain, so the
+        // demo keeps its settings under a key of its own, which the person's settings never have.
         let defaults = options.demo ? (UserDefaults(suiteName: "ch.rubencatalao.tansu.demo") ?? .standard) : .standard
         if options.demo { defaults.removePersistentDomain(forName: "ch.rubencatalao.tansu.demo") }
-        store = SettingsStore(defaults: defaults)
+        store = SettingsStore(defaults: defaults, key: options.demo ? "demoSettings" : "settings")
         let loaded = store.load()
         if case .unreadable = loaded.outcome { Log.app.error("settings unreadable: using the defaults") }
         if case .newerVersion(let version) = loaded.outcome { Log.app.error("settings from a newer Tansu (schema \(version))") }

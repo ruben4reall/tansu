@@ -233,7 +233,7 @@ struct GeneralPane: View {
                     Toggle(Strings.checkAutomatically, isOn: Binding(get: { model.automaticUpdates }, set: { model.actions.setAutomaticUpdates($0) }))
                         .labelsHidden().toggleStyle(.switch)
                 }
-                SettingRow(title: Strings.checkForUpdates) {
+                SettingRow(title: Strings.version(model.appVersion)) {
                     Button(Strings.checkNow) { model.actions.checkForUpdates() }
                         .buttonStyle(PillButtonStyle(.secondary))
                         .disabled(!model.canCheckForUpdates)
@@ -303,6 +303,7 @@ struct AboutPane: View {
             Text(verbatim: Strings.notAffiliated).font(.system(size: 11)).foregroundStyle(Theme.tertiaryText)
         }
         .padding(18)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .card()
     }
 }

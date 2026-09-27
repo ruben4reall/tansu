@@ -32,7 +32,10 @@ struct AppearancePane: View {
                     .fixedSize()
                 }
             }
-            SettingsGroup(title: Strings.menuBarTint) {
+            SettingsGroup {
+                SettingRow(title: Strings.differentLookInDarkMode) {
+                    Toggle(Strings.differentLookInDarkMode, isOn: hasDarkLook).labelsHidden().toggleStyle(.switch)
+                }
                 if appearance.darkLook != nil {
                     SettingRow(title: Strings.look) {
                         Picker(Strings.look, selection: $editing) {
@@ -68,9 +71,6 @@ struct AppearancePane: View {
                             .frame(width: 220)
                             .accessibilityLabel(Text(verbatim: Strings.strength))
                     }
-                }
-                SettingRow(title: Strings.differentLookInDarkMode) {
-                    Toggle(Strings.differentLookInDarkMode, isOn: hasDarkLook).labelsHidden().toggleStyle(.switch)
                 }
                 SettingRow(title: Strings.hairlineBorder) {
                     Toggle(Strings.hairlineBorder, isOn: binding(\.border)).labelsHidden().toggleStyle(.switch)

@@ -144,6 +144,7 @@ struct SettingsGroup<Content: View>: View {
             VStack(alignment: .leading, spacing: 4) { content }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .card()
         }
     }

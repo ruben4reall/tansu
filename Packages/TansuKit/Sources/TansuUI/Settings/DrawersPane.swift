@@ -57,7 +57,7 @@ struct DrawersPane: View {
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
-            .frame(width: 230, height: 300)
+            .frame(width: 210, height: 300)
             .card(radius: Theme.radius)
             Button(Strings.newDrawer) { _ = model.addDrawer() }.buttonStyle(PillButtonStyle(.secondary))
         }

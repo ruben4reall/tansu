@@ -114,7 +114,7 @@ public struct MarkPicker: View {
                     }
             }
         }
-        .frame(width: 400, alignment: .leading)
+        .frame(minWidth: 300, maxWidth: 400, alignment: .leading)
     }
 
     private var iconLibrary: some View {
@@ -135,7 +135,7 @@ public struct MarkPicker: View {
                             .font(.system(size: 10, weight: .semibold))
                             .foregroundStyle(Theme.tertiaryText)
                             .textCase(.uppercase)
-                        LazyVGrid(columns: Array(repeating: GridItem(.fixed(32), spacing: 4), count: 11), spacing: 4) {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 32, maximum: 32), spacing: 4)], alignment: .leading, spacing: 4) {
                             ForEach(section.symbols, id: \.self) { name in
                                 choice(isSelected: mark == .symbol(name), label: name.replacingOccurrences(of: ".", with: " ")) {
                                     mark = .symbol(name)
@@ -157,7 +157,7 @@ public struct MarkPicker: View {
 
     private var emojiGrid: some View {
         VStack(alignment: .leading, spacing: 8) {
-            LazyVGrid(columns: Array(repeating: GridItem(.fixed(30), spacing: 4), count: 12), spacing: 4) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 30, maximum: 30), spacing: 4)], alignment: .leading, spacing: 4) {
                 ForEach(MarkLibrary.emoji, id: \.self) { emoji in
                     choice(isSelected: mark == .emoji(emoji), label: emoji) {
                         mark = .emoji(emoji)
