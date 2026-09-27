@@ -19,6 +19,9 @@ public final class Divider: DividerControlling {
     /// Relaxed, the divider keeps one point: macOS 26 may never give a zero-length item a window.
     static let relaxedLength: CGFloat = 1
     static let savedPositionKey = "tansu.divider.position"
+    /// macOS orders items by this distance from the right end: Tansu's icon has 0 and its drawers 1 and up; every
+    /// other item remembers more.
+    static let firstPlace: Double = 60
 
     private var item: NSStatusItem?
     public private(set) var isExpanded = false
@@ -27,10 +30,12 @@ public final class Divider: DividerControlling {
         let defaults = UserDefaults.standard
         let preferred = "NSStatusItem Preferred Position \(Self.autosaveName)"
         // macOS forgets an item's place when the item is removed. Tansu keeps it and puts it back, so the divider
-        // comes back between the same icons at the next launch. Without a saved place, far left: every icon starts
-        // on the visible side and nothing disappears before Tansu has arranged the bar.
+        // comes back between the same icons at the next launch. Without a saved place, just left of Tansu's own items:
+        // every other icon starts on the concealed side (nothing disappears while the divider stays narrow), and
+        // arranging only carries the icons that show to its right, away from the notch. Far left, on a crowded menu bar,
+        // the divider would sit under the notch, where no drop lands.
         let saved = defaults.object(forKey: Self.savedPositionKey) as? Double
-        defaults.set(saved ?? 5_000, forKey: preferred)
+        defaults.set(saved ?? Self.firstPlace, forKey: preferred)
         defaults.set(true, forKey: "NSStatusItem Visible \(Self.autosaveName)")
         defaults.set(true, forKey: "NSStatusItem VisibleCC \(Self.autosaveName)")
 
