@@ -1,0 +1,32 @@
+name: ci
+on: [push, pull_request]
+permissions:
+  contents: read
+# macOS runners are free for public repositories only: while the repository is private, the jobs are skipped and
+# the same commands run on the maintainer's Mac before every merge.
+jobs:
+  core:
+    if: ${{ !github.event.repository.private }}
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+      - name: Test TansuKit
+        run: swift test --package-path Packages/TansuKit
+  app:
+    if: ${{ !github.event.repository.private }}
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Build Tansu.app (ad hoc signature)
+        run: scripts/build.sh Debug
+  scripts:
+    if: ${{ !github.event.repository.private }}
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Test the release scripts and the documents
+        run: scripts/tests/run.sh
