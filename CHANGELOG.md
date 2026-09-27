@@ -15,7 +15,7 @@ Tansu 1.0: your menu bar, in drawers. Free and open source, for macOS 26 Tahoe a
 - **Show everything.** A click on Tansu's icon opens every drawer and every hidden icon at once; an Option-click brings every icon back to the menu bar until the next click.
 - **Focus.** ⌃⌥⌘F leaves only the clock and Control Center, for a presentation or a screen share, and brings everything back.
 - **Notch aware.** Settings draws your menu bar at its real size, notch included, measures the room left beside it, says when icons no longer fit, and moves the overflow into a drawer in one click.
-- **Appearance.** A tint for the menu bar (a color or a gradient), a hairline border and a soft shadow, previewed live.
+- **Appearance.** A tint for the menu bar (a color or a gradient), a hairline border and a soft shadow, previewed live, in three shapes: full width, a floating bar, or split in two, one piece behind the app menus and one behind the icons, on each side of the notch on a MacBook. Dark Mode can have a look of its own, which the menu bar takes as soon as the Mac switches.
 - **macOS 26 and macOS 27.** On macOS 26 Tansu moves icons with the same Command-drag you would use. On macOS 27 it asks the menu bar to leave hidden apps out, and runs from the Applications folder; Settings says which engine runs and what macOS 27 does not allow. Support for macOS 27 is marked beta until it has been tried on a Mac running it.
 - **Nothing lost.** Quit Tansu, or let it crash, and every icon is back in the menu bar.
 - **One permission.** Accessibility, and nothing else: no Screen Recording, no Input Monitoring. Without it, Tansu says so plainly and moves nothing.
