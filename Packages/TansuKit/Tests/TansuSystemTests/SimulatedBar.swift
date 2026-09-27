@@ -22,7 +22,18 @@ final class SimulatedBar: StatusWindowSource, EventPosting, @unchecked Sendable 
     /// Right to left.
     var entries: [Entry]
     var ignoresDrags = false
-    var openMenuOwners: Set<pid_t> = []
+    /// Apps with a menu open: each menu is a window of its own, numbered when it opens.
+    var openMenuOwners: Set<pid_t> = [] {
+        didSet {
+            for pid in openMenuOwners.subtracting(oldValue) {
+                menuWindows[pid] = nextMenuWindow
+                nextMenuWindow += 1
+            }
+            for pid in oldValue.subtracting(openMenuOwners) { menuWindows[pid] = nil }
+        }
+    }
+    private var menuWindows: [pid_t: UInt32] = [:]
+    private var nextMenuWindow: UInt32 = 5000
     private(set) var drags: [(window: UInt32, end: CGPoint, route: PostingRoute)] = []
     private(set) var clicks: [UInt32] = []
 
@@ -56,6 +67,14 @@ final class SimulatedBar: StatusWindowSource, EventPosting, @unchecked Sendable 
         entries.reversed().filter { !$0.isFixed }.map { $0.windowID == Self.dividerWindow ? "|" : $0.bundleID }
     }
 
+    /// Puts the divider right after the clock and Control Center, where Tansu places it on a first launch: every
+    /// other icon starts on its left.
+    func placeDividerAtRightEnd() {
+        guard let index = entries.firstIndex(where: { $0.windowID == Self.dividerWindow }) else { return }
+        let divider = entries.remove(at: index)
+        entries.insert(divider, at: entries.filter(\.isFixed).count)
+    }
+
     func setDividerWidth(_ width: CGFloat) {
         guard let index = entries.firstIndex(where: { $0.windowID == Self.dividerWindow }) else { return }
         entries[index].width = width
@@ -70,9 +89,9 @@ final class SimulatedBar: StatusWindowSource, EventPosting, @unchecked Sendable 
         }
     }
 
-    nonisolated func openMenuFrames(ownerPIDs: Set<pid_t>) -> [CGRect] {
+    nonisolated func raisedWindows(ownerPIDs: Set<pid_t>) -> Set<UInt32> {
         MainActor.assumeIsolated {
-            openMenuOwners.isDisjoint(with: ownerPIDs) ? [] : [CGRect(x: 0, y: 33, width: 200, height: 300)]
+            Set(menuWindows.filter { ownerPIDs.contains($0.key) }.map(\.value))
         }
     }
 
@@ -98,13 +117,27 @@ final class SimulatedDivider: ArrangingDivider {
     let bar: SimulatedBar
     private(set) var isExpanded = false
     private(set) var removed = false
+    private(set) var placesRemembered = 0
 
     init(bar: SimulatedBar) { self.bar = bar }
 
-    var frame: CGRect? { removed ? nil : bar.frame(SimulatedBar.dividerWindow) }
-    func expand() { bar.setDividerWidth(10_000); isExpanded = true }
-    func relax() { bar.setDividerWidth(1); isExpanded = false }
-    func setArranging() { bar.setDividerWidth(24); isExpanded = false }
+    /// Like AppKit for a moment after each change of width: the old origin with the new width.
+    var lagsBehind = false
+    private var originBeforeChange: CGFloat?
+
+    var frame: CGRect? {
+        guard !removed, let real = bar.frame(SimulatedBar.dividerWindow) else { return nil }
+        guard lagsBehind, let origin = originBeforeChange else { return real }
+        return CGRect(x: origin, y: real.minY, width: real.width, height: real.height)
+    }
+    private func setWidth(_ width: CGFloat) {
+        originBeforeChange = bar.frame(SimulatedBar.dividerWindow)?.minX
+        bar.setDividerWidth(width)
+    }
+    func expand() { setWidth(10_000); isExpanded = true }
+    func relax() { setWidth(1); isExpanded = false }
+    func setArranging() { setWidth(24); isExpanded = false }
+    func rememberPlace() { placesRemembered += 1 }
     func remove() {
         bar.entries.removeAll { $0.windowID == SimulatedBar.dividerWindow }
         removed = true
@@ -119,6 +152,8 @@ final class SimulatedIcons: IconSource {
     var isTrusted = true
     private(set) var pressed: [String] = []
     var refusesPress: Set<String> = []
+    /// Called with the bundle identifier of each icon pressed: a test opens its menu there.
+    var onPress: ((String) -> Void)?
     /// Icons an app describes without a window: the ones macOS keeps out of the menu bar.
     var windowless: [FoundIcon] = []
     /// Apps that do not answer Accessibility in time.
@@ -140,7 +175,10 @@ final class SimulatedIcons: IconSource {
         } + windowless
     }
 
-    func record(_ bundleID: String) { pressed.append(bundleID) }
+    func record(_ bundleID: String) {
+        pressed.append(bundleID)
+        onPress?(bundleID)
+    }
 }
 
 /// Carries presses back to the main actor from a Sendable closure.

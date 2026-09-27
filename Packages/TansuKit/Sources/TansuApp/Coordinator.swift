@@ -262,13 +262,18 @@ public final class Coordinator {
 
     // MARK: Making the menu bar match
 
+    /// Arranges after `delay`; a new request before then replaces this one. Once it runs, an arrangement is never
+    /// cancelled: its waits would all return at once and every drop would be judged before the menu bar settles. A
+    /// request that comes meanwhile runs right after it.
     func scheduleApply(after delay: Duration = .milliseconds(350)) {
         pendingApply?.cancel()
-        pendingApply = Task { [weak self] in
+        let task = Task { [weak self] in
             try? await Task.sleep(for: delay)
-            guard !Task.isCancelled else { return }
-            await self?.applyNow()
+            guard !Task.isCancelled, let self else { return }
+            self.pendingApply = nil
+            await self.applyNow()
         }
+        pendingApply = task
     }
 
     @discardableResult
@@ -293,6 +298,8 @@ public final class Coordinator {
             interface.conflicts = plan.conflicts
             if !report.moved.isEmpty { await refresh(apply: false) }
         } while needsAnotherApply
+        // The engine asked to try again: once the person pauses, or a while after a move failed.
+        if let wait = report.tryAgainIn { scheduleApply(after: wait) }
         return report
     }
 

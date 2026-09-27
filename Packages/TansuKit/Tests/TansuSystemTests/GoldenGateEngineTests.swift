@@ -52,6 +52,8 @@ final class FixedIcons: IconSource {
     var isTrusted = true
     let apps: [String]
     private(set) var pressed: [String] = []
+    /// Called with the bundle identifier of each icon pressed: a test opens its menu there.
+    var onPress: ((String) -> Void)?
     init(apps: [String]) { self.apps = apps }
     func find() async -> [FoundIcon] {
         apps.enumerated().map { index, bundleID in
@@ -65,7 +67,10 @@ final class FixedIcons: IconSource {
         weak var owner: FixedIcons?
         init(owner: FixedIcons) { self.owner = owner }
         func press(_ bundleID: String) -> Bool {
-            MainActor.assumeIsolated { owner?.pressed.append(bundleID) }
+            MainActor.assumeIsolated {
+                owner?.pressed.append(bundleID)
+                owner?.onPress?(bundleID)
+            }
             return true
         }
     }
@@ -74,7 +79,7 @@ final class FixedIcons: IconSource {
 final class NoWindows: StatusWindowSource, @unchecked Sendable {
     var menusOpen = false
     func statusWindows() -> [StatusWindow] { [] }
-    func openMenuFrames(ownerPIDs: Set<pid_t>) -> [CGRect] { menusOpen ? [CGRect(x: 0, y: 0, width: 100, height: 100)] : [] }
+    func raisedWindows(ownerPIDs: Set<pid_t>) -> Set<UInt32> { menusOpen ? [5000] : [] }
 }
 
 @MainActor
@@ -193,12 +198,15 @@ final class NoWindows: StatusWindowSource, @unchecked Sendable {
         _ = await engine.apply(plan(hiding: ["com.google.drivefs", "com.protonmail.bridge"]))
         #expect(!agent.drawn.contains("com.google.drivefs"))
         let hidingApplies = restriction.applied.count
-        windows.menusOpen = true
+        let windows = self.windows
+        icons.onPress = { _ in windows.menusOpen = true }
         try await engine.open(IconID(bundleID: "com.google.drivefs"), anchor: nil)
         #expect(icons.pressed == ["com.google.drivefs"])
         #expect(restriction.applied.count == hidingApplies + 1)
         #expect(restriction.appliedAllowList?.contains("com.google.drivefs") == true, "let through for its menu")
         #expect(restriction.appliedAllowList?.contains("com.protonmail.bridge") == false, "the others stay hidden")
+        try await Task.sleep(for: .milliseconds(60))
+        #expect(restriction.applied.count == hidingApplies + 1, "still let through while the menu is open")
         windows.menusOpen = false
         for _ in 0..<80 where restriction.applied.count < hidingApplies + 2 {
             await Task.yield()

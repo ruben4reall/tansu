@@ -19,8 +19,9 @@ public struct StatusWindow: Equatable, Sendable {
 public protocol StatusWindowSource: Sendable {
     /// Every icon window (status window level), from right to left, including the ones pushed off screen.
     func statusWindows() -> [StatusWindow]
-    /// Frames of menus and popovers open on screen whose window belongs to one of `ownerPIDs`.
-    func openMenuFrames(ownerPIDs: Set<pid_t>) -> [CGRect]
+    /// Windows of these apps on screen above ordinary windows (menus, popovers, panels, overlays), the menu bar's own
+    /// windows left out, by number. What pressing an icon opened is what appears here after the press.
+    func raisedWindows(ownerPIDs: Set<pid_t>) -> Set<UInt32>
 }
 
 /// The window server, through the public window list. Needs no permission: only window names would need Screen
@@ -45,8 +46,22 @@ public struct SystemStatusWindows: StatusWindowSource {
         .sorted { $0.frame.midX > $1.frame.midX }
     }
 
-    public func openMenuFrames(ownerPIDs: Set<pid_t>) -> [CGRect] {
-        Self.openMenuFrames(ownerPIDs: ownerPIDs)
+    public func raisedWindows(ownerPIDs: Set<pid_t>) -> Set<UInt32> {
+        guard let list = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID)
+            as? [[String: Any]] else { return [] }
+        var result = Set<UInt32>()
+        for info in list {
+            guard let layer = info[kCGWindowLayer as String] as? Int, layer > 0,
+                  let owner = info[kCGWindowOwnerPID as String] as? Int, ownerPIDs.contains(pid_t(owner)),
+                  (info[kCGWindowAlpha as String] as? Double ?? 1) > 0,
+                  let number = info[kCGWindowNumber as String] as? Int, let id = UInt32(exactly: number),
+                  let bounds = info[kCGWindowBounds as String] as? NSDictionary,
+                  let frame = CGRect(dictionaryRepresentation: bounds) else { continue }
+            // The bar and its icons are no menu.
+            if [Self.statusLevel, Self.mainMenuLevel].contains(layer), frame.height <= 40 { continue }
+            result.insert(id)
+        }
+        return result
     }
 
     /// Whether any app has a menu, a popover or a panel open from the menu bar.
@@ -58,17 +73,34 @@ public struct SystemStatusWindows: StatusWindowSource {
     static func openMenuFrames(ownerPIDs: Set<pid_t>?) -> [CGRect] {
         guard let list = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID)
             as? [[String: Any]] else { return [] }
+        let displays = displayBounds()
         return list.compactMap { info -> CGRect? in
             guard let layer = info[kCGWindowLayer as String] as? Int,
                   let owner = info[kCGWindowOwnerPID as String] as? Int, ownerPIDs?.contains(pid_t(owner)) ?? true,
+                  (info[kCGWindowAlpha as String] as? Double ?? 1) > 0,
                   let bounds = info[kCGWindowBounds as String] as? NSDictionary,
                   let frame = CGRect(dictionaryRepresentation: bounds) else { return nil }
-            // Menus live at the pop-up menu level; popovers and panels that icons open sit at or near the menu
-            // bar's levels and are taller than the bar itself.
-            let isMenu = layer == popUpMenuLevel || layer == popUpMenuLevel - 1
-            let isPanel = [mainMenuLevel, statusLevel].contains(layer) && frame.height > 40
-            return isMenu || isPanel ? frame : nil
+            return isMenu(layer: layer, frame: frame, displays: displays) ? frame : nil
         }
+    }
+
+    /// Menus live at the pop-up menu level; popovers and panels that icons open sit at or near the menu bar's levels
+    /// and are taller than the bar itself. No menu covers a whole display: a window that does is an overlay (the
+    /// screenshot tool keeps one at the menu bar's level), never a menu someone is reading.
+    nonisolated static func isMenu(layer: Int, frame: CGRect, displays: [CGRect]) -> Bool {
+        let isMenu = layer == popUpMenuLevel || layer == popUpMenuLevel - 1
+        let isPanel = [mainMenuLevel, statusLevel].contains(layer) && frame.height > 40
+        let coversADisplay = displays.contains { frame.insetBy(dx: -2, dy: -2).contains($0) }
+        return (isMenu || isPanel) && !coversADisplay
+    }
+
+    /// Every active display, in window server coordinates.
+    static func displayBounds() -> [CGRect] {
+        var count: UInt32 = 0
+        guard CGGetActiveDisplayList(0, nil, &count) == .success, count > 0 else { return [] }
+        var ids = [CGDirectDisplayID](repeating: 0, count: Int(count))
+        guard CGGetActiveDisplayList(count, &ids, &count) == .success else { return [] }
+        return ids.prefix(Int(count)).map { CGDisplayBounds($0) }
     }
 }
 

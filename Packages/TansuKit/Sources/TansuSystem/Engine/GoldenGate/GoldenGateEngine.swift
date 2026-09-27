@@ -186,25 +186,30 @@ public final class GoldenGateEngine: MenuBarEngine {
             _ = await enforce(hiding: others.subtracting(Bundle.main.bundleIdentifier.map { [$0] } ?? []))
             agent = await readSettled(agent)
         }
-        // MenuBarAgent's slot presses the icon where it is drawn; the app's own element is the fallback.
-        guard let item = agent?.drawnItem(of: bundleID),
-              item.element?.press() == true || pressers[id]?() == true else {
+        // MenuBarAgent's slot presses the icon where it is drawn; the app's own element is the fallback. What the press
+        // opens is what the app raises on top of the windows it had just before.
+        guard let item = agent?.drawnItem(of: bundleID) else {
             _ = await enforce(hiding: hiddenApps)
             throw EngineError.cannotOpen(id)
         }
-        watchUntilClosed(bundleID: bundleID, pid: item.pid)
+        var owners: Set<pid_t> = [item.pid]
+        if let agentPID = lastAgent?.agentPID { owners.insert(agentPID) }
+        let raised = windows.raisedWindows(ownerPIDs: owners)
+        guard item.element?.press() == true || pressers[id]?() == true else {
+            _ = await enforce(hiding: hiddenApps)
+            throw EngineError.cannotOpen(id)
+        }
+        watchUntilClosed(bundleID: bundleID, owners: owners, opened: raised)
     }
 
-    private func watchUntilClosed(bundleID: String, pid: pid_t) {
+    private func watchUntilClosed(bundleID: String, owners: Set<pid_t>, opened before: Set<UInt32>) {
         let task = Task { [weak self] in
             guard let self else { return }
             await self.pause(.milliseconds(400))
             var closedSince: ContinuousClock.Instant?
             let started = ContinuousClock.now
-            var owners: Set<pid_t> = [pid]
-            if let agentPID = self.lastAgent?.agentPID { owners.insert(agentPID) }
             while !Task.isCancelled {
-                let open = !self.windows.openMenuFrames(ownerPIDs: owners).isEmpty
+                let open = !self.windows.raisedWindows(ownerPIDs: owners).subtracting(before).isEmpty
                 if open {
                     closedSince = nil
                 } else if let since = closedSince {

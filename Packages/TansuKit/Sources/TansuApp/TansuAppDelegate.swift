@@ -6,6 +6,7 @@ import TansuSystem
 @MainActor
 open class TansuAppDelegate: NSObject, NSApplicationDelegate {
     public private(set) var coordinator: Coordinator?
+    private var termination: DispatchSourceSignal?
 
     public override init() {
         super.init()
@@ -26,12 +27,23 @@ open class TansuAppDelegate: NSObject, NSApplicationDelegate {
         let coordinator = Coordinator(options: .current(), updater: makeUpdater())
         coordinator.moveToApplicationsHandler = { [weak self] in self?.moveToApplications() }
         self.coordinator = coordinator
+        quitOnTerminationSignal()
         Log.app.info("Tansu started")
         Task { await coordinator.start() }
     }
 
     open func applicationWillTerminate(_ notification: Notification) {
         coordinator?.shutdown()
+    }
+
+    /// `kill` and `killall` quit Tansu like its Quit command: the divider keeps its place and every setting it changed
+    /// comes back.
+    private func quitOnTerminationSignal() {
+        signal(SIGTERM, SIG_IGN)
+        let source = DispatchSource.makeSignalSource(signal: SIGTERM, queue: .main)
+        source.setEventHandler { NSApp.terminate(nil) }
+        source.resume()
+        termination = source
     }
 
     /// Opening Tansu again from Finder or Spotlight opens Settings.

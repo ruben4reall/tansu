@@ -22,8 +22,11 @@ public final class StatusItemsController {
     private var drawerItems: [UUID: NSStatusItem] = [:]
     private var trackers: [ObjectIdentifier: HoverTracker] = [:]
     private var hoverTask: Task<Void, Never>?
-    /// The drawers, and whether Tansu's icon showed, the last time Tansu set their places itself.
-    private var placed: (drawers: [UUID], main: Bool)?
+    /// The drawers, whether Tansu's icon showed, and whether Focus was on, the last time Tansu set their places itself.
+    private var placed: (drawers: [UUID], main: Bool, focus: Bool)?
+    /// Places of the drawers hidden for Focus. macOS rewrites the stored place of every item of an app when one of
+    /// them moves, hidden ones included, parked far left: a drawer shown again would land behind the divider.
+    private var placesWhileHidden: [UUID: Double] = [:]
 
     static let mainAutosaveName = "tansu.main"
     static func autosaveName(for drawer: UUID) -> String { "tansu.drawer.\(drawer.uuidString)" }
@@ -35,9 +38,12 @@ public final class StatusItemsController {
     public func update(drawers: [Drawer], counts: [UUID: Int], showsMain: Bool, isFocusOn: Bool, isShowingEverything: Bool,
                        keepsAtRightEnd: Bool = true) {
         let wantsMain = showsMain || isFocusOn
-        if keepsAtRightEnd, placed?.drawers != drawers.map(\.id) || placed?.main != wantsMain {
+        // Focus hides the drawers and shows them again: Tansu's icons are set in place again each time, since macOS
+        // rewrote their places meanwhile.
+        if keepsAtRightEnd,
+           placed?.drawers != drawers.map(\.id) || placed?.main != wantsMain || placed?.focus != isFocusOn {
             place(drawers: drawers)
-            placed = (drawers.map(\.id), wantsMain)
+            placed = (drawers.map(\.id), wantsMain, isFocusOn)
         }
         let wanted = Set(drawers.map(\.id))
         for (id, item) in drawerItems where !wanted.contains(id) {
@@ -61,7 +67,7 @@ public final class StatusItemsController {
             let item = drawerItems[drawer.id]
                 ?? makeItem(autosaveName: Self.autosaveName(for: drawer.id), position: base + Double(offset + 1), target: .drawer(drawer.id))
             drawerItems[drawer.id] = item
-            item.isVisible = !isFocusOn
+            setVisible(item, drawer: drawer.id, !isFocusOn)
             if let button = item.button { StatusMark.apply(drawer, count: counts[drawer.id] ?? 0, to: button) }
         }
     }
@@ -94,8 +100,25 @@ public final class StatusItemsController {
         return (frame, ScreenCoordinates.windowServerRect(fromAppKit: frame))
     }
 
+    /// Hides or shows a drawer's item, keeping its place while it is hidden.
+    private func setVisible(_ item: NSStatusItem, drawer: UUID, _ visible: Bool) {
+        guard item.isVisible != visible else { return }
+        let key = Self.positionKey(Self.autosaveName(for: drawer))
+        let defaults = UserDefaults.standard
+        if visible {
+            if let place = placesWhileHidden.removeValue(forKey: drawer) { defaults.set(place, forKey: key) }
+        } else if let place = defaults.object(forKey: key) as? Double {
+            placesWhileHidden[drawer] = place
+        }
+        item.isVisible = visible
+    }
+
     /// Removes every item (on quit), keeping their places for the next launch.
     public func removeAll() {
+        for (drawer, place) in placesWhileHidden {
+            UserDefaults.standard.set(place, forKey: Self.positionKey(Self.autosaveName(for: drawer)))
+        }
+        placesWhileHidden.removeAll()
         for item in drawerItems.values { NSStatusBar.system.removeStatusItem(item) }
         drawerItems.removeAll()
         if let main { NSStatusBar.system.removeStatusItem(main) }

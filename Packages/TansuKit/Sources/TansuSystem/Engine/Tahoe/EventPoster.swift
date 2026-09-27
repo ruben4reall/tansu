@@ -32,6 +32,10 @@ public protocol UserActivitySource: Sendable {
 public struct SystemUserActivity: UserActivitySource {
     public init() {}
 
+    /// A modifier seen held with no key event for this long is a state some software left behind (a synthetic press
+    /// with no release), not a person about to use a shortcut.
+    static let staleAfter: TimeInterval = 10
+
     public var secondsSincePointerMoved: TimeInterval {
         let moved = CGEventSource.secondsSinceLastEventType(.combinedSessionState, eventType: .mouseMoved)
         let dragged = CGEventSource.secondsSinceLastEventType(.combinedSessionState, eventType: .leftMouseDragged)
@@ -45,7 +49,17 @@ public struct SystemUserActivity: UserActivitySource {
 
     public var areModifiersDown: Bool {
         let flags = CGEventSource.flagsState(.combinedSessionState)
-        return !flags.intersection([.maskCommand, .maskAlternate, .maskControl, .maskShift]).isEmpty
+        let held = !flags.intersection([.maskCommand, .maskAlternate, .maskControl, .maskShift]).isEmpty
+        guard held else { return false }
+        let lastKey = [CGEventType.flagsChanged, .keyDown, .keyUp]
+            .map { CGEventSource.secondsSinceLastEventType(.combinedSessionState, eventType: $0) }
+            .min() ?? .infinity
+        return Self.isPersonHolding(modifiers: held, secondsSinceKeyEvent: lastKey)
+    }
+
+    /// Modifiers count as held by a person only while keys are in use.
+    static func isPersonHolding(modifiers: Bool, secondsSinceKeyEvent: TimeInterval) -> Bool {
+        modifiers && secondsSinceKeyEvent < staleAfter
     }
 }
 
