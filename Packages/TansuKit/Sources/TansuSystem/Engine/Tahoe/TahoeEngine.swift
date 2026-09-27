@@ -31,15 +31,23 @@ public final class TahoeEngine: MenuBarEngine {
     private var shown: (icon: IconID, task: Task<Void, Never>, beside: IconID?)?
     /// The identity each icon window had at the last scan.
     private var identityByWindow: [UInt32: IconID] = [:]
+    /// Icons that could not be moved, and when: they wait a minute before another try, so a failing move never
+    /// repeats with every change of the menu bar.
+    private var recentFailures: [UInt32: ContinuousClock.Instant] = [:]
+    static let retryAfter: Duration = .seconds(60)
 
     /// While Tansu moves icons, the divider is this wide, so a drop can land on either side of it.
     static let arrangingLength: CGFloat = 24
+    /// Whether a drop at this x (window server coordinates) is safe: far enough from the notch, where macOS places no
+    /// icon and where apps drawn around the notch catch drops.
+    private let isSafeDrop: @MainActor (CGFloat) -> Bool
 
     public init(
         icons: IconSource, windows: StatusWindowSource = SystemStatusWindows(), poster: EventPosting,
         activity: UserActivitySource = SystemUserActivity(),
         makeDivider: @escaping @MainActor () -> DividerControlling = { Divider() },
         isOnScreen: @escaping @MainActor (CGRect) -> Bool = { ScreenCoordinates.isOnScreen($0) },
+        isSafeDrop: @escaping @MainActor (CGFloat) -> Bool = { TahoeEngine.isClearOfNotch($0) },
         pause: @escaping @Sendable (Duration) async -> Void = { try? await Task.sleep(for: $0) }
     ) {
         self.icons = icons
@@ -48,6 +56,7 @@ public final class TahoeEngine: MenuBarEngine {
         self.activity = activity
         self.makeDivider = makeDivider
         self.isOnScreen = isOnScreen
+        self.isSafeDrop = isSafeDrop
         self.pause = pause
         mover = ItemMover(windows: windows, poster: poster, activity: activity, pause: pause)
     }
@@ -165,9 +174,10 @@ public final class TahoeEngine: MenuBarEngine {
         var moves = LayoutPlanner.moves(plan: plan, snapshot: snapshot, dividerFrame: dividerFrame)
         var report = ApplyReport()
         if !moves.isEmpty {
-            // With the divider narrow and every icon on screen, each drop lands on a real place.
+            // With the divider narrow and every icon on screen, each drop lands on a real place. macOS lays the bar
+            // out again, and may still be placing Tansu's own items after a launch: wait until nothing moves.
             setArranging(divider)
-            await pause(.milliseconds(220))
+            await waitForStillBar()
             snapshot = await scan()
             if let arrangingFrame = divider.frame {
                 moves = LayoutPlanner.moves(plan: plan, snapshot: snapshot, dividerFrame: arrangingFrame)
@@ -179,14 +189,22 @@ public final class TahoeEngine: MenuBarEngine {
                     continue
                 }
                 let dividerWindow = windows.statusWindows().first { Self.sameWindow($0.frame, dividerFrame) }?.id
-                let destination: ItemMover.Destination = move.to == .concealed
-                    ? .leftOf(dividerFrame, windowID: dividerWindow)
-                    : .rightOf(dividerFrame, windowID: dividerWindow)
+                if let failed = recentFailures[windowID], ContinuousClock.now - failed < Self.retryAfter {
+                    report.failed.append(move.icon)
+                    continue
+                }
                 do {
-                    try await mover.move(windowID: windowID, ownerPID: windowOwners[windowID] ?? icon.pid, to: destination)
+                    if move.to == .concealed {
+                        try await conceal(windowID: windowID, ownerPID: windowOwners[windowID] ?? icon.pid, dividerWindow: dividerWindow)
+                    } else {
+                        try await mover.move(windowID: windowID, ownerPID: windowOwners[windowID] ?? icon.pid,
+                                             to: .rightOf(dividerFrame, windowID: dividerWindow))
+                    }
                     report.moved.append(move.icon)
+                    recentFailures[windowID] = nil
                 } catch {
                     report.failed.append(move.icon)
+                    recentFailures[windowID] = .now
                 }
             }
         }
@@ -294,23 +312,56 @@ public final class TahoeEngine: MenuBarEngine {
             // The wide divider's left edge is off screen: narrow it so the icon can go right next to it, in the place
             // it had among the concealed icons, then widen it again.
             setArranging(divider)
-            await pause(.milliseconds(220))
+            await waitForStillBar()
             let snapshot = await scan()
             if let frame = divider.frame, let current = snapshot.icon(icon.id), let windowID = current.windowID {
                 let dividerWindow = windows.statusWindows().first { Self.sameWindow($0.frame, frame) }?.id
-                var destination = ItemMover.Destination.leftOf(frame, windowID: dividerWindow)
-                if let neighbour, let beside = snapshot.icon(neighbour), let besideWindow = beside.windowID,
-                   beside.frame.maxX <= frame.minX + ItemMover.slack {
-                    destination = .leftOf(beside.frame, windowID: besideWindow)
-                }
                 do {
-                    try await mover.move(windowID: windowID, ownerPID: windowOwners[windowID] ?? current.pid, to: destination)
+                    if let neighbour, let beside = snapshot.icon(neighbour), let besideWindow = beside.windowID,
+                       beside.frame.maxX <= frame.minX + ItemMover.slack, isSafeDrop(beside.frame.minX) {
+                        // Back in its own place among the concealed icons.
+                        try await mover.move(windowID: windowID, ownerPID: windowOwners[windowID] ?? current.pid,
+                                             to: .leftOf(beside.frame, windowID: besideWindow))
+                    } else {
+                        try await conceal(windowID: windowID, ownerPID: windowOwners[windowID] ?? current.pid, dividerWindow: dividerWindow)
+                    }
                 } catch {
                     Log.engine.error("an icon opened from a drawer could not go back")
                 }
             }
         }
         if wantsConcealed { divider.expand() } else { divider.relax() }
+    }
+
+    /// Carries an icon behind the divider without ever dropping on the divider's left, where the notch, or an app drawn
+    /// around it, can catch the drop: the icon comes right next to the divider, then the divider steps over it. Every
+    /// drop lands on the right of the divider, among icons that show.
+    private func conceal(windowID: UInt32, ownerPID: pid_t, dividerWindow: UInt32?) async throws {
+        guard let divider, let dividerFrame = divider.frame, let dividerWindow else { throw EngineError.notReady(status) }
+        try await mover.move(windowID: windowID, ownerPID: ownerPID, to: .rightOf(dividerFrame, windowID: dividerWindow))
+        guard let iconFrame = mover.frame(of: windowID) else { throw EngineError.iconNotFound(IconID(bundleID: "window \(windowID)")) }
+        try await mover.move(windowID: dividerWindow, ownerPID: windowOwners[dividerWindow] ?? ownerPID,
+                             to: .rightOf(iconFrame, windowID: windowID))
+    }
+
+    /// Clear of the notch by 60 points, room for a drop and for the hover area of apps drawn around it.
+    public static func isClearOfNotch(_ x: CGFloat) -> Bool {
+        guard let screen = NSScreen.screens.first, let right = screen.auxiliaryTopRightArea else { return true }
+        return x >= right.minX - screen.frame.minX + 60
+    }
+
+    /// Waits until the icons' windows hold still for three readings in a row, 50 ms apart, and 1.5 s at most.
+    func waitForStillBar() async {
+        await pause(.milliseconds(120))
+        var previous: [StatusWindow] = []
+        var still = 0
+        for _ in 0..<30 {
+            let now = windows.statusWindows()
+            still = now == previous ? still + 1 : 0
+            previous = now
+            if still >= 2 { return }
+            await pause(.milliseconds(50))
+        }
     }
 
     /// The concealed icon right of `icon`, which it goes back beside; nil when the divider comes first.

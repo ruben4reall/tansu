@@ -18,7 +18,7 @@ import TansuCore
         let divider = SimulatedDivider(bar: bar)
         self.divider = divider
         engine = TahoeEngine(icons: icons, windows: bar, poster: bar, activity: IdlePerson(), makeDivider: { divider },
-                             isOnScreen: { $0.maxX > 0 && $0.minX < SimulatedBar.screenWidth }, pause: instant)
+                             isOnScreen: { $0.maxX > 0 && $0.minX < SimulatedBar.screenWidth }, isSafeDrop: { _ in true }, pause: instant)
     }
 
     /// A plan as LayoutPlanner makes it: every other icon of the bar is visible.

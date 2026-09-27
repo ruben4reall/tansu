@@ -39,9 +39,11 @@ public final class ItemMover {
     static let patience: Duration = .seconds(2)
     /// How long the pointer must rest before a move.
     static let stillness: TimeInterval = 0.15
-    /// How long a move may take to show in the window list.
-    static let settleChecks = 15
-    static let settleInterval: Duration = .milliseconds(40)
+    /// How long macOS takes to start laying the icons out after a drop.
+    static let dropDelay: Duration = .milliseconds(250)
+    /// How long a move may take to settle in the window list: 20 readings, 50 ms apart.
+    static let settleChecks = 20
+    static let settleInterval: Duration = .milliseconds(50)
     /// Points of slack when checking where an icon landed.
     static let slack: CGFloat = 3
     /// The widest gap between two neighbouring icons; any icon is wider, so a wider gap means one sits in between.
@@ -65,6 +67,7 @@ public final class ItemMover {
     public func move(windowID: UInt32, ownerPID: pid_t, to destination: Destination) async throws -> CGRect {
         for (route, variant) in attempts() {
             try await waitForPause()
+            await waitUntilStill(windowID, destination)
             guard let current = frame(of: windowID) else { throw EngineError.iconNotFound(IconID(bundleID: "window \(windowID)")) }
             if landed(current, at: destination) { return current }
             let target = destination.windowID.flatMap(frame(of:)) ?? destination.frame
@@ -72,24 +75,32 @@ public final class ItemMover {
             let end = Self.dropPoint(for: destination, target: target, moving: current, variant: variant)
             await poster.commandDrag(windowID: windowID, ownerPID: ownerPID, from: start, to: end,
                                      destinationWindowID: destination.windowID, route: route)
-            // macOS animates a drop into place: judge where the icon landed once it stops moving.
-            var previous: CGRect?
+            // macOS animates a drop into place and lays the other icons out again: let it start, then judge where the
+            // icon landed once it and its target have both held still for three readings in a row.
+            await pause(Self.dropDelay)
+            var previous: (icon: CGRect, target: CGRect)?
+            var stillReadings = 0
             for _ in 0..<Self.settleChecks {
-                await pause(Self.settleInterval)
-                guard let now = frame(of: windowID) else { continue }
-                defer { previous = now }
-                guard now == previous else { continue }
-                if landed(now, at: destination) {
-                    workingRoute = route
-                    workingVariant = variant
-                    Log.engine.notice("moved window \(windowID) through \(route.rawValue, privacy: .public), variant \(variant)")
-                    return now
+                if let now = frame(of: windowID) {
+                    let target = destination.windowID.flatMap(frame(of:)) ?? destination.frame
+                    stillReadings = previous.map { $0.icon == now && $0.target == target } == true ? stillReadings + 1 : 0
+                    previous = (now, target)
+                    if stillReadings >= 2 {
+                        if landed(now, at: destination) {
+                            workingRoute = route
+                            workingVariant = variant
+                            Log.engine.notice("moved window \(windowID) through \(route.rawValue, privacy: .public), variant \(variant)")
+                            return now
+                        }
+                        // Settled somewhere else: the next attempt starts from there.
+                        Log.engine.notice("window \(windowID) from x \(Int(start.x)) dropped at x \(Int(end.x)) settled at x \(Int(now.minX)) w \(Int(now.width)), target x \(Int(target.minX)) w \(Int(target.width)) (\(route.rawValue, privacy: .public) \(variant))")
+                        break
+                    }
                 }
-                // Settled somewhere else: the next attempt starts from there.
-                break
+                await pause(Self.settleInterval)
             }
         }
-        Log.engine.error("could not move window \(windowID)")
+        Log.engine.error("could not move window \(windowID) after \(self.attempts().count) attempts")
         throw EngineError.moveFailed(IconID(bundleID: "window \(windowID)"))
     }
 
@@ -131,6 +142,18 @@ public final class ItemMover {
             return frame.maxX <= target.minX + Self.slack && frame.maxX >= target.minX - Self.neighbourGap && frame.midX < target.midX
         case .rightOf:
             return frame.minX >= target.maxX - Self.slack && frame.minX <= target.maxX + Self.neighbourGap && frame.midX > target.midX
+        }
+    }
+
+    /// Before a drag: the icon and its target hold still for two readings in a row, 50 ms apart, 0.6 s at most. A drop
+    /// aimed at a place macOS is still moving lands one place off.
+    func waitUntilStill(_ windowID: UInt32, _ destination: Destination) async {
+        var previous: (CGRect?, CGRect?)?
+        for _ in 0..<12 {
+            let now = (frame(of: windowID), destination.windowID.flatMap(frame(of:)))
+            if let previous, previous.0 == now.0, previous.1 == now.1 { return }
+            previous = now
+            await pause(.milliseconds(50))
         }
     }
 
