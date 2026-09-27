@@ -89,6 +89,85 @@ enum TestPaths {
     }
 }
 
+/// The languages of the String Catalog beside English: every key translated, with the key's format specifiers.
+@Suite struct TranslationTests {
+    static let languages = ["de", "es", "fr", "it", "ja", "ko", "nl", "pt-BR", "zh-Hans"]
+
+    /// Each key's string units, by language.
+    static func units() throws -> [String: [String: [String: Any]]] {
+        let strings = try StringCatalogTests.catalog()["strings"] as? [String: [String: Any]] ?? [:]
+        return strings.mapValues { entry in
+            let localizations = entry["localizations"] as? [String: [String: Any]] ?? [:]
+            return localizations.compactMapValues { $0["stringUnit"] as? [String: Any] }
+        }
+    }
+
+    static func value(_ units: [String: [String: Any]], _ language: String) -> String {
+        units[language]?["value"] as? String ?? ""
+    }
+
+    /// `%@` and `%lld`, plain or numbered (`%2$@`): each one's position, if numbered, and type.
+    static func specifiers(_ text: String) -> [(position: Int?, type: Substring)] {
+        text.matches(of: /%(?:(\d+)\$)?(@|lld)/).map { match in (match.output.1.flatMap { Int($0) }, match.output.2) }
+    }
+
+    @Test(arguments: TranslationTests.languages) func everyKeyIsTranslated(into language: String) throws {
+        for (key, units) in try Self.units() {
+            #expect(units[language]?["state"] as? String == "translated", "no \(language) translation of \(key)")
+        }
+    }
+
+    @Test(arguments: TranslationTests.languages) func noTranslationIsEmpty(in language: String) throws {
+        for (key, units) in try Self.units() {
+            let value = Self.value(units, language).trimmingCharacters(in: .whitespacesAndNewlines)
+            #expect(!value.isEmpty, "empty \(language) value for \(key)")
+        }
+    }
+
+    /// The key's `%@` and `%lld`, as many and of the same types: in the key's order, or all numbered to match it, since
+    /// `String(format:)` fills them in with the same arguments.
+    @Test(arguments: TranslationTests.languages) func translationsKeepTheFormatSpecifiers(in language: String) throws {
+        for (key, units) in try Self.units() {
+            let value = Self.value(units, language)
+            let expected = Self.specifiers(key).map(\.type)
+            let found = Self.specifiers(value)
+            let positions = found.compactMap(\.position)
+            if positions.isEmpty {
+                #expect(found.map(\.type) == expected, "\(language) value \(value) for \(key)")
+            } else {
+                #expect(positions.count == found.count, "numbered and plain specifiers in \(language): \(value)")
+                #expect(positions.sorted() == expected.indices.map { $0 + 1 }, "\(language) value \(value) for \(key)")
+                for specifier in found {
+                    guard let position = specifier.position, expected.indices.contains(position - 1) else { continue }
+                    #expect(specifier.type == expected[position - 1], "\(language) value \(value) for \(key)")
+                }
+            }
+            let stripped = value.replacing(/%(?:\d+\$)?(?:@|lld)/, with: "")
+            #expect(!stripped.contains("%"), "stray % in the \(language) value for \(key)")
+        }
+    }
+
+    @Test(arguments: TranslationTests.languages) func noTranslationHasADash(in language: String) throws {
+        for (key, units) in try Self.units() {
+            let value = Self.value(units, language)
+            #expect(!value.contains("\u{2014}") && !value.contains("\u{2013}"), "dash in \(language): \(value)")
+        }
+    }
+
+    /// The app declares English and the catalog's languages, so macOS offers them and Sparkle follows.
+    @Test func theAppDeclaresTheCatalogsLanguages() throws {
+        let catalogLanguages = Set(try Self.units().values.flatMap(\.keys))
+        #expect(catalogLanguages == Set(Self.languages))
+        let projectFile = TestPaths.repositoryRoot.appendingPathComponent("project.yml")
+        let project = try String(contentsOf: projectFile, encoding: .utf8)
+        let line = try #require(project.split(separator: "\n").first { $0.contains("CFBundleLocalizations:") })
+        let list = line.drop { $0 != "[" }.dropFirst().prefix { $0 != "]" }
+        let declared = list.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+        #expect(Set(declared) == catalogLanguages.union(["en"]))
+        #expect(project.contains("CFBundleDevelopmentRegion: en"))
+    }
+}
+
 @MainActor
 @Suite struct SymbolLibraryTests {
     @Test func everySymbolExistsOnThisMac() {
