@@ -119,6 +119,8 @@ final class SimulatedIcons: IconSource {
     var isTrusted = true
     private(set) var pressed: [String] = []
     var refusesPress: Set<String> = []
+    /// Icons an app describes without a window: the ones macOS keeps out of the menu bar.
+    var windowless: [FoundIcon] = []
 
     init(bar: SimulatedBar) { self.bar = bar }
 
@@ -133,7 +135,7 @@ final class SimulatedIcons: IconSource {
                 app: RunningApp(pid: entry.pid, bundleID: bundleID, name: bundleID.components(separatedBy: ".").last ?? bundleID),
                 frame: frames[entry.windowID]!, identifier: entry.key.isEmpty ? nil : entry.key,
                 press: { refuses ? false : recorder.press(bundleID) })
-        }
+        } + windowless
     }
 
     func record(_ bundleID: String) { pressed.append(bundleID) }

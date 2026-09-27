@@ -18,6 +18,9 @@ public struct Behavior: Codable, Hashable, Sendable {
     public var showsEverythingWithOption: Bool
     /// Show Tansu's own icon (the All drawer). Without it, Settings open from a right-click on any drawer.
     public var showsTansuIcon: Bool
+    /// Keep Tansu's icon and drawers together at the right end of the menu bar, next to Control Center. Off, they
+    /// stay wherever the person Command-drags them.
+    public var keepsItemsAtRightEnd: Bool
     /// Show every icon when the pointer rests on an empty part of the menu bar.
     public var revealsOnHover: Bool
     /// Show every icon after a click on an empty part of the menu bar.
@@ -32,7 +35,8 @@ public struct Behavior: Codable, Hashable, Sendable {
     public var movesOverflowAutomatically: Bool
 
     public init(opensOnHover: Bool = false, hoverDelay: Double = 0.25, rehideDelay: Double = 0.5,
-                showsEverythingWithOption: Bool = true, showsTansuIcon: Bool = true, revealsOnHover: Bool = false,
+                showsEverythingWithOption: Bool = true, showsTansuIcon: Bool = true, keepsItemsAtRightEnd: Bool = true,
+                revealsOnHover: Bool = false,
                 revealsOnClick: Bool = false, revealsOnScroll: Bool = false, revealPlace: RevealPlace = .menuBar,
                 hidesAgainAutomatically: Bool = true, hideAgainDelay: Double = 5, movesOverflowAutomatically: Bool = false) {
         self.opensOnHover = opensOnHover
@@ -40,6 +44,7 @@ public struct Behavior: Codable, Hashable, Sendable {
         self.rehideDelay = rehideDelay
         self.showsEverythingWithOption = showsEverythingWithOption
         self.showsTansuIcon = showsTansuIcon
+        self.keepsItemsAtRightEnd = keepsItemsAtRightEnd
         self.revealsOnHover = revealsOnHover
         self.revealsOnClick = revealsOnClick
         self.revealsOnScroll = revealsOnScroll
@@ -65,7 +70,8 @@ public struct Behavior: Codable, Hashable, Sendable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case opensOnHover, hoverDelay, rehideDelay, showsEverythingWithOption, showsTansuIcon, revealsOnHover, revealsOnClick
+        case opensOnHover, hoverDelay, rehideDelay, showsEverythingWithOption, showsTansuIcon, keepsItemsAtRightEnd, revealsOnHover
+        case revealsOnClick
         case revealsOnScroll, revealPlace, hidesAgainAutomatically, hideAgainDelay, movesOverflowAutomatically
     }
 
@@ -80,6 +86,7 @@ public struct Behavior: Codable, Hashable, Sendable {
         rehideDelay = value(.rehideDelay, standard.rehideDelay)
         showsEverythingWithOption = value(.showsEverythingWithOption, standard.showsEverythingWithOption)
         showsTansuIcon = value(.showsTansuIcon, standard.showsTansuIcon)
+        keepsItemsAtRightEnd = value(.keepsItemsAtRightEnd, standard.keepsItemsAtRightEnd)
         revealsOnHover = value(.revealsOnHover, standard.revealsOnHover)
         revealsOnClick = value(.revealsOnClick, standard.revealsOnClick)
         revealsOnScroll = value(.revealsOnScroll, standard.revealsOnScroll)

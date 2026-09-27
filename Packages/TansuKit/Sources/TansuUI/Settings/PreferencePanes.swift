@@ -136,6 +136,9 @@ struct BehaviorPane: View {
                 SettingRow(title: Strings.showTansuIcon, note: Strings.showTansuIconNote) {
                     Toggle(Strings.showTansuIcon, isOn: behavior(\.showsTansuIcon)).labelsHidden().toggleStyle(.switch)
                 }
+                SettingRow(title: Strings.keepItemsAtRightEnd, note: Strings.keepItemsAtRightEndNote) {
+                    Toggle(Strings.keepItemsAtRightEnd, isOn: behavior(\.keepsItemsAtRightEnd)).labelsHidden().toggleStyle(.switch)
+                }
             }
             SettingsGroup(title: Strings.revealSection) {
                 SettingRow(title: Strings.optionClickShowsEverything) {

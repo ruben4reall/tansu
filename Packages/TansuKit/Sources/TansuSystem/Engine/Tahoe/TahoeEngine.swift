@@ -29,6 +29,8 @@ public final class TahoeEngine: MenuBarEngine {
     private var lastSnapshot = MenuBarSnapshot.empty
     private var wantsConcealed = false
     private var shown: (icon: IconID, task: Task<Void, Never>, beside: IconID?)?
+    /// The identity each icon window had at the last scan.
+    private var identityByWindow: [UInt32: IconID] = [:]
 
     /// While Tansu moves icons, the divider is this wide, so a drop can land on either side of it.
     static let arrangingLength: CGFloat = 24
@@ -74,30 +76,61 @@ public final class TahoeEngine: MenuBarEngine {
         let others = listed.filter { window in !ownFrames.contains { Self.sameWindow($0, window.frame) } }
         windowOwners = Dictionary(listed.map { ($0.id, $0.ownerPID) }, uniquingKeysWith: { first, _ in first })
 
-        let identified = IconAssembly.identify(found)
         let matches = FrameMatcher.match(
-            elements: identified.enumerated().map { FrameMatcher.Element(index: $0.offset, frame: $0.element.found.frame) },
+            elements: found.enumerated().map { FrameMatcher.Element(index: $0.offset, frame: $0.element.frame) },
             windows: others.map { FrameMatcher.Window(id: $0.id, frame: $0.frame) })
         let windowsByID = Dictionary(others.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+        // An icon without a window is one macOS itself keeps out of the menu bar ("Allow in the Menu Bar"): it is left
+        // out before an app's icons are numbered, so it never shifts the others' identities.
+        let windowed = found.enumerated().compactMap { index, icon in matches[index].map { (icon, $0) } }
 
         var result: [MenuBarIcon] = []
         var presses: [IconID: @Sendable () -> Bool] = [:]
-        for (index, entry) in identified.enumerated() {
-            // An icon without a window is one macOS itself keeps out of the menu bar ("Allow in the Menu Bar").
-            guard let windowID = matches[index], let window = windowsByID[windowID] else { continue }
+        for entry in stableIdentities(windowed) {
+            guard let window = windowsByID[entry.windowID] else { continue }
             let kind = IconAssembly.kind(of: entry.id.bundleID)
             let icon = MenuBarIcon(
                 id: entry.id, ownerName: entry.found.app.name,
                 label: IconAssembly.displayLabel(entry.found.label, kind: kind), frame: window.frame,
                 isOnScreen: isOnScreen(window.frame),
                 isMovable: !IconIdentity.fixedSystemIdentifiers.contains(entry.id.key),
-                kind: kind, windowID: windowID, pid: entry.found.app.pid)
+                kind: kind, windowID: entry.windowID, pid: entry.found.app.pid)
             result.append(icon)
             presses[entry.id] = entry.found.press
         }
         pressers = presses
         lastSnapshot = MenuBarSnapshot(icons: result)
         return lastSnapshot
+    }
+
+    /// Identities of an app's icons. An icon keeps the identity it had as long as its window lives, even when a move
+    /// changes its rank among its app's icons (hiding the right one of two would otherwise swap them); icons seen for
+    /// the first time are named by rank, skipping the ranks already taken.
+    private func stableIdentities(_ windowed: [(FoundIcon, UInt32)]) -> [(found: FoundIcon, windowID: UInt32, id: IconID)] {
+        var result: [(found: FoundIcon, windowID: UInt32, id: IconID)] = []
+        for (bundleID, group) in Dictionary(grouping: windowed, by: { $0.0.app.bundleID }) {
+            let ordered = group.sorted { $0.0.frame.midX > $1.0.frame.midX }
+            var assigned: [UInt32: IconID] = [:]
+            var used = Set<IconID>()
+            for (_, window) in ordered {
+                if let previous = identityByWindow[window], previous.bundleID == bundleID, used.insert(previous).inserted {
+                    assigned[window] = previous
+                }
+            }
+            for (rank, (icon, window)) in ordered.enumerated() where assigned[window] == nil {
+                var next = rank
+                var id = IconIdentity.make(bundleID: bundleID, identifier: icon.identifier, indexFromRight: next, countForApp: ordered.count)
+                while used.contains(id), icon.identifier == nil, next < ordered.count * 2 {
+                    next += 1
+                    id = IconIdentity.make(bundleID: bundleID, identifier: nil, indexFromRight: next, countForApp: ordered.count)
+                }
+                used.insert(id)
+                assigned[window] = id
+            }
+            result.append(contentsOf: ordered.compactMap { icon, window in assigned[window].map { (icon, window, $0) } })
+        }
+        identityByWindow = Dictionary(result.map { ($0.windowID, $0.id) }, uniquingKeysWith: { first, _ in first })
+        return result
     }
 
     static func sameWindow(_ a: CGRect, _ b: CGRect) -> Bool {
@@ -109,6 +142,12 @@ public final class TahoeEngine: MenuBarEngine {
     public func apply(_ plan: VisibilityPlan) async -> ApplyReport {
         guard let divider else { return .nothing }
         wantsConcealed = !plan.concealed.isEmpty
+        guard wantsConcealed else {
+            // A narrow divider hides nothing: every icon shows without a single move, and each keeps its place for
+            // the next time some hide.
+            divider.relax()
+            return .nothing
+        }
         var snapshot = await scan()
         guard status == .ready, let dividerFrame = divider.frame else { return .nothing }
         var moves = LayoutPlanner.moves(plan: plan, snapshot: snapshot, dividerFrame: dividerFrame)

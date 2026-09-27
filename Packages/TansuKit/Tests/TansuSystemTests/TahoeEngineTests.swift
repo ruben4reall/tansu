@@ -77,6 +77,50 @@ import TansuCore
         #expect(bar.order == hidden, "back next to the divider, not at the far left of the hidden icons")
     }
 
+    /// Seen on a real menu bar: Claude has a second icon macOS keeps out of the menu bar, parked at x -1. Once Tansu
+    /// hid the real one far left, the parked one became the rightmost and took its identity.
+    @Test func anIconMacOSKeepsOutNeverShiftsTheOthers() async {
+        icons.windowless = [FoundIcon(app: RunningApp(pid: 2002, bundleID: "com.anthropic.claudefordesktop", name: "Claude"),
+                                      frame: CGRect(x: -1, y: 0, width: 42, height: 33))]
+        await engine.start()
+        #expect(await engine.scan().icon(IconID(bundleID: "com.anthropic.claudefordesktop")) != nil, "one icon: no rank in its name")
+        _ = await engine.apply(plan(hiding: ["com.anthropic.claudefordesktop"]))
+        let drags = bar.drags.count
+        let again = await engine.apply(plan(hiding: ["com.anthropic.claudefordesktop"]))
+        #expect(again.moved.isEmpty && again.failed.isEmpty)
+        #expect(bar.drags.count == drags, "hidden once, left alone after")
+    }
+
+    @Test func twoIconsOfOneAppKeepTheirNamesWhenOneHides() async {
+        bar.entries.insert(SimulatedBar.Entry(windowID: 120, bundleID: "com.google.drivefs", width: 30, pid: 2000), at: 3)
+        await engine.start()
+        let before = await engine.scan()
+        let right = try? #require(before.icons.first { $0.id.bundleID == "com.google.drivefs" })
+        let rightID = right?.id
+        #expect(rightID == IconID(bundleID: "com.google.drivefs", key: "#0"))
+        let plan = VisibilityPlan(visible: Set(before.icons.map(\.id)).subtracting([rightID!]), concealed: [rightID!], hiddenApps: [])
+        _ = await engine.apply(plan)
+        let after = await engine.scan()
+        #expect(after.icon(rightID!)?.windowID == right?.windowID, "the hidden icon is still #0")
+        let drags = bar.drags.count
+        _ = await engine.apply(plan)
+        #expect(bar.drags.count == drags)
+    }
+
+    @Test func showingEveryIconMovesNothing() async {
+        await engine.start()
+        _ = await engine.apply(plan(hiding: ["com.google.drivefs", "com.protonmail.bridge"]))
+        let drags = bar.drags.count
+        let report = await engine.apply(.showEverything)
+        #expect(report.moved.isEmpty)
+        #expect(bar.drags.count == drags)
+        #expect(!divider.isExpanded)
+        // Back to the layout: still no move, the divider just widens again.
+        _ = await engine.apply(plan(hiding: ["com.google.drivefs", "com.protonmail.bridge"]))
+        #expect(bar.drags.count == drags)
+        #expect(divider.isExpanded)
+    }
+
     @Test func iconsAlreadyInPlaceAreNotMovedAgain() async {
         await engine.start()
         _ = await engine.apply(plan(hiding: ["com.google.drivefs"]))

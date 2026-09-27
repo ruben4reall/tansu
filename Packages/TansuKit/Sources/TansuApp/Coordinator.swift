@@ -257,7 +257,8 @@ public final class Coordinator {
         var counts: [UUID: Int] = [:]
         for drawer in layout.drawers { counts[drawer.id] = interface.members(of: drawer.id).count }
         statusItems.update(drawers: layout.drawers, counts: counts, showsMain: interface.settings.behavior.showsTansuIcon,
-                           isFocusOn: mode == .focus, isShowingEverything: mode == .showEverything)
+                           isFocusOn: mode == .focus, isShowingEverything: mode == .showEverything,
+                           keepsAtRightEnd: interface.settings.behavior.keepsItemsAtRightEnd)
     }
 
     private func syncChrome() {

@@ -22,21 +22,30 @@ public final class StatusItemsController {
     private var drawerItems: [UUID: NSStatusItem] = [:]
     private var trackers: [ObjectIdentifier: HoverTracker] = [:]
     private var hoverTask: Task<Void, Never>?
+    /// The drawers, and whether Tansu's icon showed, the last time Tansu set their places itself.
+    private var placed: (drawers: [UUID], main: Bool)?
 
     static let mainAutosaveName = "tansu.main"
     static func autosaveName(for drawer: UUID) -> String { "tansu.drawer.\(drawer.uuidString)" }
 
     public init() {}
 
-    /// Makes the menu bar show exactly these drawers, in this order, and Tansu's icon if asked.
-    public func update(drawers: [Drawer], counts: [UUID: Int], showsMain: Bool, isFocusOn: Bool, isShowingEverything: Bool) {
+    /// Makes the menu bar show exactly these drawers, in this order, and Tansu's icon if asked. With
+    /// `keepsAtRightEnd`, Tansu's icons sit together next to Control Center, the drawers in the order of Settings.
+    public func update(drawers: [Drawer], counts: [UUID: Int], showsMain: Bool, isFocusOn: Bool, isShowingEverything: Bool,
+                       keepsAtRightEnd: Bool = true) {
+        let wantsMain = showsMain || isFocusOn
+        if keepsAtRightEnd, placed?.drawers != drawers.map(\.id) || placed?.main != wantsMain {
+            place(drawers: drawers)
+            placed = (drawers.map(\.id), wantsMain)
+        }
         let wanted = Set(drawers.map(\.id))
         for (id, item) in drawerItems where !wanted.contains(id) {
             NSStatusBar.system.removeStatusItem(item)
             drawerItems[id] = nil
         }
         // Tansu's icon first, then the drawers from right to left: macOS puts each new item on the left of the others.
-        if showsMain || isFocusOn {
+        if wantsMain {
             if main == nil { main = makeItem(autosaveName: Self.mainAutosaveName, position: 0, target: .all) }
             main?.button?.image = TansuGlyph.image(isFocusOn ? .focus : (isShowingEverything ? .open : .closed))
             main?.button?.toolTip = isFocusOn ? Strings.focusIsOnHelp : Strings.tansuIconHelp
@@ -91,6 +100,20 @@ public final class StatusItemsController {
         drawerItems.removeAll()
         if let main { NSStatusBar.system.removeStatusItem(main) }
         main = nil
+        trackers.removeAll()
+    }
+
+    /// Sets the places of Tansu's items afresh: its icon at the right end of the icons macOS lets move, the drawers on
+    /// its left in the order of Settings. macOS remembers each item's place as a number it compares with every other
+    /// app's, often stale: set once per launch and per reorder, Tansu's icons stay together where people look for
+    /// them. The items are made again, since macOS reads a place only when an item appears.
+    private func place(drawers: [Drawer]) {
+        removeAll()
+        let defaults = UserDefaults.standard
+        defaults.set(0.0, forKey: Self.positionKey(Self.mainAutosaveName))
+        for (offset, drawer) in drawers.reversed().enumerated() {
+            defaults.set(Double(offset + 1), forKey: Self.positionKey(Self.autosaveName(for: drawer.id)))
+        }
     }
 
     static func positionKey(_ autosaveName: String) -> String { "NSStatusItem Preferred Position \(autosaveName)" }
