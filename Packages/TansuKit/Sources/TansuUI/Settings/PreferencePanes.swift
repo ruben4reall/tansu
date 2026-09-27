@@ -29,14 +29,14 @@ struct BehaviorPane: View {
                     SettingRow(title: Strings.hoverDelay) {
                         HStack {
                             Slider(value: behavior(\.hoverDelay), in: Behavior.hoverDelayRange).frame(width: 180).accessibilityLabel(Text(verbatim: Strings.hoverDelay))
-                            Text(verbatim: Strings.seconds(String(format: "%.2g", model.settings.behavior.hoverDelay))).monospacedDigit().frame(width: 44)
+                            Text(verbatim: Strings.seconds(model.settings.behavior.hoverDelay.formatted(.number.precision(.fractionLength(0...2))))).monospacedDigit().frame(width: 44)
                         }
                     }
                 }
                 SettingRow(title: Strings.returnIconsAfter, note: Strings.returnIconsNote) {
                     HStack {
                         Slider(value: behavior(\.rehideDelay), in: 0...5, step: 0.5).frame(width: 180).accessibilityLabel(Text(verbatim: Strings.returnIconsAfter))
-                        Text(verbatim: Strings.seconds(String(format: "%.1f", model.settings.behavior.rehideDelay))).monospacedDigit().frame(width: 44)
+                        Text(verbatim: Strings.seconds(model.settings.behavior.rehideDelay.formatted(.number.precision(.fractionLength(1))))).monospacedDigit().frame(width: 44)
                     }
                 }
                 SettingRow(title: Strings.showTansuIcon, note: Strings.showTansuIconNote) {
@@ -75,7 +75,7 @@ struct BehaviorPane: View {
                     SettingRow(title: Strings.hoverDelay) {
                         HStack {
                             Slider(value: behavior(\.hideAgainDelay), in: Behavior.hideAgainDelayRange, step: 1).frame(width: 180).accessibilityLabel(Text(verbatim: Strings.hideAgainAutomatically))
-                            Text(verbatim: Strings.seconds(String(format: "%.0f", model.settings.behavior.hideAgainDelay))).monospacedDigit().frame(width: 44)
+                            Text(verbatim: Strings.seconds(model.settings.behavior.hideAgainDelay.formatted(.number.precision(.fractionLength(0))))).monospacedDigit().frame(width: 44)
                         }
                     }
                 }

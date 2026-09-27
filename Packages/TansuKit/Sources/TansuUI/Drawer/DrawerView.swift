@@ -140,7 +140,7 @@ public struct DrawerView: View {
                     .font(.system(size: 11, weight: .medium))
                     .padding(.horizontal, 8).padding(.vertical, 3)
                     .background(Capsule().fill(Theme.selection))
-                    .accessibilityLabel(Text(verbatim: "\(Strings.filter): \(filter)"))
+                    .accessibilityLabel(Text(verbatim: Strings.filterLabel(filter)))
             }
             Button {
                 if case .drawer(let id) = target { model.selectedDrawer = id }

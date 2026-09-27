@@ -22,7 +22,6 @@ public enum Strings {
     public static let openSystemSettings = String(localized: "Open System Settings", bundle: .module)
     public static let menuBar = String(localized: "Menu Bar", bundle: .module)
     public static let hidden = String(localized: "Hidden", bundle: .module)
-    public static let notRunning = String(localized: "Not running", bundle: .module)
     public static let beta = String(localized: "Beta", bundle: .module)
 
     public static func iconCount(_ count: Int) -> String {
@@ -82,6 +81,10 @@ public enum Strings {
     public static let hide = String(localized: "Hide", bundle: .module)
     public static let showInFinder = String(localized: "Show in Finder", bundle: .module)
     public static let filter = String(localized: "Filter", bundle: .module)
+    /// The drawer's filter for VoiceOver, with what is typed in it.
+    public static func filterLabel(_ text: String) -> String {
+        String(format: String(localized: "Filter: %@", bundle: .module), text)
+    }
     public static let noHiddenIcons = String(localized: "Nothing hidden and no drawers yet.", bundle: .module)
 
     public static func couldNotOpen(_ name: String) -> String {
@@ -299,7 +302,7 @@ public enum Strings {
 
     // MARK: General
 
-    public static let loginNeedsApproval = String(localized: "Allow Tansu in System Settings, General, Login Items.", bundle: .module)
+    public static let loginNeedsApproval = String(localized: "Allow Tansu in System Settings, General, Login Items & Extensions.", bundle: .module)
     public static let updates = String(localized: "Updates", bundle: .module)
     public static let checkAutomatically = String(localized: "Check for updates automatically", bundle: .module)
     public static let checkNow = String(localized: "Check Now", bundle: .module)

@@ -26,7 +26,8 @@ An app that Smart Sort puts in the wrong drawer is the easiest change to make: a
 
 - Swift 6 with strict concurrency; anything that touches AppKit is `@MainActor`.
 - The rules (drawers, Smart Sort, the layout planner, search) live in `TansuCore`, with tests. It imports no AppKit, so `swift test` covers every rule.
-- Every user-facing string goes through `Strings.swift` and the String Catalog, in plain English: short sentences, no exclamation marks, no em dash or en dash.
+- Every user-facing string goes through `Strings.swift` and the String Catalog, in plain English: short sentences, no exclamation marks, no em dash or en dash. After adding or changing one, run `node scripts/sync-strings.mjs`, then translate the new key into the nine other languages in `Localizable.xcstrings`, with the words macOS itself uses in each language: the tests fail while a translation is missing. Not sure of a language? Say so in the pull request, and a native speaker will check it.
+- Numbers, dates and times go through the formatters of the person's locale, never `String(format:)`: 0.5 s in English is 0,5 s in French.
 - Native controls and the system's own glass first; custom drawing only where macOS has no control, such as the menu bar preview in Settings.
 - Colors come from the brand tokens (`brand/tokens/tokens.json`) through `Theme.swift`.
 - Nothing polls at rest: listen to notifications rather than run timers. Before and after a change that could cost memory or processor time, measure with `scripts/bench.sh`: at rest, Tansu stays under 30 MB and 0.01 % of one core.
