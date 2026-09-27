@@ -64,6 +64,7 @@ public struct SearchView: View {
             }
         }
         .glassEffect(.regular, in: RoundedRectangle(cornerRadius: Theme.panelRadius, style: .continuous))
+        .shadow(color: .black.opacity(0.28), radius: 16, y: 8)
         .onAppear { fieldFocused = true }
         .onKeyPress(.escape) {
             onClose()

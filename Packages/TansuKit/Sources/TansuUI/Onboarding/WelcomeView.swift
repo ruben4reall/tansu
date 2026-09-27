@@ -112,7 +112,7 @@ public struct WelcomeView: View {
                     .font(.system(size: 14)).foregroundStyle(Theme.secondaryText)
             }
             if !model.icons.isEmpty {
-                Picker("", selection: $welcome.strategy) {
+                Picker(Strings.smartSortTitle, selection: $welcome.strategy) {
                     Text(verbatim: Strings.byPurpose).tag(SortStrategy.purpose)
                     Text(verbatim: Strings.byDeveloper).tag(SortStrategy.developer)
                     Text(verbatim: Strings.oneDrawer).tag(SortStrategy.justOne)

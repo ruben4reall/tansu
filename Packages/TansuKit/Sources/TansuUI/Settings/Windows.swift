@@ -104,18 +104,21 @@ public final class Toast {
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
             .glassEffect(.regular, in: Capsule())
+            .shadow(color: .black.opacity(0.25), radius: 12, y: 6)
+            .padding(Theme.panelShadowRoom)
         let hosting = NSHostingView(rootView: content)
         let size = hosting.fittingSize
+        let room = Theme.panelShadowRoom
         let center = anchor.map { CGPoint(x: $0.midX, y: $0.midY) } ?? NSEvent.mouseLocation
         let screen = NSScreen.screens.first { $0.frame.contains(center) } ?? NSScreen.main
         guard let visible = screen?.visibleFrame else { return }
-        let x = anchor.map { min(max($0.midX - size.width / 2, visible.minX + 8), visible.maxX - size.width - 8) } ?? (visible.midX - size.width / 2)
-        let panel = NSPanel(contentRect: CGRect(x: x, y: visible.maxY - size.height - 8, width: size.width, height: size.height),
+        let x = anchor.map { min(max($0.midX - size.width / 2, visible.minX + 8 - room), visible.maxX - size.width - 8 + room) } ?? (visible.midX - size.width / 2)
+        let panel = NSPanel(contentRect: CGRect(x: x, y: visible.maxY - size.height - 8 + room, width: size.width, height: size.height),
                             styleMask: [.nonactivatingPanel, .borderless], backing: .buffered, defer: false)
         panel.level = .statusBar
         panel.backgroundColor = .clear
         panel.isOpaque = false
-        panel.hasShadow = true
+        panel.hasShadow = false
         panel.ignoresMouseEvents = true
         panel.collectionBehavior = [.canJoinAllSpaces, .transient, .ignoresCycle]
         panel.contentView = hosting

@@ -61,7 +61,10 @@ public final class ExtrasReader: @unchecked Sendable {
             for app in targets {
                 group.addTask { [timeout, lock] in
                     let (items, answered) = Self.items(of: app, timeout: timeout)
-                    if !answered { lock.withLock { $0[app.pid] = Date() } }
+                    if !answered {
+                        lock.withLock { $0[app.pid] = Date() }
+                        Log.accessibility.debug("\(app.bundleID, privacy: .public) did not answer in time")
+                    }
                     return items
                 }
             }

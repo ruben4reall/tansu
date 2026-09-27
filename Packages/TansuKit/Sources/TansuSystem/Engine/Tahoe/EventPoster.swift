@@ -61,7 +61,7 @@ public final class SystemEventPoster: EventPosting {
     /// Undocumented field that also carries the window under the pointer.
     static let windowUnderPointerField = CGEventField(rawValue: 51)
     /// Marks Tansu's own events, for anyone watching the event stream.
-    static let userDataMarker: Int64 = 0x7A6E_7375 // "tansu"
+    nonisolated static let userDataMarker: Int64 = 0x7A6E_7375 // "tansu"
 
     private let source = CGEventSource(stateID: .hidSystemState)
 

@@ -86,10 +86,10 @@ struct DrawersPane: View {
             }
             SettingsGroup {
                 SettingRow(title: Strings.showNameInMenuBar) {
-                    Toggle("", isOn: binding(drawer, \.showsName)).labelsHidden().toggleStyle(.switch)
+                    Toggle(Strings.showNameInMenuBar, isOn: binding(drawer, \.showsName)).labelsHidden().toggleStyle(.switch)
                 }
                 SettingRow(title: Strings.showCount) {
-                    Toggle("", isOn: binding(drawer, \.showsCount)).labelsHidden().toggleStyle(.switch)
+                    Toggle(Strings.showCount, isOn: binding(drawer, \.showsCount)).labelsHidden().toggleStyle(.switch)
                 }
                 SettingRow(title: Strings.shortcut) {
                     ShortcutRecorder(shortcut: Binding(get: { drawer.shortcut }, set: { shortcut in
