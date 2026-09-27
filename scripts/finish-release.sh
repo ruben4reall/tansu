@@ -4,6 +4,10 @@
 # CHANGELOG.md), the new appcast item (EdDSA-signed with the key in the login keychain: macOS asks once to let
 # generate_appcast use it) and the Homebrew cask. scripts/release.sh runs it; after NOTARIZE_LATER, run it yourself.
 #
+# TANSU_SPARKLE_KEY_FILE names a copy of the key exported with generate_keys -x, for a release made while nobody can
+# answer the keychain's question. The copy never goes in the repository; verify-update.swift checks the signature
+# against the public key in the app either way.
+#
 # TANSU_APPCAST (default site/appcast.xml) and TANSU_DOWNLOAD_PREFIX (default the GitHub release of <version>) let the
 # update rehearsal serve a feed from this Mac.
 set -euo pipefail
@@ -44,7 +48,12 @@ printf '%s\n' "$NOTES" > "$UPDATES/Tansu-$VERSION.md"
 # -quit rather than "| head -1": with pipefail, find would die of SIGPIPE if it found a second copy.
 GENERATE_APPCAST=$(find .build/spm/artifacts -type f -name generate_appcast -perm -u+x -print -quit 2>/dev/null || true)
 [ -n "$GENERATE_APPCAST" ] || fail "Sparkle's tools are missing from .build/spm: build with scripts/release.sh first"
-"$GENERATE_APPCAST" --account "$ACCOUNT" --download-url-prefix "$PREFIX" --link "$SITE_URL" \
+KEY=(--account "$ACCOUNT")
+if [ -n "${TANSU_SPARKLE_KEY_FILE:-}" ]; then
+  [ -r "$TANSU_SPARKLE_KEY_FILE" ] || fail "TANSU_SPARKLE_KEY_FILE is not a readable file"
+  KEY=(--ed-key-file "$TANSU_SPARKLE_KEY_FILE")
+fi
+"$GENERATE_APPCAST" "${KEY[@]}" --download-url-prefix "$PREFIX" --link "$SITE_URL" \
   --full-release-notes-url "$REPO_URL/releases" --embed-release-notes --maximum-deltas 0 -o "$APPCAST" "$UPDATES"
 rm -rf "$UPDATES"   # a second copy of the image, only needed by generate_appcast
 swift scripts/verify-update.swift App/Info.plist "$APPCAST" "$VERSION" "$DMG"
