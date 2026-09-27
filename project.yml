@@ -42,6 +42,9 @@ targets:
       properties:
         CFBundleName: Tansu
         CFBundleDisplayName: Tansu
+        CFBundleDevelopmentRegion: en
+        # The languages of the String Catalog: macOS shows Tansu in the person's language, and Sparkle follows it.
+        CFBundleLocalizations: [en, fr, de, it, es, pt-BR, nl, ja, ko, zh-Hans]
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSMinimumSystemVersion: "26.0"
