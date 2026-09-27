@@ -25,25 +25,41 @@ public final class SettingsStore: @unchecked Sendable {
 
     public func load() -> (settings: TansuSettings, outcome: Outcome) {
         guard let data = defaults.data(forKey: key) else { return (.defaults, .fresh) }
-        guard let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
-            return (.defaults, .unreadable)
+        switch Self.read(data) {
+        case .success(let settings): return (settings, .loaded)
+        case .failure(.newerVersion(let version)): return (.defaults, .newerVersion(version))
+        case .failure(.unreadable): return (.defaults, .unreadable)
         }
-        if let version = object["schemaVersion"] as? Int, version > TansuSettings.currentSchemaVersion {
-            return (.defaults, .newerVersion(version))
-        }
-        guard let settings = try? JSONDecoder().decode(TansuSettings.self, from: data) else {
-            return (.defaults, .unreadable)
-        }
-        return (settings.clamped, .loaded)
     }
 
     public func save(_ settings: TansuSettings) {
+        guard let data = Self.data(settings) else { return }
+        defaults.set(data, forKey: key)
+    }
+
+    /// Why a settings file cannot be used.
+    public enum ReadError: Error, Equatable, Sendable {
+        case unreadable
+        case newerVersion(Int)
+    }
+
+    /// Settings from JSON (a saved value or an exported file), clamped to their ranges.
+    public static func read(_ data: Data) -> Result<TansuSettings, ReadError> {
+        guard let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return .failure(.unreadable) }
+        if let version = object["schemaVersion"] as? Int, version > TansuSettings.currentSchemaVersion {
+            return .failure(.newerVersion(version))
+        }
+        guard let settings = try? JSONDecoder().decode(TansuSettings.self, from: data) else { return .failure(.unreadable) }
+        return .success(settings.clamped)
+    }
+
+    /// Settings as JSON, keys sorted; `pretty` for a file people may read.
+    public static func data(_ settings: TansuSettings, pretty: Bool = false) -> Data? {
         var stored = settings.clamped
         stored.schemaVersion = TansuSettings.currentSchemaVersion
         let encoder = JSONEncoder()
-        encoder.outputFormatting = [.sortedKeys]
-        guard let data = try? encoder.encode(stored) else { return }
-        defaults.set(data, forKey: key)
+        encoder.outputFormatting = pretty ? [.sortedKeys, .prettyPrinted, .withoutEscapingSlashes] : [.sortedKeys]
+        return try? encoder.encode(stored)
     }
 
     /// Forgets everything: the next launch starts with the welcome.

@@ -50,6 +50,9 @@ public enum Theme {
     public static let radius: CGFloat = 12
     public static let cardRadius: CGFloat = 16
     public static let panelRadius: CGFloat = 22
+    /// Room around a glass panel inside its window, for the soft shadow SwiftUI draws: the window server's own shadow
+    /// outlines a transparent window's rectangle on macOS 26.
+    static let panelShadowRoom: CGFloat = 22
     public static let gutter: CGFloat = 20
 }
 

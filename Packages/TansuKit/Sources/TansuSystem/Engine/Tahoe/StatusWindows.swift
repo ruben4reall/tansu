@@ -46,17 +46,27 @@ public struct SystemStatusWindows: StatusWindowSource {
     }
 
     public func openMenuFrames(ownerPIDs: Set<pid_t>) -> [CGRect] {
+        Self.openMenuFrames(ownerPIDs: ownerPIDs)
+    }
+
+    /// Whether any app has a menu, a popover or a panel open from the menu bar.
+    public static func anyMenuIsOpen() -> Bool {
+        !openMenuFrames(ownerPIDs: nil).isEmpty
+    }
+
+    /// Frames of the menus and popovers on screen whose window belongs to one of `ownerPIDs`, or to anyone for nil.
+    static func openMenuFrames(ownerPIDs: Set<pid_t>?) -> [CGRect] {
         guard let list = CGWindowListCopyWindowInfo([.optionOnScreenOnly, .excludeDesktopElements], kCGNullWindowID)
             as? [[String: Any]] else { return [] }
         return list.compactMap { info -> CGRect? in
             guard let layer = info[kCGWindowLayer as String] as? Int,
-                  let owner = info[kCGWindowOwnerPID as String] as? Int, ownerPIDs.contains(pid_t(owner)),
+                  let owner = info[kCGWindowOwnerPID as String] as? Int, ownerPIDs?.contains(pid_t(owner)) ?? true,
                   let bounds = info[kCGWindowBounds as String] as? NSDictionary,
                   let frame = CGRect(dictionaryRepresentation: bounds) else { return nil }
             // Menus live at the pop-up menu level; popovers and panels that icons open sit at or near the menu
             // bar's levels and are taller than the bar itself.
-            let isMenu = layer == Self.popUpMenuLevel || layer == Self.popUpMenuLevel - 1
-            let isPanel = [Self.mainMenuLevel, Self.statusLevel].contains(layer) && frame.height > 40
+            let isMenu = layer == popUpMenuLevel || layer == popUpMenuLevel - 1
+            let isPanel = [mainMenuLevel, statusLevel].contains(layer) && frame.height > 40
             return isMenu || isPanel ? frame : nil
         }
     }

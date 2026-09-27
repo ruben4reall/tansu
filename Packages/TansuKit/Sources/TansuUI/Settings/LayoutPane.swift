@@ -36,7 +36,12 @@ struct LayoutPane: View {
             }
             ArrangementBoard(sections: sections, columns: 2, onDrop: { id, placement in
                 model.move(id, to: placement)
-            }, onMarkTap: { editingMark = $0 }, lockReason: lockReason)
+            }, onMarkTap: { editingMark = $0 }, lockReason: lockReason, onOpen: { id in
+                model.actions.openIcon(id, nil)
+            }, onAddShortcut: { id in
+                model.pendingIconShortcut = id
+                model.settingsPane = .shortcuts
+            })
         }
         .popover(item: Binding(get: { editingMark.map(DrawerEditing.init) }, set: { editingMark = $0?.id })) { editing in
             if let drawer = model.drawer(editing.id) {
@@ -127,21 +132,25 @@ struct RoomGauge: View {
     var body: some View {
         if let capacity = model.capacity {
             VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Text(verbatim: model.hasNotch ? Strings.roomBesideNotch : Strings.roomInMenuBar).font(.system(size: 13, weight: .medium))
-                    Spacer()
-                    Text(verbatim: Strings.roomUsed(Int(capacity.used.rounded()), of: Int(capacity.room.rounded())))
-                        .font(.system(size: 12, design: .rounded)).foregroundStyle(Theme.secondaryText)
-                }
-                GeometryReader { proxy in
-                    ZStack(alignment: .leading) {
-                        Capsule().fill(Color.white.opacity(0.08))
-                        Capsule()
-                            .fill(capacity.fits ? AnyShapeStyle(LinearGradient(colors: [Theme.accent, Theme.accentDeep], startPoint: .leading, endPoint: .trailing)) : AnyShapeStyle(Theme.warning))
-                            .frame(width: proxy.size.width * min(capacity.share, 1))
+                // The gauge reads as one sentence; the controls under it stay separate.
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Text(verbatim: model.hasNotch ? Strings.roomBesideNotch : Strings.roomInMenuBar).font(.system(size: 13, weight: .medium))
+                        Spacer()
+                        Text(verbatim: Strings.roomUsed(Int(capacity.used.rounded()), of: Int(capacity.room.rounded())))
+                            .font(.system(size: 12, design: .rounded)).foregroundStyle(Theme.secondaryText)
                     }
+                    GeometryReader { proxy in
+                        ZStack(alignment: .leading) {
+                            Capsule().fill(Color.white.opacity(0.08))
+                            Capsule()
+                                .fill(capacity.fits ? AnyShapeStyle(LinearGradient(colors: [Theme.accent, Theme.accentDeep], startPoint: .leading, endPoint: .trailing)) : AnyShapeStyle(Theme.warning))
+                                .frame(width: proxy.size.width * min(capacity.share, 1))
+                        }
+                    }
+                    .frame(height: 8)
                 }
-                .frame(height: 8)
+                .accessibilityElement(children: .combine)
                 if !capacity.fits {
                     HStack {
                         Text(verbatim: Strings.iconsDoNotFit(capacity.overflow.count)).font(.system(size: 12)).foregroundStyle(Theme.warning)
@@ -149,10 +158,30 @@ struct RoomGauge: View {
                         Button(Strings.moveThemToDrawer) { model.moveOverflowIntoDrawer() }.buttonStyle(PillButtonStyle(.primary))
                     }
                 }
+                Divider().opacity(0.4)
+                if model.engineKind != .goldenGate {
+                    SettingRow(title: Strings.iconSpacingRow,
+                               note: model.iconSpacingChanged ? Strings.iconSpacingPending : Strings.iconSpacingNote) {
+                        Picker(Strings.iconSpacingRow, selection: Binding(get: { model.iconSpacing }, set: { model.actions.setIconSpacing($0) })) {
+                            Text(verbatim: Strings.spacingStandard).tag(IconSpacing.standard)
+                            Text(verbatim: Strings.spacingSnug).tag(IconSpacing.snug)
+                            Text(verbatim: Strings.spacingCompact).tag(IconSpacing.compact)
+                            Text(verbatim: Strings.spacingTight).tag(IconSpacing.tight)
+                        }
+                        .pickerStyle(.segmented)
+                        .labelsHidden()
+                        .fixedSize()
+                    }
+                }
+                SettingRow(title: Strings.moveOverflowAutomatically, note: Strings.moveOverflowAutomaticallyNote) {
+                    Toggle(Strings.moveOverflowAutomatically, isOn: Binding(get: { model.settings.behavior.movesOverflowAutomatically }, set: { value in
+                        model.update { $0.behavior.movesOverflowAutomatically = value }
+                    }))
+                    .labelsHidden().toggleStyle(.switch)
+                }
             }
             .padding(14)
             .card(radius: Theme.radius)
-            .accessibilityElement(children: .combine)
         }
     }
 }
@@ -166,7 +195,7 @@ struct SmartSortSheet: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             Text(verbatim: Strings.smartSortTitle).font(.system(size: 20, weight: .semibold))
-            Picker("", selection: $welcome.strategy) {
+            Picker(Strings.smartSortTitle, selection: $welcome.strategy) {
                 Text(verbatim: Strings.byPurpose).tag(SortStrategy.purpose)
                 Text(verbatim: Strings.byDeveloper).tag(SortStrategy.developer)
                 Text(verbatim: Strings.oneDrawer).tag(SortStrategy.justOne)

@@ -15,7 +15,8 @@ final class FloatingPanel: NSPanel {
         hidesOnDeactivate = false
         backgroundColor = .clear
         isOpaque = false
-        hasShadow = true
+        // The shadow comes from SwiftUI, around the rounded glass (Theme.panelShadowRoom).
+        hasShadow = false
         isMovable = false
         animationBehavior = .utilityWindow
     }
@@ -48,15 +49,17 @@ public final class PanelController {
     public func show<Content: View>(_ content: Content, under anchor: CGRect, target: StatusItemsController.Target?) {
         close()
         let panel = FloatingPanel()
-        let hosting = NSHostingView(rootView: content.preferredColorScheme(nil))
+        let room = Theme.panelShadowRoom
+        let hosting = NSHostingView(rootView: content.padding(room).preferredColorScheme(nil))
         hosting.sizingOptions = [.intrinsicContentSize]
         panel.contentView = hosting
         let size = hosting.fittingSize
         let screen = NSScreen.screens.first { $0.frame.contains(CGPoint(x: anchor.midX, y: anchor.midY)) } ?? NSScreen.main
         let visible = screen?.visibleFrame ?? .zero
-        var origin = CGPoint(x: anchor.midX - size.width / 2, y: anchor.minY - size.height - 6)
-        origin.x = min(max(origin.x, visible.minX + 8), visible.maxX - size.width - 8)
-        origin.y = max(origin.y, visible.minY + 8)
+        // The glass itself starts `room` inside the window: its top edge sits 6 points under the anchor.
+        var origin = CGPoint(x: anchor.midX - size.width / 2, y: anchor.minY - 6 + room - size.height)
+        origin.x = min(max(origin.x, visible.minX + 8 - room), visible.maxX - size.width - 8 + room)
+        origin.y = max(origin.y, visible.minY + 8 - room)
         panel.setFrame(CGRect(origin: origin, size: size), display: true)
         panel.onClose = { [weak self] in self?.close() }
         self.panel = panel
