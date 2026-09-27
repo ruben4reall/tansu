@@ -54,12 +54,12 @@ public final class DisplayObserver {
 public enum LoginItemStatus: Sendable, Equatable {
     case enabled
     case disabled
-    /// Registered, waiting for the person to allow it in System Settings, Login Items.
+    /// Registered, waiting for the person to allow it in System Settings, General, Login Items & Extensions.
     case needsApproval
     case unavailable
 }
 
-/// Open at Login through SMAppService: macOS lists Tansu in Login Items, where it can also be removed.
+/// Open at Login through SMAppService: macOS lists Tansu in Login Items & Extensions, where it can also be removed.
 @MainActor
 public final class LoginItem {
     private let service: SMAppService

@@ -23,4 +23,5 @@ Tansu 1.0: your menu bar, in drawers. Free and open source, for macOS 26 Tahoe a
 - **One permission.** Accessibility, and nothing else: no Screen Recording, no Input Monitoring. Without it, Tansu says so plainly and moves nothing.
 - **Private.** No telemetry, no account. The only connection is the update check, which you can turn off.
 - **Native.** A four-step welcome, a dark Settings window in the manner of System Settings, Open at Login, shortcuts you can record for search, Focus, the All drawer, each drawer and each profile, and respect for Reduce Motion, Reduce Transparency and Increase Contrast.
+- **Ten languages.** English, French, German, Italian, Spanish, Brazilian Portuguese, Dutch, Japanese, Korean and Simplified Chinese, in the words macOS itself uses for the menu bar, Control Center and System Settings in each. Tansu follows the Mac's language, or the one chosen for it in System Settings.
 - **Updates.** Sparkle checks for new versions, signed with Tansu's EdDSA key and notarized by Apple. Homebrew: `brew install --cask ruben4reall/tap/tansu`.

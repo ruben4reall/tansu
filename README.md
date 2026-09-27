@@ -54,6 +54,9 @@ in one click, and asks for one permission.
   the hours you choose, or while the camera or microphone is on: switch to a profile, show a drawer or one icon, or
   turn on Focus. When the condition ends, the menu bar goes back.
 - **Nothing lost.** Quit Tansu, or let it crash, and every icon is back in the menu bar.
+- **Languages.** English, French, German, Italian, Spanish, Brazilian Portuguese, Dutch, Japanese, Korean and
+  Simplified Chinese, in the words macOS uses in each. Tansu follows your Mac's language, or the one you choose for it
+  in System Settings, General, Language & Region.
 
 <p align="center">
   <img src="docs/images/smart-sort.webp" alt="The welcome's Smart Sort step: the icons that stay in the menu bar, and the proposed drawers with their apps" width="400">
@@ -166,7 +169,8 @@ open .build/xcode/Build/Products/Debug/Tansu.app
 - Demo mode shows generic icons and never touches your menu bar or your settings: `-TansuDemo YES`. With
   `-TansuQuiet YES`, windows appear without taking the keyboard, for screenshots. `-TansuWelcomeStep 2`,
   `-TansuSettingsPane layout`, `-TansuOpenDrawer 0` (or `all`) and `-TansuSearch cl` open a given screen.
-- Every visible word is in the String Catalog: after changing `Strings.swift`, run `node scripts/sync-strings.mjs`.
+- Every visible word is in the String Catalog: after changing `Strings.swift`, run `node scripts/sync-strings.mjs`, then
+  translate each new key into the nine other languages (the tests check that none is missing).
 - `scripts/tests/run.sh` tests the release scripts and the documents; `scripts/release.sh` makes a disk image, ad hoc
   without a team, signed and notarized with one.
 
