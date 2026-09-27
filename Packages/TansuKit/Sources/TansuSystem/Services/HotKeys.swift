@@ -25,6 +25,7 @@ public final class ShortcutCenter {
         case focus
         case showEverything
         case drawer(UUID)
+        case profile(UUID)
         case icon(IconID)
     }
 
@@ -70,6 +71,9 @@ public final class ShortcutCenter {
         if let showEverything = settings.shortcuts.showEverything { wanted[.showEverything] = showEverything }
         for drawer in settings.layout.drawers {
             if let shortcut = drawer.shortcut { wanted[.drawer(drawer.id)] = shortcut }
+        }
+        for profile in settings.profiles {
+            if let shortcut = profile.shortcut { wanted[.profile(profile.id)] = shortcut }
         }
         for entry in settings.shortcuts.icons { wanted[.icon(entry.icon)] = entry.shortcut }
         return wanted

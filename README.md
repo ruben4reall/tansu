@@ -48,6 +48,11 @@ in one click, and asks for one permission.
 - **Appearance.** A tint for the menu bar, a color or a gradient, a hairline and a soft shadow: edge to edge, as a
   floating bar, or split in two, one piece behind the app menus and one behind the icons. Dark Mode can have a look of
   its own.
+- **Profiles.** Save the whole setup of your menu bar (the drawers, where each icon goes, the appearance) under a
+  name, and switch from Tansu's menu or with a shortcut: one for work, one for a talk.
+- **Triggers.** While an app is open or in front, on battery or below a battery level, with an external display, during
+  the hours you choose, or while the camera or microphone is on: switch to a profile, show a drawer or one icon, or
+  turn on Focus. When the condition ends, the menu bar goes back.
 - **Nothing lost.** Quit Tansu, or let it crash, and every icon is back in the menu bar.
 
 <p align="center">

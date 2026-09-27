@@ -41,6 +41,8 @@ public struct SettingsView: View {
         switch model.settingsPane {
         case .layout: LayoutPane(model: model)
         case .drawers: DrawersPane(model: model)
+        case .profiles: ProfilesPane(model: model)
+        case .triggers: TriggersPane(model: model)
         case .appearance: AppearancePane(model: model)
         case .behavior: BehaviorPane(model: model)
         case .shortcuts: ShortcutsPane(model: model)
@@ -53,6 +55,8 @@ public struct SettingsView: View {
         switch pane {
         case .layout: Strings.layout
         case .drawers: Strings.drawers
+        case .profiles: Strings.profiles
+        case .triggers: Strings.triggers
         case .appearance: Strings.appearance
         case .behavior: Strings.behavior
         case .shortcuts: Strings.shortcuts
@@ -65,6 +69,8 @@ public struct SettingsView: View {
         switch pane {
         case .layout: "rectangle.3.group"
         case .drawers: "archivebox"
+        case .profiles: "square.stack.3d.up"
+        case .triggers: "bolt"
         case .appearance: "paintbrush"
         case .behavior: "cursorarrow.click.2"
         case .shortcuts: "command"
