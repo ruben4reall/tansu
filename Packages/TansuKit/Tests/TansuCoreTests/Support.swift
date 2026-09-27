@@ -57,3 +57,11 @@ final class SequentialIDs: @unchecked Sendable {
         return UUID(uuidString: String(format: "00000000-0000-0000-0000-%012d", next))!
     }
 }
+
+/// Removes a preferences domain a test made, and the empty file macOS would otherwise leave in ~/Library/Preferences.
+func discardDefaults(_ name: String) {
+    UserDefaults(suiteName: name)?.removePersistentDomain(forName: name)
+    CFPreferencesAppSynchronize(name as CFString)
+    let file = FileManager.default.homeDirectoryForCurrentUser.appending(path: "Library/Preferences/\(name).plist")
+    try? FileManager.default.removeItem(at: file)
+}

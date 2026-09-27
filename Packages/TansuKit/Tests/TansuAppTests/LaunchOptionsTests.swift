@@ -8,7 +8,7 @@ import TansuUI
         let name = "ch.rubencatalao.tansu.launch.\(UUID().uuidString)"
         let defaults: UserDefaults
         init() { defaults = UserDefaults(suiteName: name)! }
-        deinit { defaults.removePersistentDomain(forName: name) }
+        deinit { discardDefaults(name) }
     }
 
     @Test func nothingSetMeansNormalLaunch() {
@@ -39,4 +39,12 @@ import TansuUI
         scratch.defaults.set("all", forKey: "TansuOpenDrawer")
         #expect(LaunchOptions.current(scratch.defaults).openDrawer == -1)
     }
+}
+
+/// Removes a preferences domain a test made, and the empty file macOS would otherwise leave in ~/Library/Preferences.
+func discardDefaults(_ name: String) {
+    UserDefaults(suiteName: name)?.removePersistentDomain(forName: name)
+    CFPreferencesAppSynchronize(name as CFString)
+    let file = FileManager.default.homeDirectoryForCurrentUser.appending(path: "Library/Preferences/\(name).plist")
+    try? FileManager.default.removeItem(at: file)
 }

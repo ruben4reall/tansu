@@ -232,7 +232,7 @@ import Testing
     @Test func theStoreDropsAnActiveProfileThatIsGone() {
         let name = "ch.rubencatalao.tansu.tests.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: name)!
-        defer { defaults.removePersistentDomain(forName: name) }
+        defer { discardDefaults(name) }
         let json = #"{"schemaVersion": 1, "activeProfile": "00000000-0000-0000-0000-000000000009", "profiles": []}"#
         defaults.set(Data(json.utf8), forKey: "settings")
         let (settings, outcome) = SettingsStore(defaults: defaults).load()
