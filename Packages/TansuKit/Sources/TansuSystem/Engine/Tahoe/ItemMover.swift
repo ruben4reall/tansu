@@ -32,6 +32,8 @@ public final class ItemMover {
     let poster: EventPosting
     let activity: UserActivitySource
     let pause: @Sendable (Duration) async -> Void
+    /// Whether a drop at this x lands where it is aimed: not beside the notch, nor near an app drawn around it.
+    let isSafeDrop: @MainActor (CGFloat) -> Bool
     /// The posting route that moved the last icon.
     public private(set) var workingRoute: PostingRoute?
 
@@ -51,11 +53,13 @@ public final class ItemMover {
 
     public init(
         windows: StatusWindowSource, poster: EventPosting, activity: UserActivitySource,
+        isSafeDrop: @escaping @MainActor (CGFloat) -> Bool = { _ in true },
         pause: @escaping @Sendable (Duration) async -> Void = { try? await Task.sleep(for: $0) }
     ) {
         self.windows = windows
         self.poster = poster
         self.activity = activity
+        self.isSafeDrop = isSafeDrop
         self.pause = pause
     }
 
@@ -73,6 +77,8 @@ public final class ItemMover {
             let target = destination.windowID.flatMap(frame(of:)) ?? destination.frame
             let start = CGPoint(x: current.midX, y: current.midY)
             let end = Self.dropPoint(for: destination, target: target, moving: current, variant: variant)
+            // Beside the notch a drop lands anywhere: that variant is left out.
+            guard isSafeDrop(end.x) else { continue }
             await poster.commandDrag(windowID: windowID, ownerPID: ownerPID, from: start, to: end,
                                      destinationWindowID: destination.windowID, route: route)
             // macOS animates a drop into place and lays the other icons out again: let it start, then judge where the
@@ -163,9 +169,20 @@ public final class ItemMover {
 
     func waitForPause() async throws {
         let deadline = ContinuousClock.now + Self.patience
-        while activity.isMouseButtonDown || activity.areModifiersDown || activity.secondsSincePointerMoved < Self.stillness {
-            if ContinuousClock.now > deadline { throw EngineError.personIsBusy }
+        while let reason = busyReason() {
+            if ContinuousClock.now > deadline {
+                Log.engine.notice("left for later: \(reason, privacy: .public)")
+                throw EngineError.personIsBusy
+            }
             await pause(.milliseconds(25))
         }
+    }
+
+    /// What the person is doing that a move would fight, if anything.
+    private func busyReason() -> String? {
+        if activity.isMouseButtonDown { return "a mouse button is held" }
+        if activity.areModifiersDown { return "a modifier key is held" }
+        if activity.secondsSincePointerMoved < Self.stillness { return "the pointer is moving" }
+        return nil
     }
 }

@@ -28,7 +28,8 @@ public enum EngineError: Error, Equatable, Sendable {
     case iconNotFound(IconID)
     /// The icon did not land where it was sent, after every attempt.
     case moveFailed(IconID)
-    /// The person kept using the mouse; Tansu waited, then gave up rather than interfere.
+    /// The person kept using the mouse or the keyboard; Tansu waited, then left the move for later rather than
+    /// interfere.
     case personIsBusy
     /// MenuBarAgent refused the restriction.
     case restrictionRefused(String)
@@ -38,12 +39,20 @@ public enum EngineError: Error, Equatable, Sendable {
 
 /// What an arrangement did.
 public struct ApplyReport: Equatable, Sendable {
+    /// Icons now on the side the plan wants, that were not there before.
     public var moved: [IconID]
+    /// Icons Tansu tried to move, in vain.
     public var failed: [IconID]
+    /// Icons left for later: the person was using the pointer or the keyboard.
+    public var postponed: [IconID]
+    /// When the engine asks to arrange again by itself: once the person pauses, or a while after a failed move.
+    public var tryAgainIn: Duration?
 
-    public init(moved: [IconID] = [], failed: [IconID] = []) {
+    public init(moved: [IconID] = [], failed: [IconID] = [], postponed: [IconID] = [], tryAgainIn: Duration? = nil) {
         self.moved = moved
         self.failed = failed
+        self.postponed = postponed
+        self.tryAgainIn = tryAgainIn
     }
 
     public static let nothing = ApplyReport()

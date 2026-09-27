@@ -10,6 +10,8 @@ public protocol DividerControlling: AnyObject {
     var isExpanded: Bool { get }
     func expand()
     func relax()
+    /// Keeps the divider's place for the next launch.
+    func rememberPlace()
     func remove()
 }
 
@@ -26,16 +28,20 @@ public final class Divider: DividerControlling {
     private var item: NSStatusItem?
     public private(set) var isExpanded = false
 
+    static let preferredPositionKey = "NSStatusItem Preferred Position \(autosaveName)"
+
     public init() {
         let defaults = UserDefaults.standard
-        let preferred = "NSStatusItem Preferred Position \(Self.autosaveName)"
-        // macOS forgets an item's place when the item is removed. Tansu keeps it and puts it back, so the divider
-        // comes back between the same icons at the next launch. Without a saved place, just left of Tansu's own items:
-        // every other icon starts on the concealed side (nothing disappears while the divider stays narrow), and
-        // arranging only carries the icons that show to its right, away from the notch. Far left, on a crowded menu bar,
-        // the divider would sit under the notch, where no drop lands.
-        let saved = defaults.object(forKey: Self.savedPositionKey) as? Double
-        defaults.set(saved ?? Self.firstPlace, forKey: preferred)
+        // macOS writes an item's place each time it is dragged, and forgets it when the item is removed. Tansu keeps a
+        // copy after each arrangement and at quit, and puts it back, so the divider comes back between the same icons
+        // at the next launch; after a crash, macOS's own value is still there, and newer. Without either, just left of
+        // Tansu's own items: every other icon starts on the concealed side (nothing disappears while the divider stays
+        // narrow), and the first arrangement drags the divider once to its place. Far left, on a crowded menu bar, the
+        // divider would sit under the notch, where no drop lands.
+        if defaults.object(forKey: Self.preferredPositionKey) == nil {
+            let saved = defaults.object(forKey: Self.savedPositionKey) as? Double
+            defaults.set(saved ?? Self.firstPlace, forKey: Self.preferredPositionKey)
+        }
         defaults.set(true, forKey: "NSStatusItem Visible \(Self.autosaveName)")
         defaults.set(true, forKey: "NSStatusItem VisibleCC \(Self.autosaveName)")
 
@@ -87,13 +93,17 @@ public final class Divider: DividerControlling {
         isExpanded = false
     }
 
+    public func rememberPlace() {
+        let defaults = UserDefaults.standard
+        if let position = defaults.object(forKey: Self.preferredPositionKey) as? Double {
+            defaults.set(position, forKey: Self.savedPositionKey)
+        }
+    }
+
     /// Keeps the divider's place for the next launch, then takes it out of the menu bar: every icon comes back.
     public func remove() {
         guard let item else { return }
-        let defaults = UserDefaults.standard
-        if let position = defaults.object(forKey: "NSStatusItem Preferred Position \(Self.autosaveName)") as? Double {
-            defaults.set(position, forKey: Self.savedPositionKey)
-        }
+        rememberPlace()
         item.length = Self.relaxedLength
         NSStatusBar.system.removeStatusItem(item)
         self.item = nil
