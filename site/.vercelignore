@@ -1,0 +1,9 @@
+/tools/
+/tests/
+/.shots/
+/package.json
+/README.md
+/CAPTURES.md
+/.gitignore
+/artifact-check.html
+/artifact-check.css

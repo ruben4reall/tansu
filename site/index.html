@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tansu: your menu bar, in drawers</title>
+  <meta name="description" content="A free, open source Mac app that sorts the icons of your menu bar into drawers, one icon each, and proposes the drawers for you. For macOS 26 and macOS 27.">
+  <link rel="canonical" href="https://gettansu.vercel.app/">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0C0B0A">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Tansu">
+  <meta property="og:url" content="https://gettansu.vercel.app/">
+  <meta property="og:title" content="Tansu: your menu bar, in drawers">
+  <meta property="og:description" content="Tansu sorts the icons of your menu bar into drawers, one icon each. Free and open source, for macOS 26 and 27.">
+  <meta property="og:image" content="https://gettansu.vercel.app/assets/brand/og.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta property="og:image:alt" content="Tansu: your menu bar, in drawers.">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/site.css">
+  <link rel="stylesheet" href="css/menubar.css">
+  <link rel="modulepreload" href="js/hero.js">
+  <script src="js/boot.js"></script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="g-cloud" viewBox="0 0 24 24"><path d="M7 18.5h9.5a4 4 0 0 0 .8-7.92 5.5 5.5 0 0 0-10.7.52A3.7 3.7 0 0 0 7 18.5Z"/></symbol>
+    <symbol id="g-lock" viewBox="0 0 24 24"><rect x="5.5" y="10.5" width="13" height="9.5" rx="2.2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5M12 14.3v2"/></symbol>
+    <symbol id="g-key" viewBox="0 0 24 24"><circle cx="7.5" cy="12" r="3.5"/><path d="M11 12h9.5M17.5 12v3M20.5 12v2.5"/></symbol>
+    <symbol id="g-chat" viewBox="0 0 24 24"><path d="M4.5 7.5a3 3 0 0 1 3-3h9a3 3 0 0 1 3 3V13a3 3 0 0 1-3 3h-6L6 19.5v-3.6A3 3 0 0 1 4.5 13Z"/></symbol>
+    <symbol id="g-envelope" viewBox="0 0 24 24"><rect x="3.5" y="6" width="17" height="12" rx="2.2"/><path d="M4.5 7.5l7.5 5.5 7.5-5.5"/></symbol>
+    <symbol id="g-sparkle" viewBox="0 0 24 24"><path d="M11 3.5c.7 4.6 2.4 6.3 7 7-4.6.7-6.3 2.4-7 7-.7-4.6-2.4-6.3-7-7 4.6-.7 6.3-2.4 7-7Z"/><path d="M18.5 15.6c.25 1.5.85 2.1 2.4 2.4-1.55.25-2.15.85-2.4 2.4-.25-1.55-.85-2.15-2.4-2.4 1.55-.3 2.15-.9 2.4-2.4Z"/></symbol>
+    <symbol id="g-box" viewBox="0 0 24 24"><path d="M12 3.8l7.6 4.1v8.2L12 20.2l-7.6-4.1V7.9Z"/><path d="M4.6 8L12 12l7.4-4M12 12v8.1"/></symbol>
+    <symbol id="g-terminal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="M7.5 9.5l3 2.5-3 2.5M13 15h3.5"/></symbol>
+    <symbol id="g-note" viewBox="0 0 24 24"><path d="M6.5 3.5H14l4.5 4.5v12.5h-12Z"/><path d="M14 3.5V8h4.5M9.5 12.5H15M9.5 16H15"/></symbol>
+    <symbol id="g-chart" viewBox="0 0 24 24"><path d="M4 20h16M7.5 16.5v-4M12 16.5V7M16.5 16.5V10"/></symbol>
+    <symbol id="g-wifi" viewBox="0 0 24 24"><path d="M3.3 9.4a12.3 12.3 0 0 1 17.4 0M6.2 12.4a8.2 8.2 0 0 1 11.6 0M9.1 15.3a4.1 4.1 0 0 1 5.8 0"/><circle cx="12" cy="18.4" r="1.3" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="g-battery" viewBox="0 0 24 24"><rect x="2.5" y="7.5" width="16.5" height="9" rx="2.6"/><rect x="4.5" y="9.5" width="10.5" height="5" rx="1.3" fill="currentColor" stroke="none"/><path d="M21.3 10.6v2.8"/></symbol>
+    <symbol id="g-toggles" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="6.5" rx="3.25"/><circle cx="17.25" cy="7.75" r="1.7" fill="currentColor" stroke="none"/><rect x="3.5" y="13" width="17" height="6.5" rx="3.25"/><circle cx="6.75" cy="16.25" r="1.7" fill="currentColor" stroke="none"/></symbol>
+    <!-- The drawers' own icons: filled template glyphs, one per kind of drawer. -->
+    <symbol id="d-files" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><path d="M6 19.5h11.2a4.6 4.6 0 0 0 1-9.1 6.3 6.3 0 0 0-12.3.7A4.3 4.3 0 0 0 6 19.5Z"/></g></symbol>
+    <symbol id="d-security" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><path fill-rule="evenodd" d="M7.4 10.2h9.2a2.4 2.4 0 0 1 2.4 2.4v5.5a2.4 2.4 0 0 1-2.4 2.4H7.4A2.4 2.4 0 0 1 5 18.1v-5.5a2.4 2.4 0 0 1 2.4-2.4ZM11.1 14.1a.9.9 0 0 1 1.8 0v2.3a.9.9 0 0 1-1.8 0Z"/></g><g fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M8.3 10.2V8a3.7 3.7 0 0 1 7.4 0v2.2"/></g></symbol>
+    <symbol id="d-messages" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><path d="M11 3h7a3 3 0 0 1 3 3v4a3 3 0 0 1-2.2 2.9l.9 2.6-3.1-2.5h-.1V8.5A1.5 1.5 0 0 0 15 7H8V6a3 3 0 0 1 3-3Z"/><path d="M6 8.5h6.5a3 3 0 0 1 3 3V15a3 3 0 0 1-3 3H9l-3.5 2.8v-2.9A3 3 0 0 1 3 15v-3.5a3 3 0 0 1 3-3Z"/></g></symbol>
+    <symbol id="d-ai" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><path d="M11 2.8c.8 5 2.7 6.9 7.7 7.7-5 .8-6.9 2.7-7.7 7.7-.8-5-2.7-6.9-7.7-7.7 5-.8 6.9-2.7 7.7-7.7Z"/><path d="M18.6 15.2c.3 1.8 1 2.5 2.8 2.8-1.8.3-2.5 1-2.8 2.8-.3-1.8-1-2.5-2.8-2.8 1.8-.3 2.5-1 2.8-2.8Z"/></g></symbol>
+    <symbol id="d-developer" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7L3.5 12l5 5M15.5 7l5 5-5 5M13.8 4.5l-3.6 15"/></g></symbol>
+    <symbol id="d-media" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M4 15.5V12a8 8 0 0 1 16 0v3.5"/></g><g fill="currentColor" stroke="none"><rect x="2.5" y="13" width="5.5" height="8" rx="2.2"/><rect x="16" y="13" width="5.5" height="8" rx="2.2"/></g></symbol>
+    <symbol id="d-devices" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><path fill-rule="evenodd" d="M4.7 3.5h14.6a2.2 2.2 0 0 1 2.2 2.2v8.6a2.2 2.2 0 0 1-2.2 2.2H4.7a2.2 2.2 0 0 1-2.2-2.2V5.7a2.2 2.2 0 0 1 2.2-2.2ZM4.6 5.6v8.8h14.8V5.6Z"/><path d="M10 16.5h4l.5 2.8h-5Z"/><rect x="7" y="19" width="10" height="2" rx="1"/></g></symbol>
+    <symbol id="d-system" viewBox="0 0 24 24"><g fill="currentColor" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"><path fill-rule="evenodd" d="M10.08 5.06L10.52 2.52L13.48 2.52L13.92 5.06L15.55 5.74L17.66 4.25L19.75 6.34L18.26 8.45L18.94 10.08L21.48 10.52L21.48 13.48L18.94 13.92L18.26 15.55L19.75 17.66L17.66 19.75L15.55 18.26L13.92 18.94L13.48 21.48L10.52 21.48L10.08 18.94L8.45 18.26L6.34 19.75L4.25 17.66L5.74 15.55L5.06 13.92L2.52 13.48L2.52 10.52L5.06 10.08L5.74 8.45L4.25 6.34L6.34 4.25L8.45 5.74ZM15.2 12a3.2 3.2 0 1 0-6.4 0a3.2 3.2 0 1 0 6.4 0Z"/></g></symbol>
+    <symbol id="d-productivity" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><path d="M6 4.5h12a2.5 2.5 0 0 1 2.5 2.5v2.5h-17V7A2.5 2.5 0 0 1 6 4.5Z"/><rect x="7" y="12.4" width="3.2" height="3.2" rx=".9"/><rect x="13.8" y="12.4" width="3.2" height="3.2" rx=".9"/><rect x="7" y="16.3" width="3.2" height="2.6" rx=".9"/></g><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="17" height="16" rx="2.5"/><path d="M8 2.5v3M16 2.5v3"/></g></symbol>
+    <symbol id="d-utilities" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><path fill-rule="evenodd" d="M5 8.5h14a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7.5a2 2 0 0 1 2-2ZM3 12.6h18V14H3Z"/><rect x="10.3" y="11.6" width="3.4" height="3.4" rx="1"/></g><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 8.5V7a1.8 1.8 0 0 1 1.8-1.8h2.4A1.8 1.8 0 0 1 15 7v1.5"/></g></symbol>
+    <symbol id="d-design" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><path fill-rule="evenodd" d="M12 3.3c-4.9 0-8.8 3.7-8.8 8.4 0 4.6 3.7 8.5 8.4 8.5 1.3 0 2-.8 2-1.8 0-.5-.2-.9-.5-1.2-.3-.4-.5-.8-.5-1.3 0-1 .8-1.9 1.9-1.9h2.1c2.8 0 5-2.2 5-5 0-3.8-4.1-5.7-9.6-5.7ZM7.6 12.9a1.45 1.45 0 1 0 0-2.9 1.45 1.45 0 0 0 0 2.9ZM9.9 8.8a1.45 1.45 0 1 0 0-2.9 1.45 1.45 0 0 0 0 2.9ZM14.3 8.3a1.45 1.45 0 1 0 0-2.9 1.45 1.45 0 0 0 0 2.9ZM17.1 11.4a1.45 1.45 0 1 0 0-2.9 1.45 1.45 0 0 0 0 2.9Z"/></g></symbol>
+    <symbol id="d-games" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><path fill-rule="evenodd" d="M7.3 6.5h9.4a4.6 4.6 0 0 1 4.5 3.7l.9 4.9a2.9 2.9 0 0 1-5 2.5l-1.8-2H8.7l-1.8 2a2.9 2.9 0 0 1-5-2.5l.9-4.9a4.6 4.6 0 0 1 4.5-3.7ZM7.2 9.2h1.6v1.5h1.5v1.6H8.8v1.5H7.2v-1.5H5.7v-1.6h1.5ZM15.6 11.1a1.1 1.1 0 1 0 0-2.2 1.1 1.1 0 0 0 0 2.2ZM17.9 13.3a1.1 1.1 0 1 0 0-2.2 1.1 1.1 0 0 0 0 2.2Z"/></g></symbol>
+    <symbol id="d-other" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><rect x="3" y="4" width="18" height="5" rx="1.6"/><path fill-rule="evenodd" d="M4.5 10.3h15V18a2.5 2.5 0 0 1-2.5 2.5H7A2.5 2.5 0 0 1 4.5 18ZM9.5 12.3h5a1.1 1.1 0 0 1 0 2.2h-5a1.1 1.1 0 0 1 0-2.2Z"/></g></symbol>
+  </svg>
+
+  <header class="nav">
+    <nav class="nav-inner" aria-label="Tansu">
+      <a class="nav-brand" href="#top"><img src="assets/brand/wordmark.svg" alt="Tansu" width="69" height="20"></a>
+      <div class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#smart-sort">Smart Sort</a>
+        <a href="#engines">Your Mac</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <a class="nav-cta" href="https://github.com/ruben4reall/tansu/releases/latest/download/Tansu.dmg">Download</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="wrap hero-copy">
+        <p class="hero-name">Tansu</p>
+        <h1 id="hero-title">Your menu bar, in drawers.</h1>
+      </div>
+
+      <div class="wrap scene-wrap">
+        <figure class="scene" data-scene role="img" aria-label="The right end of a Mac's menu bar, beside the notch. A crowded row of icons becomes three drawers, each shown as one icon: a cloud, a lock and two speech bubbles. The cloud drawer opens below it with its icons.">
+          <div class="lid">
+            <div class="display">
+              <div class="bar">
+                <svg class="item glyph i0" viewBox="0 0 24 24"><use href="#g-cloud"/></svg>
+                <svg class="item glyph i1" viewBox="0 0 24 24"><use href="#g-chat"/></svg>
+                <svg class="item glyph i2" viewBox="0 0 24 24"><use href="#g-lock"/></svg>
+                <svg class="item glyph i3" viewBox="0 0 24 24"><use href="#g-sparkle"/></svg>
+                <svg class="item glyph i4" viewBox="0 0 24 24"><use href="#g-envelope"/></svg>
+                <svg class="item glyph i5" viewBox="0 0 24 24"><use href="#g-chart"/></svg>
+                <svg class="item glyph i6" viewBox="0 0 24 24"><use href="#g-key"/></svg>
+                <svg class="item glyph i7" viewBox="0 0 24 24"><use href="#g-box"/></svg>
+                <svg class="item glyph i8" viewBox="0 0 24 24"><use href="#g-terminal"/></svg>
+                <svg class="item glyph i9" viewBox="0 0 24 24"><use href="#g-note"/></svg>
+                <span class="item drawer d0"><svg viewBox="0 0 24 24"><use href="#d-messages"/></svg></span>
+                <span class="item drawer d1"><svg viewBox="0 0 24 24"><use href="#d-security"/></svg></span>
+                <span class="item drawer d2"><svg viewBox="0 0 24 24"><use href="#d-files"/></svg></span>
+                <svg class="item system s-wifi" viewBox="0 0 24 24"><use href="#g-wifi"/></svg>
+                <svg class="item system s-battery" viewBox="0 0 24 24"><use href="#g-battery"/></svg>
+                <svg class="item system s-toggles" viewBox="0 0 24 24"><use href="#g-toggles"/></svg>
+                <span class="clock">Tue 10:08</span>
+              </div>
+              <div class="notch"></div>
+              <picture><source type="image/webp" srcset="assets/app/drawer-files.webp 1x, assets/app/drawer-files@2x.webp 2x"><img class="drawer-shot" src="assets/app/drawer-files.png" srcset="assets/app/drawer-files@2x.png 2x" width="280" height="125" alt="" fetchpriority="high"></picture>
+            </div>
+          </div>
+        </figure>
+        <button class="scene-toggle" type="button" data-scene-toggle aria-label="Pause the animation" hidden>
+          <svg class="icon-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9M11 3.5v9"/></svg>
+          <svg class="icon-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.2v9.6L12.8 8Z"/></svg>
+        </button>
+      </div>
+
+      <div class="wrap hero-foot">
+        <p class="hero-sub">Tansu sorts the icons crowding your menu bar into drawers, one icon each: the menu bar keeps what you look at all day, and everything else waits one click away.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://github.com/ruben4reall/tansu/releases/latest/download/Tansu.dmg">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v9M4 7l4 4 4-4M2.5 14h11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download for Mac
+          </a>
+          <a class="btn btn-secondary" href="https://github.com/ruben4reall/tansu">
+            <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+            View on GitHub
+          </a>
+        </div>
+        <ul class="facts" aria-label="At a glance">
+          <li>Free and open source</li>
+          <li>Version 1.0</li>
+          <li>macOS 26 and 27</li>
+          <li>One permission</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section-2" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <div class="center reveal">
+          <p class="eyebrow">How it works</p>
+          <h2 class="h2" id="how-title">Sorted in a minute. Open in two clicks.</h2>
+          <p class="lead">Tansu finds out which app owns each icon, proposes a drawer for every kind of thing you run, and lets you change anything before a single icon moves.</p>
+        </div>
+        <ol class="steps">
+          <li class="step reveal">
+            <div class="step-art art-propose" aria-hidden="true">
+              <div class="mini-list">
+                <p class="mini-row"><span class="mini-mark"><svg viewBox="0 0 24 24"><use href="#d-files"/></svg></span><span class="mini-name">Files &amp; Cloud</span><span class="mini-glyphs"><svg viewBox="0 0 24 24"><use href="#g-cloud"/></svg><svg viewBox="0 0 24 24"><use href="#g-box"/></svg><svg viewBox="0 0 24 24"><use href="#g-note"/></svg></span></p>
+                <p class="mini-row"><span class="mini-mark"><svg viewBox="0 0 24 24"><use href="#d-security"/></svg></span><span class="mini-name">Security &amp; VPN</span><span class="mini-glyphs"><svg viewBox="0 0 24 24"><use href="#g-lock"/></svg><svg viewBox="0 0 24 24"><use href="#g-key"/></svg></span></p>
+                <p class="mini-row"><span class="mini-mark"><svg viewBox="0 0 24 24"><use href="#d-messages"/></svg></span><span class="mini-name">Messages</span><span class="mini-glyphs"><svg viewBox="0 0 24 24"><use href="#g-chat"/></svg><svg viewBox="0 0 24 24"><use href="#g-envelope"/></svg></span></p>
+              </div>
+            </div>
+            <p class="step-num">1</p>
+            <h3>Smart Sort proposes</h3>
+            <p>On first launch, Tansu finds every icon in your menu bar and proposes drawers by purpose. You see the result before it applies.</p>
+          </li>
+          <li class="step reveal">
+            <div class="step-art art-adjust" aria-hidden="true">
+              <div class="mini-drawer">
+                <p class="mini-title"><span class="mini-mark"><svg viewBox="0 0 24 24"><use href="#d-files"/></svg></span>Files</p>
+                <div class="mini-tiles"><span class="mini-tile"><svg viewBox="0 0 24 24"><use href="#g-cloud"/></svg></span><span class="mini-tile"><svg viewBox="0 0 24 24"><use href="#g-box"/></svg></span></div>
+              </div>
+              <span class="mini-tile mini-lifted"><svg viewBox="0 0 24 24"><use href="#g-key"/></svg></span>
+              <div class="mini-drawer">
+                <p class="mini-title"><span class="mini-mark"><svg viewBox="0 0 24 24"><use href="#d-security"/></svg></span>Security</p>
+                <div class="mini-tiles"><span class="mini-tile"><svg viewBox="0 0 24 24"><use href="#g-lock"/></svg></span><span class="mini-tile mini-slot"></span></div>
+              </div>
+            </div>
+            <p class="step-num">2</p>
+            <h3>You adjust by dragging</h3>
+            <p>Drag an icon to another drawer, rename a drawer or give it another icon. Keep in the menu bar whatever you look at all day.</p>
+          </li>
+          <li class="step reveal">
+            <div class="step-art art-open" aria-hidden="true">
+              <div class="mini-bar">
+                <span class="mini-mark is-open"><svg viewBox="0 0 24 24"><use href="#d-files"/></svg><span class="mini-panel">
+                  <span class="mini-app"><span class="mini-tile"><svg viewBox="0 0 24 24"><use href="#g-cloud"/></svg></span><span class="mini-label">Cloud</span></span>
+                  <span class="mini-app"><span class="mini-tile"><svg viewBox="0 0 24 24"><use href="#g-box"/></svg></span><span class="mini-label">Backup</span></span>
+                  <span class="mini-app"><span class="mini-tile"><svg viewBox="0 0 24 24"><use href="#g-note"/></svg></span><span class="mini-label">Notes</span></span>
+                </span></span>
+                <span class="mini-mark"><svg viewBox="0 0 24 24"><use href="#d-security"/></svg></span><span class="mini-mark"><svg viewBox="0 0 24 24"><use href="#d-messages"/></svg></span><svg class="mini-sys" viewBox="0 0 24 24"><use href="#g-toggles"/></svg><span class="mini-clock">10:08</span>
+              </div>
+            </div>
+            <p class="step-num">3</p>
+            <h3>Click a drawer</h3>
+            <p>It drops in a glass panel with each app's icon and name. Click one and its own menu opens, as if it had never moved.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="smart-sort" aria-labelledby="sort-title">
+      <div class="wrap">
+        <div class="center reveal">
+          <p class="eyebrow">Smart Sort</p>
+          <h2 class="h2" id="sort-title">A drawer for every kind of thing.</h2>
+          <p class="lead">Smart Sort knows 244 menu bar apps by name. It finds out which app owns each icon, looks up its purpose and proposes the drawers in one click. New icons sort themselves.</p>
+        </div>
+        <ul class="kinds reveal" aria-label="Smart Sort's drawers">
+          <li class="kind"><span class="kind-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#d-files"/></svg></span><b>Files &amp; Cloud</b><span>Drives, sync and backups</span></li>
+          <li class="kind"><span class="kind-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#d-security"/></svg></span><b>Security &amp; VPN</b><span>VPNs, passwords, firewalls</span></li>
+          <li class="kind"><span class="kind-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#d-messages"/></svg></span><b>Messages</b><span>Chat, mail and calls</span></li>
+          <li class="kind"><span class="kind-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#d-ai"/></svg></span><b>AI</b><span>Assistants and dictation</span></li>
+          <li class="kind"><span class="kind-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#d-developer"/></svg></span><b>Developer</b><span>Containers, databases, Git</span></li>
+          <li class="kind"><span class="kind-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#d-media"/></svg></span><b>Music &amp; Video</b><span>Players, audio, capture</span></li>
+          <li class="kind"><span class="kind-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#d-devices"/></svg></span><b>Displays &amp; Devices</b><span>Screens, mice, keyboards</span></li>
+          <li class="kind"><span class="kind-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#d-system"/></svg></span><b>System</b><span>Battery, sensors, macOS</span></li>
+          <li class="kind"><span class="kind-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#d-productivity"/></svg></span><b>Productivity</b><span>Calendars, tasks, timers</span></li>
+          <li class="kind"><span class="kind-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#d-utilities"/></svg></span><b>Utilities</b><span>Clipboard, windows, files</span></li>
+          <li class="kind"><span class="kind-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#d-design"/></svg></span><b>Design</b><span>Colors and creative tools</span></li>
+          <li class="kind"><span class="kind-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#d-games"/></svg></span><b>Games</b><span>Launchers and stores</span></li>
+          <li class="kind kind-other"><span class="kind-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#d-other"/></svg></span><b>Other</b><span>Anything the catalog does not know yet</span></li>
+        </ul>
+
+        <div class="split reveal">
+          <figure class="shot-card">
+            <div class="shot-stage stage-square">
+              <picture><source type="image/webp" srcset="assets/app/welcome-sort.webp 1x, assets/app/welcome-sort@2x.webp 2x"><img src="assets/app/welcome-sort.png" srcset="assets/app/welcome-sort@2x.png 2x" width="680" height="632" alt="Tansu's welcome window at the Smart Sort step: Tansu found 16 icons, the icons that stay in the menu bar, the proposed drawers with their apps, and the choice between By Purpose, By Developer and One Drawer." loading="lazy"></picture>
+            </div>
+            <figcaption><b>Before anything moves</b>The proposal as a preview of your menu bar. Drag an icon to another drawer, click a drawer's icon to change it, then Sort My Menu Bar.</figcaption>
+          </figure>
+          <div class="options">
+            <div class="option">
+              <h3>By purpose</h3>
+              <p>A drawer for each kind of app you run, six at most. Lone icons gather in Other.</p>
+            </div>
+            <div class="option">
+              <h3>By developer</h3>
+              <p>One drawer per company, read from each app's signature: Google, Proton, Microsoft, each shown by its initial.</p>
+            </div>
+            <div class="option">
+              <h3>One drawer</h3>
+              <p>Every icon in a single drawer, for the quietest menu bar.</p>
+            </div>
+            <div class="option">
+              <h3>What stays</h3>
+              <p>The clock, Control Center, Battery, Wi-Fi and Sound stay in the menu bar, with anything you choose to keep.</p>
+            </div>
+            <div class="option">
+              <h3>New icons sort themselves</h3>
+              <p>Install an app and its icon goes straight to its drawer. Or let new icons show, or hide them: your choice.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-2" id="drawers" aria-labelledby="drawers-title">
+      <div class="wrap">
+        <div class="center reveal">
+          <p class="eyebrow">Drawers</p>
+          <h2 class="h2" id="drawers-title">Every icon, one click away.</h2>
+          <p class="lead">Click a drawer and a glass panel drops under it, each app shown with its own icon and name. Click one and the icon's real menu opens.</p>
+        </div>
+        <div class="split reveal">
+          <figure class="shot-card">
+            <div class="shot-stage stage-square">
+              <picture><source type="image/webp" srcset="assets/app/drawer-all.webp 1x, assets/app/drawer-all@2x.webp 2x"><img src="assets/app/drawer-all.png" srcset="assets/app/drawer-all@2x.png 2x" width="456" height="525" alt="The All drawer: one glass panel with every drawer on its own row, its icon and name on the left and its apps on the right." loading="lazy"></picture>
+            </div>
+            <figcaption><b>The All drawer</b>Click Tansu's own icon: every drawer and every hidden icon in one panel, right under it.</figcaption>
+          </figure>
+          <div class="options">
+            <div class="option">
+              <h3>Right under your click</h3>
+              <p>A drawer drops as a small glass panel right under its icon, never a long menu off to the side. Click an app and its own menu opens there.</p>
+            </div>
+            <div class="option">
+              <h3>Every icon, when you ask</h3>
+              <p>Option-click Tansu's icon, or rest the pointer on an empty part of the menu bar, click it or scroll there: every icon shows, in the menu bar or in the All drawer, and hides again once you are done.</p>
+            </div>
+            <div class="option">
+              <h3>Focus</h3>
+              <p>Press <kbd><span aria-hidden="true">⌃⌥⌘F</span><span class="visually-hidden">Control Option Command F</span></kbd> before a presentation or a screen share: everything but the clock and Control Center leaves. Press it again and it all comes back.</p>
+            </div>
+          </div>
+        </div>
+        <div class="split flip reveal">
+          <figure class="shot-card">
+            <div class="shot-stage">
+              <picture><source type="image/webp" srcset="assets/app/search.webp 1x, assets/app/search@2x.webp 2x"><img src="assets/app/search.png" srcset="assets/app/search@2x.png 2x" width="604" height="233" alt="Tansu's search field under the menu bar, with two letters typed and three matching icons, each with its app and its drawer." loading="lazy"></picture>
+            </div>
+            <figcaption><b>Search every icon</b>Press <kbd><span aria-hidden="true">⌃⌥⌘Space</span><span class="visually-hidden">Control Option Command Space</span></kbd>, type two letters, press Return: the icon's menu opens, wherever it lives.</figcaption>
+          </figure>
+          <div class="options">
+            <div class="option">
+              <h3>Keyboard first</h3>
+              <p>In a drawer, arrow keys move, Return opens and typing filters. Every drawer, and any single icon, can have its own shortcut.</p>
+            </div>
+            <div class="option">
+              <h3>Move without dragging</h3>
+              <p>Right-click an icon in a drawer to move it to another drawer, keep it in the menu bar or hide it.</p>
+            </div>
+            <div class="option">
+              <h3>Hidden, never lost</h3>
+              <p>Icons you never need to see stay out of the menu bar and one search away, in the All drawer too.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="automation" aria-labelledby="automation-title">
+      <div class="wrap">
+        <div class="center reveal">
+          <p class="eyebrow">Profiles and triggers</p>
+          <h2 class="h2" id="automation-title">The right menu bar at the right moment.</h2>
+          <p class="lead">Keep one setup for the laptop and one for the desk, and let Tansu switch between them, show a drawer or turn on Focus while something is true.</p>
+        </div>
+        <div class="split reveal">
+          <figure class="shot-card">
+            <div class="shot-stage">
+              <picture><source type="image/webp" srcset="assets/app/settings-profiles.webp 1x, assets/app/settings-profiles@2x.webp 2x"><img src="assets/app/settings-profiles.png" srcset="assets/app/settings-profiles@2x.png 2x" width="960" height="700" alt="Tansu's Settings at Profiles: a Laptop profile marked Active and a Desk profile with a Switch button, each with its drawers' icons and a shortcut." loading="lazy"></picture>
+            </div>
+            <figcaption><b>Profiles</b>Switch from Tansu's menu, from Settings, or with the profile's own shortcut.</figcaption>
+          </figure>
+          <div class="options">
+            <div class="option">
+              <h3>A whole setup</h3>
+              <p>The drawers, where each icon goes, and the appearance, under a name: one for the laptop alone, one for the desk, one for a talk.</p>
+            </div>
+            <div class="option">
+              <h3>Always up to date</h3>
+              <p>While a profile is active, every change you make is saved into it: switch away and back, and it is as you left it.</p>
+            </div>
+            <div class="option">
+              <h3>Yours to arrange</h3>
+              <p>Rename, duplicate, reorder or delete a profile; deleting the active one leaves your menu bar as it is.</p>
+            </div>
+          </div>
+        </div>
+        <div class="split flip reveal">
+          <figure class="shot-card">
+            <div class="shot-stage">
+              <picture><source type="image/webp" srcset="assets/app/settings-triggers.webp 1x, assets/app/settings-triggers@2x.webp 2x"><img src="assets/app/settings-triggers.png" srcset="assets/app/settings-triggers@2x.png 2x" width="960" height="700" alt="Tansu's Settings at Triggers: show Battery when it is at or below 20 percent, show the Messages drawer while the camera or the microphone is in use, and switch to the Desk profile when an external display is connected." loading="lazy"></picture>
+            </div>
+            <figcaption><b>Triggers</b>While the condition holds, the menu bar changes. When it ends, it goes back.</figcaption>
+          </figure>
+          <div class="options">
+            <div class="option">
+              <h3>When</h3>
+              <p>An app is open or in front, the Mac runs on battery or below a level you choose, an external display is connected, it is between two times, the camera or the microphone is in use.</p>
+            </div>
+            <div class="option">
+              <h3>Then</h3>
+              <p>Switch to a profile, show a drawer's icons or a single icon in the menu bar, or turn on Focus. Your own Focus or Show Every Icon always wins.</p>
+            </div>
+            <div class="option">
+              <h3>Nothing waits in the background</h3>
+              <p>Each trigger listens for the one change it needs, and only while it is on. No polling, and no new permission.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-2" id="settings" aria-labelledby="settings-title">
+      <div class="wrap">
+        <div class="center reveal">
+          <p class="eyebrow">Settings</p>
+          <h2 class="h2" id="settings-title">The top right of your Mac, your way.</h2>
+          <p class="lead">Layout draws your menu bar at its real size, the notch included, with the room left beside it. Appearance tints it, floats it or splits it in two.</p>
+        </div>
+        <div class="split reveal">
+          <figure class="shot-card">
+            <div class="shot-stage">
+              <picture><source type="image/webp" srcset="assets/app/settings-layout.webp 1x, assets/app/settings-layout@2x.webp 2x"><img src="assets/app/settings-layout.png" srcset="assets/app/settings-layout@2x.png 2x" width="960" height="700" alt="Tansu's Settings at Layout: the menu bar drawn at its real size with the notch, the gauge of the room beside it, the space between icons, and a card for each drawer." loading="lazy"></picture>
+            </div>
+            <figcaption><b>Layout</b>Drag icons between the menu bar, your drawers and Hidden, and watch the room beside the notch.</figcaption>
+          </figure>
+          <div class="options">
+            <div class="option">
+              <h3>At its real size</h3>
+              <p>Your menu bar as Tansu sees it, the notch included, with the room left beside it and the icons that would not fit.</p>
+            </div>
+            <div class="option">
+              <h3>Room for more icons</h3>
+              <p>Tighten the space between icons on macOS 26, and let icons that stop fitting beside the notch move into a drawer by themselves.</p>
+            </div>
+            <div class="option">
+              <h3>Drag, or right-click</h3>
+              <p>Move an icon between the menu bar, your drawers and Hidden by dragging it, or with a right-click that also opens it or gives it a shortcut.</p>
+            </div>
+          </div>
+        </div>
+        <div class="split flip reveal">
+          <figure class="shot-card">
+            <div class="shot-stage">
+              <picture><source type="image/webp" srcset="assets/app/settings-appearance.webp 1x, assets/app/settings-appearance@2x.webp 2x"><img src="assets/app/settings-appearance.png" srcset="assets/app/settings-appearance@2x.png 2x" width="960" height="700" alt="Tansu's Settings at Appearance: a floating bar with a honey to ember gradient over a live preview, the shape choice between Full Width, Floating and Split, the tint's colors and strength, the hairline border and the soft shadow." loading="lazy"></picture>
+            </div>
+            <figcaption><b>Appearance</b>Every change shows at once in the preview, and in your menu bar.</figcaption>
+          </figure>
+          <div class="options">
+            <div class="option">
+              <h3>Full width, floating or split</h3>
+              <p>Tint the whole bar, float it with round ends, or split it in two pieces that leave the notch and the middle free.</p>
+            </div>
+            <div class="option">
+              <h3>A color or a gradient</h3>
+              <p>With its strength, a hairline along the bottom and a soft shadow underneath.</p>
+            </div>
+            <div class="option">
+              <h3>A look for Dark Mode</h3>
+              <p>Give Dark Mode a tint of its own: Tansu follows your Mac as it switches.</p>
+            </div>
+          </div>
+        </div>
+        <div class="features reveal">
+          <div class="feature">
+            <h3>An icon for each drawer</h3>
+            <p>Each drawer shows a monochrome icon, drawn like the rest of your menu bar, with its name or its count if you like. A drawer can also show an emoji or a few letters, if you prefer.</p>
+          </div>
+          <div class="feature">
+            <h3>A shortcut for everything</h3>
+            <p>Search, the All drawer, Show Every Icon, Focus, each drawer, each profile, and any single icon, whose menu opens wherever it lives.</p>
+          </div>
+          <div class="feature">
+            <h3>Tansu's icons where you want them</h3>
+            <p>Next to Control Center by default, its icon then your drawers in the order you set. Or place them yourself with a Command-drag.</p>
+          </div>
+          <div class="feature">
+            <h3>In your language</h3>
+            <p>English, French, German, Italian, Spanish, Portuguese, Dutch, Japanese, Korean and Chinese, following the language of your Mac.</p>
+          </div>
+          <div class="feature">
+            <h3>For everyone</h3>
+            <p>Every control has a name for VoiceOver, the keyboard reaches everything, and panels follow Reduce Motion, Reduce Transparency and Increase Contrast.</p>
+          </div>
+          <div class="feature">
+            <h3>Your setup in a file</h3>
+            <p>Export your drawers, profiles and settings, and import them on another Mac. For a bug report, Copy Diagnostics gathers what helps, and sends nothing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="engines" aria-labelledby="engines-title">
+      <div class="wrap">
+        <div class="center reveal">
+          <p class="eyebrow">Your Mac</p>
+          <h2 class="h2" id="engines-title">Two versions of macOS. Two honest engines.</h2>
+          <p class="lead">macOS 27 rebuilt the menu bar, so Tansu carries an engine for each version. It picks the right one at launch, and Settings tells you which one runs.</p>
+        </div>
+        <div class="engines reveal">
+          <article class="engine">
+            <p class="engine-os">macOS 26 Tahoe</p>
+            <h3>Icon by icon.</h3>
+            <p>Tansu keeps an invisible divider in your menu bar and moves icons behind it with Command-drags, as you would by hand. The pointer is hidden while icons move, then put back.</p>
+            <ul class="specs">
+              <li><span>Hides</span><span>Any icon, one at a time</span></li>
+              <li><span>Opening an icon</span><span>It steps beside its drawer while its menu is open</span></li>
+              <li><span>The pointer</span><span>Hidden during a move</span></li>
+              <li><span>While icons are hidden</span><span>Nothing else changes</span></li>
+            </ul>
+          </article>
+          <article class="engine">
+            <p class="engine-os">macOS 27 Golden Gate <span class="badge">Beta</span></p>
+            <h3>App by app.</h3>
+            <p>macOS 27 draws the whole menu bar itself, and apps can no longer move its icons. Tansu asks macOS to show every app except those in drawers. It never moves the pointer.</p>
+            <ul class="specs">
+              <li><span>Hides</span><span>Whole apps: an app with two icons hides both</span></li>
+              <li><span>The pointer</span><span>Never moves</span></li>
+              <li><span>While icons are hidden</span><span>macOS 27 also hides Focus and the camera and microphone indicators</span></li>
+              <li><span>Where Tansu runs</span><span>The Applications folder</span></li>
+            </ul>
+          </article>
+        </div>
+        <div class="check reveal">
+          <b>Support for macOS 27 is in beta</b> until it has run on many Macs. If anything looks wrong, Show Every Icon brings everything back in one click, and quitting Tansu does too. An issue on GitHub helps fix it.
+        </div>
+
+        <h3 class="subhead reveal">Light on your Mac</h3>
+        <div class="stats reveal">
+          <div class="stat"><p class="num"><span data-slot="memory-at-rest">…</span><small>MB</small></p><h4>Memory at rest</h4><p>What Tansu uses while it waits. Settings shows the live figure.</p></div>
+          <div class="stat"><p class="num">0</p><h4>Timers at rest</h4><p>No polling: Tansu wakes when an app starts or quits, a display changes, or you click. A time trigger sets one alarm for its next change.</p></div>
+          <div class="stat"><p class="num">1<small>permission</small></p><h4>Accessibility</h4><p>Never Screen Recording, never Input Monitoring.</p></div>
+          <div class="stat"><p class="num">1<small>connection</small></p><h4>The update check</h4><p>Which you can turn off. Nothing else leaves your Mac.</p></div>
+        </div>
+        <p class="fine center reveal">Every Mac that runs macOS 26 or 27, Apple silicon and Intel; Intel Macs stop at macOS 26. With a notch, Tansu measures the room beside it. With several displays, a drawer opens on the one you clicked.</p>
+      </div>
+    </section>
+
+    <section class="section section-2" id="compare" aria-labelledby="compare-title">
+      <div class="wrap">
+        <div class="center reveal">
+          <p class="eyebrow">Side by side</p>
+          <h2 class="h2" id="compare-title">Tansu and the other menu bar apps.</h2>
+          <p class="lead">As of September 2026, from each app's website, repository and release notes. Where we could not confirm a detail, the table says so.</p>
+        </div>
+        <div class="table-scroll reveal">
+          <table class="compare">
+            <caption class="visually-hidden">Tansu compared with Bartender 6, Bartender 7, Ice, Thaw and Hidden Bar, as of September 2026</caption>
+            <thead>
+              <tr><th scope="col"><span class="visually-hidden">Feature</span></th><th scope="col" class="us">Tansu</th><th scope="col">Bartender 6</th><th scope="col">Bartender 7</th><th scope="col">Ice</th><th scope="col">Thaw</th><th scope="col">Hidden Bar</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Price</th><td class="us">Free</td><td>$20</td><td>$24.99, or $19.99 a year</td><td>Free</td><td>Free</td><td>Free</td></tr>
+              <tr><th scope="row">License</th><td class="us">MIT</td><td>Closed</td><td>Closed</td><td>GPL-3.0</td><td>GPL-3.0</td><td>MIT</td></tr>
+              <tr><th scope="row">macOS 26 Tahoe</th><td class="us">Yes</td><td>Yes</td><td>Not yet</td><td>Beta only</td><td>Yes</td><td>Yes</td></tr>
+              <tr><th scope="row">macOS 27 Golden Gate</th><td class="us">Beta</td><td>No</td><td>Yes</td><td>No</td><td>Alpha</td><td>Yes, per app</td></tr>
+              <tr><th scope="row">Groups as one icon</th><td class="us">Yes</td><td>Yes</td><td>Not on macOS 27</td><td>No</td><td>No</td><td>No</td></tr>
+              <tr><th scope="row">Automatic sorting</th><td class="us">Smart Sort</td><td>No</td><td>No</td><td>No</td><td>No</td><td>No</td></tr>
+              <tr><th scope="row">Profiles</th><td class="us">Yes</td><td>Presets</td><td>Yes</td><td>Planned</td><td>Yes</td><td>No</td></tr>
+              <tr><th scope="row">Triggers</th><td class="us">Yes</td><td>Yes</td><td>Yes</td><td>Planned</td><td>Yes</td><td>No</td></tr>
+              <tr><th scope="row">Search</th><td class="us">Yes</td><td>Yes</td><td>Not verified</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+              <tr><th scope="row">Space between icons</th><td class="us">macOS 26</td><td>Yes</td><td>Not verified</td><td>Beta</td><td>Yes</td><td>No</td></tr>
+              <tr><th scope="row">Menu bar shapes</th><td class="us">Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+              <tr><th scope="row">Screen Recording</th><td class="us">Not needed</td><td>Required</td><td>Optional</td><td>Optional</td><td>Optional</td><td>Not needed</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="fine swipe-hint">Swipe the table to see every app.</p>
+        <p class="fine center reveal">Bartender 6 and 7, Ice, Thaw and Hidden Bar as of September 2026. &ldquo;Not verified&rdquo; means we could not confirm it either way. Ice's last stable release dates from October 2024; Thaw is a fork of Ice. Corrections are welcome on GitHub.</p>
+      </div>
+    </section>
+
+    <section class="section" id="privacy" aria-labelledby="privacy-title">
+      <div class="wrap">
+        <div class="center reveal">
+          <p class="eyebrow">Privacy</p>
+          <h2 class="h2" id="privacy-title">It opens your icons. It never looks at your screen.</h2>
+          <p class="lead">Tansu needs to know which app owns each icon, and nothing else.</p>
+        </div>
+        <div class="promises">
+          <div class="promise reveal">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4l10 4v7c0 6.5-4.3 11.2-10 13-5.7-1.8-10-6.5-10-13V8Z"/><path d="M11.5 16l3 3 6-6.5"/></svg>
+            <h3>One permission</h3>
+            <p>Accessibility, to see which app owns each icon and to open it for you. Never Screen Recording, never Input Monitoring.</p>
+          </div>
+          <div class="promise reveal">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11V8a3 3 0 0 1 3-3h3M21 5h3a3 3 0 0 1 3 3v3M27 21v3a3 3 0 0 1-3 3h-3M11 27H8a3 3 0 0 1-3-3v-3"/><path d="M8.5 23.5l15-15"/></svg>
+            <h3>No screenshots</h3>
+            <p>Tansu never takes a picture of your menu bar. Drawers show each app's own icon, read from the app itself.</p>
+          </div>
+          <div class="promise reveal">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.2 22.8a9.6 9.6 0 0 1 0-13.6M22.8 9.2a9.6 9.6 0 0 1 0 13.6M12.6 19.4a4.8 4.8 0 0 1 0-6.8M19.4 12.6a4.8 4.8 0 0 1 0 6.8"/><path d="M6 26L26 6"/></svg>
+            <h3>No telemetry</h3>
+            <p>No account, no analytics, no crash reports. The only connection is the update check, and you can turn it off.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-2" id="open-source" aria-labelledby="oss-title">
+      <div class="wrap">
+        <div class="reveal">
+          <p class="eyebrow">Open source</p>
+          <h2 class="h2" id="oss-title">Every line is on GitHub.</h2>
+          <p class="lead">Tansu is MIT licensed: read exactly what runs on your Mac, change it, ship your own. Issues and pull requests are welcome.</p>
+        </div>
+        <a class="repo reveal" href="https://github.com/ruben4reall/tansu">
+          <span class="repo-top"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg><b>ruben4reall / tansu</b></span>
+          <span class="repo-desc">Your menu bar, in drawers. Native Swift, two menu bar engines behind one protocol, and every Smart Sort rule tested on its own.</span>
+          <span class="repo-meta"><span><i class="lang-dot"></i>Swift</span><span>MIT License</span><span>macOS 26 and 27</span></span>
+        </a>
+        <div class="tiles reveal">
+          <a class="tile" href="https://github.com/ruben4reall/tansu/tree/main/Packages/TansuKit">
+            <h3>Swift 6</h3>
+            <p>Native Swift and SwiftUI with strict concurrency. Sparkle, for updates, is the only dependency.</p>
+          </a>
+          <a class="tile" href="https://github.com/ruben4reall/tansu/blob/main/LICENSE">
+            <h3>MIT</h3>
+            <p>Read it, change it, ship your own. The whole license fits in three paragraphs.</p>
+          </a>
+          <a class="tile" href="https://github.com/ruben4reall/tansu/blob/main/Packages/TansuKit/Sources/TansuSystem/PrivateAPI.swift">
+            <h3>Private functions in one file</h3>
+            <p>Hiding the pointer on macOS 26 and the menu bar of macOS 27 need a few private functions. They all live in PrivateAPI.swift and are looked up at run time: if one disappears, only its feature turns off.</p>
+          </a>
+          <a class="tile" href="https://github.com/ruben4reall/tansu/tree/main/Packages/TansuKit/Tests">
+            <h3>Tests</h3>
+            <p>Smart Sort and the layout planner are tested on their own, the engines against fake menu bars, and guard tests keep networking and screen capture out of the code.</p>
+          </a>
+        </div>
+        <div class="catalog reveal">
+          <div class="catalog-copy">
+            <h3>The catalog is open.</h3>
+            <p>Smart Sort starts from a list of menu bar apps and their drawers. Is yours missing, or in the wrong drawer? Add its bundle identifier to Catalog.json and open a pull request.</p>
+            <p class="catalog-link"><a href="https://github.com/ruben4reall/tansu/blob/main/Packages/TansuKit/Sources/TansuCore/Resources/Catalog.json">Open Catalog.json on GitHub</a></p>
+          </div>
+          <pre class="code"><code>"apps": {
+  "com.docker.docker": "developer",
+  "com.getdropbox.dropbox": "files",
+  "com.example.yourapp": "utilities"
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq" aria-labelledby="faq-title">
+      <div class="wrap-narrow">
+        <h2 class="h2 reveal" id="faq-title">Questions</h2>
+        <div class="faq reveal">
+          <details>
+            <summary>Is it free?</summary>
+            <div><p>Yes. No trial, no subscription, no account: Tansu is free and open source under the MIT License.</p></div>
+          </details>
+          <details>
+            <summary>Does it work on macOS 27?</summary>
+            <div><p>Yes, in beta. macOS 27 draws the menu bar itself and only lets apps hide whole apps, so there an app with two icons hides both, and Tansu never moves the pointer. While icons are hidden, macOS 27 also hides Focus and the camera and microphone indicators.</p><p>macOS 27 only lets apps in the Applications folder change the menu bar: Tansu offers to move itself there.</p></div>
+          </details>
+          <details>
+            <summary>Why does Tansu need Accessibility?</summary>
+            <div><p>To see which app owns each icon, and to open an icon's menu for you. macOS only shares both with apps you allow in System Settings, Privacy &amp; Security, Accessibility. Tansu asks for nothing else: never Screen Recording, never Input Monitoring.</p></div>
+          </details>
+          <details>
+            <summary>Will it slow my Mac?</summary>
+            <div><p>No. At rest Tansu polls nothing: it wakes when an app starts or quits, when a display changes, or when you click, and a time trigger sets one alarm for its next change. Its memory at rest is in the Your Mac section above, and Settings, General shows the live figure.</p></div>
+          </details>
+          <details>
+            <summary>What happens if Tansu quits or crashes?</summary>
+            <div><p>Every icon comes back. On macOS 26 the invisible divider that hides them leaves the menu bar with Tansu; on macOS 27, macOS drops Tansu's request as soon as Tansu stops. On macOS 26 the order of your icons stays as Tansu left it, as if you had arranged them yourself.</p></div>
+          </details>
+          <details>
+            <summary>Can I hide Apple's icons?</summary>
+            <div><p>On macOS 26, yes: Wi-Fi, Battery, Sound and the other Control Center icons can go into a drawer like any other. macOS keeps the clock and Control Center itself in place. On macOS 27, Apple's own icons cannot be hidden, so they stay in the menu bar.</p></div>
+          </details>
+          <details>
+            <summary>Does it read my screen?</summary>
+            <div><p>No. Tansu never asks for Screen Recording and never takes a picture of your menu bar. Through Accessibility it reads each icon's app, position and label, and drawers show the apps' own icons, read from the apps themselves.</p></div>
+          </details>
+          <details>
+            <summary>How is it different from Bartender or Ice?</summary>
+            <div><p>Tansu gathers icons into drawers, each shown in the menu bar as a single icon, proposes those drawers itself, and works on macOS 26 and 27 with Accessibility alone. Profiles, triggers, search, shapes and the space between icons are there too. It is free and MIT licensed. Bartender is paid and closed, and version 6 needs Screen Recording; Ice no longer works on macOS 27. The table above compares them line by line.</p></div>
+          </details>
+          <details>
+            <summary>Can the menu bar change by itself?</summary>
+            <div><p>Yes, with triggers. While an app is open or in front, the Mac runs on battery, an external display is connected, during the hours you choose or while the camera or the microphone is in use, Tansu can switch to a profile, show a drawer or a single icon, or turn on Focus. When the condition ends, the menu bar goes back.</p></div>
+          </details>
+          <details>
+            <summary>Is Tansu in my language?</summary>
+            <div><p>Tansu speaks English, French, German, Italian, Spanish, Portuguese, Dutch, Japanese, Korean and Chinese, and follows the language of your Mac.</p></div>
+          </details>
+          <details>
+            <summary>How do I uninstall it?</summary>
+            <div><p>Right-click any drawer and choose Quit Tansu: every icon comes back. Then move Tansu to the Trash, or run <code>brew uninstall --cask tansu</code> if you installed it with Homebrew. Its settings live in one preferences file, <code>ch.rubencatalao.tansu</code>.</p></div>
+          </details>
+          <details>
+            <summary>Can I suggest an app for Smart Sort?</summary>
+            <div><p>Yes, please. Smart Sort starts from a catalog of 244 menu bar apps, kept in one JSON file in the repository. Add your app's bundle identifier and its drawer and open a pull request, or open an issue with the app's name.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section download" id="download" aria-labelledby="download-title">
+      <div class="wrap">
+        <div class="download-marks reveal" aria-hidden="true"><span><svg viewBox="0 0 24 24"><use href="#d-files"/></svg></span><span><svg viewBox="0 0 24 24"><use href="#d-security"/></svg></span><span><svg viewBox="0 0 24 24"><use href="#d-messages"/></svg></span></div>
+        <h2 class="h2 reveal" id="download-title">A place for every icon.</h2>
+        <p class="lead reveal">Free, open source, and sorted in a minute.</p>
+        <div class="actions reveal">
+          <a class="btn btn-primary" href="https://github.com/ruben4reall/tansu/releases/latest/download/Tansu.dmg">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5v9M4 7l4 4 4-4M2.5 14h11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download for Mac
+          </a>
+          <a class="btn btn-secondary" href="https://github.com/ruben4reall/tansu/releases">Release notes</a>
+        </div>
+        <p class="fine reveal">macOS 26 Tahoe or macOS 27 Golden Gate (beta) <span aria-hidden="true">·</span> Apple silicon and Intel <span aria-hidden="true">·</span> Signed and notarized. Updates arrive through the app, when you allow them.</p>
+        <p class="fine reveal">Or install it with Homebrew: <code>brew install --cask ruben4reall/tap/tansu</code></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <a class="footer-brand" href="#top"><img src="assets/brand/wordmark.svg" alt="Tansu" width="69" height="20"></a>
+        <p class="footer-line">A tansu is a Japanese chest of drawers: each drawer holds one kind of thing.</p>
+        <ul class="footer-links">
+          <li><a href="https://github.com/ruben4reall/tansu">GitHub</a></li>
+          <li><a href="https://github.com/ruben4reall/tansu/releases">Releases</a></li>
+          <li><a href="https://github.com/ruben4reall/tansu/issues">Report an Issue</a></li>
+          <li><a href="https://github.com/ruben4reall/tansu/blob/main/LICENSE">MIT License</a></li>
+        </ul>
+      </div>
+      <p class="legal">Made in Switzerland by Ruben Catalao. Tansu is not affiliated with Apple. Mac and macOS are trademarks of Apple Inc. Bartender, Ice, Thaw and Hidden Bar belong to their authors.</p>
+    </div>
+  </footer>
+</body>
+</html>
