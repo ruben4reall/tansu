@@ -11,15 +11,25 @@ enum TestPaths {
 }
 
 @Suite struct StringCatalogTests {
-    static let stringsFile = TestPaths.packageRoot.appendingPathComponent("Sources/TansuUI/Design/Strings.swift")
+    static let designFolder = TestPaths.packageRoot.appendingPathComponent("Sources/TansuUI/Design")
     static let catalogFile = TestPaths.packageRoot.appendingPathComponent("Sources/TansuUI/Resources/Localizable.xcstrings")
 
-    /// Every `String(localized: "…"` key of Strings.swift.
+    /// Strings.swift and its extensions (Strings+Profiles.swift…).
+    static func stringsFiles() throws -> [URL] {
+        try FileManager.default.contentsOfDirectory(at: designFolder, includingPropertiesForKeys: nil)
+            .filter { $0.lastPathComponent.hasPrefix("Strings") && $0.pathExtension == "swift" }
+    }
+
+    /// Every `String(localized: "…"` key of the Strings files.
     static func codeKeys() throws -> Set<String> {
-        let text = try String(contentsOf: stringsFile, encoding: .utf8)
-        return Set(text.matches(of: /String\(localized: "((?:[^"\\]|\\.)*)"/).map {
-            String($0.output.1).replacingOccurrences(of: "\\\"", with: "\"").replacingOccurrences(of: "\\\\", with: "\\")
-        })
+        var keys: Set<String> = []
+        for file in try stringsFiles() {
+            let text = try String(contentsOf: file, encoding: .utf8)
+            keys.formUnion(text.matches(of: /String\(localized: "((?:[^"\\]|\\.)*)"/).map {
+                String($0.output.1).replacingOccurrences(of: "\\\"", with: "\"").replacingOccurrences(of: "\\\\", with: "\\")
+            })
+        }
+        return keys
     }
 
     static func catalog() throws -> [String: Any] {
