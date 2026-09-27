@@ -71,13 +71,15 @@ public struct InterfaceActions {
     public var showInFinder: (IconID) -> Void = { _ in }
     public var refreshMemory: () -> Void = {}
     public var quit: () -> Void = {}
+    /// Switches to a profile by hand; the menu bar follows at once.
+    public var switchProfile: (UUID) -> Void = { _ in }
 
     public init() {}
 }
 
 /// Settings' sections.
 public enum SettingsPane: String, CaseIterable, Identifiable, Sendable {
-    case layout, drawers, appearance, behavior, shortcuts, general, about
+    case layout, drawers, profiles, triggers, appearance, behavior, shortcuts, general, about
     public var id: String { rawValue }
 }
 
@@ -111,6 +113,8 @@ public final class InterfaceModel {
     public var refusedShortcuts: Set<String> = []
     /// The drawer Settings shows in the Drawers pane.
     public var selectedDrawer: UUID?
+    /// Triggers whose condition holds now: Settings marks them "Active now".
+    public var activeTriggers: Set<UUID> = []
     public var actions = InterfaceActions()
 
     public init(settings: TansuSettings = .defaults) {
@@ -155,9 +159,11 @@ public final class InterfaceModel {
 
     // MARK: Changing the layout
 
+    /// Changes the settings. While a profile is active, it follows every change of the layout and the appearance.
     public func update(_ change: (inout TansuSettings) -> Void) {
         var copy = settings
         change(&copy)
+        copy.writeThrough()
         guard copy != settings else { return }
         settings = copy
         actions.updateSettings(copy)
@@ -181,6 +187,37 @@ public final class InterfaceModel {
     public func removeDrawer(_ id: UUID) {
         update { $0.layout.removeDrawer(id) }
         if selectedDrawer == id { selectedDrawer = settings.layout.drawers.first?.id }
+    }
+
+    // MARK: Profiles
+
+    /// Saves the current setup as a new profile, which becomes active.
+    @discardableResult
+    public func saveCurrentAsProfile(named name: String) -> UUID {
+        let id = UUID()
+        update { $0.saveCurrentAsProfile(named: name, id: id) }
+        return id
+    }
+
+    public func switchProfile(to id: UUID) {
+        actions.switchProfile(id)
+    }
+
+    // MARK: Triggers
+
+    /// Adds a trigger, or replaces the one with the same identity.
+    public func saveTrigger(_ trigger: Trigger) {
+        update { settings in
+            if let index = settings.triggers.firstIndex(where: { $0.id == trigger.id }) {
+                settings.triggers[index] = trigger.clamped
+            } else {
+                settings.triggers.append(trigger.clamped)
+            }
+        }
+    }
+
+    public func removeTrigger(_ id: UUID) {
+        update { $0.triggers.removeAll { $0.id == id } }
     }
 
     /// Moves the icons that do not fit beside the notch into a drawer (Other, made if needed).
