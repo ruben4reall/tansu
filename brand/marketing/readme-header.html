@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Tansu · README header</title>
+<!-- Rendered to docs/brand/readme-header.png (light) and, with ?dark, to docs/brand/readme-header-dark.png
+     (1600 x 480) by brand/scripts/export-marketing.sh. -->
+<link rel="stylesheet" href="marketing.css">
+<script>
+  if (/[?&]dark\b/.test(location.search)) document.documentElement.dataset.theme = 'dark';
+</script>
+<style>
+  html, body { width: 1600px; height: 480px; background: transparent; }
+  .tile { position: absolute; inset: 0; border-radius: 28px; background: #FFFFFF; overflow: hidden; }
+  [data-theme="dark"] .tile { background: #0C0B0A; }
+  .glow { position: absolute; left: 14%; width: 520px; top: -60px; height: 600px;
+          background: radial-gradient(closest-side, rgba(255, 185, 56, 0.26), rgba(255, 138, 31, 0.08) 60%, transparent); }
+  [data-theme="dark"] .glow { background: radial-gradient(closest-side, rgba(255, 185, 56, 0.34), rgba(255, 138, 31, 0.1) 60%, transparent); }
+  .lockup { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 64px; }
+  .icon { width: 216px; height: 216px; flex: none; }
+  [data-theme="dark"] .icon { filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.55)); }
+  .words { display: flex; flex-direction: column; align-items: flex-start; }
+  .wordmark { height: 118px; width: auto; }
+  .wordmark.rice, [data-theme="dark"] .wordmark.ink { display: none; }
+  [data-theme="dark"] .wordmark.rice { display: block; }
+  .tagline { margin-top: 30px; font-size: 44px; line-height: 50px; font-weight: 600; letter-spacing: -0.003em; color: #1C1A17; }
+  .signature { margin-top: 10px; font-size: 28px; line-height: 34px; font-weight: 400; color: #6E6A63; }
+  [data-theme="dark"] .tagline { color: #F5F1EA; }
+  [data-theme="dark"] .signature { color: #9D968B; }
+</style>
+</head>
+<body>
+  <div class="tile"><div class="glow"></div></div>
+  <div class="lockup">
+    <img class="icon" src="../icon-previews/default-1024.png" alt="">
+    <div class="words">
+      <img class="wordmark ink" src="../wordmark/tansu-wordmark-ink.svg" alt="tansu">
+      <img class="wordmark rice" src="../wordmark/tansu-wordmark-rice.svg" alt="tansu">
+      <p class="tagline">Your menu bar, in drawers.</p>
+      <p class="signature">A place for every icon.</p>
+    </div>
+  </div>
+</body>
+</html>

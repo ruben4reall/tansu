@@ -27,3 +27,6 @@ site/.shots/
 # Internal notes, never published
 docs/private/
 TASKS.md
+
+# Icon previews, rendered by brand/scripts/export-icon.sh
+brand/icon-previews/
