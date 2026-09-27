@@ -64,6 +64,14 @@ public final class StatusItemsController {
         return (frame, ScreenCoordinates.windowServerRect(fromAppKit: frame))
     }
 
+    /// Where Tansu's items that show sit, in AppKit coordinates.
+    public var visibleFrames: [CGRect] {
+        (Array(drawerItems.values) + [main].compactMap { $0 }).compactMap { item in
+            guard item.isVisible, let frame = item.button?.window?.frame, frame.width > 0 else { return nil }
+            return frame
+        }
+    }
+
     /// Removes every item (on quit), keeping their places for the next launch.
     public func removeAll() {
         for item in drawerItems.values { NSStatusBar.system.removeStatusItem(item) }

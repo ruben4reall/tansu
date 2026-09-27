@@ -158,7 +158,25 @@ public final class Coordinator {
         rememberNewIcons()
         updateCapacity()
         syncStatusItems()
+        measureIcons()
         if apply { scheduleApply() }
+    }
+
+    /// Tells the tint where the icons start on each display, for its split shape: the left edge of the leftmost icon
+    /// that shows there, Tansu's own included. Demo icons are made up and measure nothing, and Tansu's own items alone
+    /// say nothing of where the other apps' icons start.
+    private func measureIcons() {
+        var starts: [CGDirectDisplayID: CGFloat] = [:]
+        if !options.demo {
+            let others = snapshot.icons.filter(\.isOnScreen).map { ScreenCoordinates.appKitRect(fromWindowServer: $0.frame) }
+            let own = statusItems.visibleFrames
+            for screen in NSScreen.screens {
+                let bar = screen.menuBarFrame
+                guard let id = screen.displayID, let start = TintGeometry.statusStart(of: others, in: bar) else { continue }
+                starts[id] = min(start, TintGeometry.statusStart(of: own, in: bar) ?? start)
+            }
+        }
+        overlay.update(statusStarts: starts)
     }
 
     /// Icons seen for the first time take the place the new icon policy gives them, and keep it: a later change of
