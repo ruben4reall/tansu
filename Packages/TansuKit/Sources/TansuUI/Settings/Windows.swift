@@ -58,7 +58,7 @@ public final class WindowPresenter: NSObject, NSWindowDelegate {
         window.isReleasedWhenClosed = false
         window.appearance = NSAppearance(named: .darkAqua)
         window.backgroundColor = NSColor(Theme.night)
-        window.contentViewController = NSHostingController(rootView: content)
+        window.contentViewController = NSHostingController(rootView: QuietCapture(isQuiet: isQuiet, content: content))
         window.setContentSize(size)
         window.delegate = self
         window.center()
@@ -129,6 +129,21 @@ public final class Toast {
             guard !Task.isCancelled else { return }
             self?.panel?.orderOut(nil)
             self?.panel = nil
+        }
+    }
+}
+
+/// Windows shown without taking the keyboard (captures while someone works) draw their controls as in the window in
+/// front, so pictures show Tansu as people see it.
+private struct QuietCapture<Content: View>: View {
+    let isQuiet: Bool
+    let content: Content
+
+    var body: some View {
+        if isQuiet {
+            content.environment(\.controlActiveState, .key)
+        } else {
+            content
         }
     }
 }

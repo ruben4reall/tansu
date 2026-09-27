@@ -117,3 +117,13 @@ public struct SectionTitle: View {
             .tracking(0.6)
     }
 }
+
+/// The last points of a scrolling area fade out, so a card cut by the edge reads as more to scroll, not as a mistake.
+struct ScrollFade: View {
+    var body: some View {
+        VStack(spacing: 0) {
+            Color.black
+            LinearGradient(colors: [.black, .clear], startPoint: .top, endPoint: .bottom).frame(height: 28)
+        }
+    }
+}

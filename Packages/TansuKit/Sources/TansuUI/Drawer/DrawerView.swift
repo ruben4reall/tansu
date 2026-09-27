@@ -20,7 +20,6 @@ public struct DrawerView: View {
     static let tileWidth: CGFloat = 80
     static let chestLabelWidth: CGFloat = 150
     static let chestTileWidth: CGFloat = 70
-    static let chestWidth: CGFloat = chestLabelWidth + CGFloat(maximumColumns) * (chestTileWidth + 4) + 40
 
     /// Three to five columns: a drawer is as wide as its icons need, never a sliver.
     var columns: Int {
@@ -56,6 +55,14 @@ public struct DrawerView: View {
 
     var flatRows: [IconRow] { sections.flatMap(\.rows) }
 
+    /// The chest is as wide as its fullest drawer needs, from three icons to five: it never spreads empty room, and it
+    /// keeps its width while typing filters it.
+    var chestWidth: CGFloat {
+        let counts = model.settings.layout.drawers.map { model.members(of: $0.id).count } + [model.hiddenRows.count]
+        let widest = min(max(counts.max() ?? 0, 3), Self.maximumColumns)
+        return Self.chestLabelWidth + CGFloat(widest) * (Self.chestTileWidth + 4) + 40
+    }
+
     public var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             header
@@ -79,7 +86,7 @@ public struct DrawerView: View {
             }
         }
         .padding(14)
-        .frame(width: target == .all ? Self.chestWidth : CGFloat(columns) * (Self.tileWidth + 6) + 22)
+        .frame(width: target == .all ? chestWidth : CGFloat(columns) * (Self.tileWidth + 6) + 22)
         .glassEffect(.regular, in: RoundedRectangle(cornerRadius: Theme.panelRadius, style: .continuous))
         .shadow(color: .black.opacity(0.28), radius: 16, y: 8)
         .scaleEffect(appeared || reduceMotion ? 1 : 0.94, anchor: .top)

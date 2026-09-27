@@ -214,8 +214,10 @@ struct SmartSortSheet: View {
             .onChange(of: welcome.strategy) { _, strategy in welcome.proposal = model.actions.propose(strategy) }
             ScrollView {
                 ArrangementBoard(sections: sections, columns: 2) { id, placement in welcome.proposal.assign(id, to: placement) }
+                    .padding(.bottom, 18)
             }
             .frame(height: 380)
+            .mask { ScrollFade() }
             HStack {
                 Text(verbatim: Strings.iconsLeaveMenuBar(welcome.leavingCount(in: model))).font(.system(size: 12)).foregroundStyle(Theme.secondaryText)
                 Spacer()
