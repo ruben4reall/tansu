@@ -1,0 +1,4 @@
+/* Shared by the marketing pages: the brand tokens, the system font, nothing to download. */
+@import url("../tokens/tokens.css");
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { -webkit-font-smoothing: antialiased; font-family: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif; }
