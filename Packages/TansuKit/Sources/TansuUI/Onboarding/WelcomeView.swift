@@ -126,9 +126,10 @@ public struct WelcomeView: View {
                     ArrangementBoard(sections: sections, columns: 2, onDrop: { id, placement in
                         welcome.proposal.assign(id, to: placement)
                     }, onMarkTap: { editingMark = $0 })
-                    .padding(.bottom, 4)
+                    .padding(.bottom, 18)
                 }
                 .scrollIndicators(.never)
+                .mask { ScrollFade() }
                 HStack(spacing: 10) {
                     Text(verbatim: Strings.smartSortHint).font(.system(size: 11)).foregroundStyle(Theme.tertiaryText)
                     Spacer()

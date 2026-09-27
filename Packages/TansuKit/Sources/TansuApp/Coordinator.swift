@@ -114,6 +114,7 @@ public final class Coordinator {
             interface.update { settings in
                 settings.layout = layout
                 settings.hasCompletedWelcome = true
+                Self.addDemoProfilesAndTriggers(to: &settings)
             }
         }
         syncChrome()
@@ -131,6 +132,26 @@ public final class Coordinator {
             try? await Task.sleep(for: .milliseconds(500))
             openSearch(query: query)
         }
+    }
+
+    /// Demo mode's examples: a tinted floating bar, two profiles (the laptop alone, and at a desk), three triggers.
+    private static func addDemoProfilesAndTriggers(to settings: inout TansuSettings) {
+        settings.appearance.shape = .floating
+        settings.appearance.tint = .gradient
+        settings.appearance.border = true
+        settings.appearance.shadow = true
+        let laptop = settings.saveCurrentAsProfile(named: "Laptop")
+        guard let desk = settings.duplicateProfile(laptop, named: "Desk") else { return }
+        settings.switchProfile(to: laptop)
+        let battery = IconID(bundleID: "com.apple.controlcenter", key: "com.apple.menuextra.battery")
+        var triggers = [
+            Trigger(condition: .batteryAtOrBelow(20), action: .showIcon(battery)),
+            Trigger(condition: .externalDisplay, action: .switchProfile(desk)),
+        ]
+        if let messages = settings.layout.drawer(for: .messages) {
+            triggers.insert(Trigger(condition: .cameraOrMicrophone, action: .showDrawer(messages.id)), at: 1)
+        }
+        settings.triggers = triggers
     }
 
     /// On quit: the menu bar goes back to what macOS would show without Tansu.
