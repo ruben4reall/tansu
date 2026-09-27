@@ -16,7 +16,7 @@ public enum CategoryID: String, Codable, Sendable, CaseIterable {
     case games
     case other
 
-    /// The emoji a Smart Sort drawer of this kind starts with.
+    /// An emoji for the category, for people who prefer emoji marks.
     public var emoji: String {
         switch self {
         case .files: "☁️"
@@ -35,7 +35,7 @@ public enum CategoryID: String, Codable, Sendable, CaseIterable {
         }
     }
 
-    /// The SF Symbol the interface shows next to the category's name.
+    /// The SF Symbol a Smart Sort drawer of this kind starts with, drawn like macOS's own menu bar icons.
     public var symbol: String {
         switch self {
         case .files: "cloud.fill"

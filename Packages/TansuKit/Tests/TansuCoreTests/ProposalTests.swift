@@ -37,7 +37,7 @@ import Testing
                     "com.apple.menuextra.battery", "com.apple.menuextra.sound"] {
             #expect(layout.placements[IconID(bundleID: "com.apple.controlcenter", key: key)] == .menuBar)
         }
-        #expect(layout.drawers.first?.mark == .emoji("☁️"))
+        #expect(layout.drawers.first?.mark == .symbol("cloud.fill"), "icons by default, like macOS's own menu bar icons")
         #expect(layout.drawers.first?.category == .files)
     }
 

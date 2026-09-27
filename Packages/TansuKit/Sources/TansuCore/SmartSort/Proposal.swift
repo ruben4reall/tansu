@@ -18,7 +18,7 @@ public enum SmartSort {
     /// More drawers than this and the menu bar is crowded again.
     public static let maximumDrawers = 6
     /// The mark of the single drawer of the "just one" strategy.
-    public static let everythingMark = DrawerMark.emoji("🗄️")
+    public static let everythingMark = DrawerMark.symbol("archivebox.fill")
 
     /// - Parameters:
     ///   - pinned: icons the person wants to keep in the menu bar.
@@ -57,7 +57,7 @@ public enum SmartSort {
                 let reused = previous?.drawer(for: category)
                 let drawer = Drawer(
                     id: reused?.id ?? makeID(), name: reused?.name ?? names(category),
-                    mark: reused?.mark ?? .emoji(category.emoji), category: category,
+                    mark: reused?.mark ?? .symbol(category.symbol), category: category,
                     showsName: reused?.showsName ?? false, showsCount: reused?.showsCount ?? false,
                     shortcut: reused?.shortcut)
                 layout.addDrawer(drawer)
@@ -81,7 +81,7 @@ public enum SmartSort {
                 let isOther = developer == otherKey
                 let drawer = Drawer(
                     id: makeID(), name: isOther ? names(.other) : developer,
-                    mark: isOther ? .emoji(CategoryID.other.emoji) : .text(initial(of: developer)),
+                    mark: isOther ? .symbol(CategoryID.other.symbol) : .text(initial(of: developer)),
                     category: isOther ? .other : nil)
                 layout.addDrawer(drawer)
                 for input in members { layout.assign(input.icon.id, to: .drawer(drawer.id)) }
