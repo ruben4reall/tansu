@@ -23,8 +23,10 @@ public final class ShortcutCenter {
         case search
         case allDrawer
         case focus
+        case showEverything
         case drawer(UUID)
         case profile(UUID)
+        case icon(IconID)
     }
 
     private let registrar: HotKeyRegistrar
@@ -66,12 +68,14 @@ public final class ShortcutCenter {
         if let search = settings.shortcuts.search { wanted[.search] = search }
         if let all = settings.shortcuts.allDrawer { wanted[.allDrawer] = all }
         if let focus = settings.shortcuts.focus { wanted[.focus] = focus }
+        if let showEverything = settings.shortcuts.showEverything { wanted[.showEverything] = showEverything }
         for drawer in settings.layout.drawers {
             if let shortcut = drawer.shortcut { wanted[.drawer(drawer.id)] = shortcut }
         }
         for profile in settings.profiles {
             if let shortcut = profile.shortcut { wanted[.profile(profile.id)] = shortcut }
         }
+        for entry in settings.shortcuts.icons { wanted[.icon(entry.icon)] = entry.shortcut }
         return wanted
     }
 }

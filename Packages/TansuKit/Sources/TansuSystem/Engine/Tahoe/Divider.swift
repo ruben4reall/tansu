@@ -62,11 +62,15 @@ public final class Divider: DividerControlling {
         guard let item, !isExpanded else { return }
         item.length = Self.expandedLength
         isExpanded = true
+        Log.engine.notice("divider widened to \(Int(item.length))")
     }
 
     public func relax() {
         guard let item else { return }
-        if item.length != Self.relaxedLength { item.length = Self.relaxedLength }
+        if item.length != Self.relaxedLength {
+            item.length = Self.relaxedLength
+            Log.engine.notice("divider narrowed")
+        }
         isExpanded = false
     }
 

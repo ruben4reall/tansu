@@ -2,46 +2,109 @@ import Foundation
 
 /// How drawers and hidden icons behave (spec 6.3, Behavior).
 public struct Behavior: Codable, Hashable, Sendable {
+    /// Where Show Every Icon shows them: in the menu bar itself, or in the All drawer's panel, where every icon fits
+    /// even beside a notch.
+    public enum RevealPlace: String, Codable, Sendable, CaseIterable {
+        case menuBar, allDrawer
+    }
+
     /// Open a drawer when the pointer rests on its mark.
     public var opensOnHover: Bool
     /// How long the pointer rests before a drawer opens, in seconds.
     public var hoverDelay: Double
     /// How long an icon opened from a drawer stays in the menu bar after its menu closes, in seconds.
     public var rehideDelay: Double
-    /// Option-click on Tansu's icon shows every icon in the menu bar until the next click.
+    /// Option-click on Tansu's icon shows every icon, and hides them again.
     public var showsEverythingWithOption: Bool
     /// Show Tansu's own icon (the All drawer). Without it, Settings open from a right-click on any drawer.
     public var showsTansuIcon: Bool
+    /// Keep Tansu's icon and drawers together at the right end of the menu bar, next to Control Center. Off, they
+    /// stay wherever the person Command-drags them.
+    public var keepsItemsAtRightEnd: Bool
+    /// Show every icon when the pointer rests on an empty part of the menu bar.
+    public var revealsOnHover: Bool
+    /// Show every icon after a click on an empty part of the menu bar.
+    public var revealsOnClick: Bool
+    /// Show every icon after a scroll or a swipe in the menu bar.
+    public var revealsOnScroll: Bool
+    public var revealPlace: RevealPlace
+    /// Hide the icons again once the pointer has left the menu bar for `hideAgainDelay` seconds with no menu open.
+    public var hidesAgainAutomatically: Bool
+    public var hideAgainDelay: Double
+    /// Move the icons that stop fitting beside the notch into a drawer, as soon as it happens.
+    public var movesOverflowAutomatically: Bool
 
     public init(opensOnHover: Bool = false, hoverDelay: Double = 0.25, rehideDelay: Double = 0.5,
-                showsEverythingWithOption: Bool = true, showsTansuIcon: Bool = true) {
+                showsEverythingWithOption: Bool = true, showsTansuIcon: Bool = true, keepsItemsAtRightEnd: Bool = true,
+                revealsOnHover: Bool = false,
+                revealsOnClick: Bool = false, revealsOnScroll: Bool = false, revealPlace: RevealPlace = .menuBar,
+                hidesAgainAutomatically: Bool = true, hideAgainDelay: Double = 5, movesOverflowAutomatically: Bool = false) {
         self.opensOnHover = opensOnHover
         self.hoverDelay = hoverDelay
         self.rehideDelay = rehideDelay
         self.showsEverythingWithOption = showsEverythingWithOption
         self.showsTansuIcon = showsTansuIcon
+        self.keepsItemsAtRightEnd = keepsItemsAtRightEnd
+        self.revealsOnHover = revealsOnHover
+        self.revealsOnClick = revealsOnClick
+        self.revealsOnScroll = revealsOnScroll
+        self.revealPlace = revealPlace
+        self.hidesAgainAutomatically = hidesAgainAutomatically
+        self.hideAgainDelay = hideAgainDelay
+        self.movesOverflowAutomatically = movesOverflowAutomatically
     }
 
     public static let hoverDelayRange: ClosedRange<Double> = 0.1...1.0
     public static let rehideDelayRange: ClosedRange<Double> = 0...10
+    public static let hideAgainDelayRange: ClosedRange<Double> = 1...30
+
+    /// Whether anything shows every icon besides Tansu's own icon and menu.
+    public var revealsFromTheMenuBar: Bool { revealsOnHover || revealsOnClick || revealsOnScroll }
 
     public var clamped: Behavior {
         var copy = self
         copy.hoverDelay = hoverDelay.clamped(to: Self.hoverDelayRange)
         copy.rehideDelay = rehideDelay.clamped(to: Self.rehideDelayRange)
+        copy.hideAgainDelay = hideAgainDelay.clamped(to: Self.hideAgainDelayRange)
         return copy
     }
 
-    private enum CodingKeys: String, CodingKey { case opensOnHover, hoverDelay, rehideDelay, showsEverythingWithOption, showsTansuIcon }
+    private enum CodingKeys: String, CodingKey {
+        case opensOnHover, hoverDelay, rehideDelay, showsEverythingWithOption, showsTansuIcon, keepsItemsAtRightEnd, revealsOnHover
+        case revealsOnClick
+        case revealsOnScroll, revealPlace, hidesAgainAutomatically, hideAgainDelay, movesOverflowAutomatically
+    }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let standard = Behavior()
-        opensOnHover = (try? container.decodeIfPresent(Bool.self, forKey: .opensOnHover)) ?? standard.opensOnHover
-        hoverDelay = (try? container.decodeIfPresent(Double.self, forKey: .hoverDelay)) ?? standard.hoverDelay
-        rehideDelay = (try? container.decodeIfPresent(Double.self, forKey: .rehideDelay)) ?? standard.rehideDelay
-        showsEverythingWithOption = (try? container.decodeIfPresent(Bool.self, forKey: .showsEverythingWithOption)) ?? standard.showsEverythingWithOption
-        showsTansuIcon = (try? container.decodeIfPresent(Bool.self, forKey: .showsTansuIcon)) ?? standard.showsTansuIcon
+        func value<T: Decodable>(_ key: CodingKeys, _ fallback: T) -> T {
+            (try? container.decodeIfPresent(T.self, forKey: key)) ?? fallback
+        }
+        opensOnHover = value(.opensOnHover, standard.opensOnHover)
+        hoverDelay = value(.hoverDelay, standard.hoverDelay)
+        rehideDelay = value(.rehideDelay, standard.rehideDelay)
+        showsEverythingWithOption = value(.showsEverythingWithOption, standard.showsEverythingWithOption)
+        showsTansuIcon = value(.showsTansuIcon, standard.showsTansuIcon)
+        keepsItemsAtRightEnd = value(.keepsItemsAtRightEnd, standard.keepsItemsAtRightEnd)
+        revealsOnHover = value(.revealsOnHover, standard.revealsOnHover)
+        revealsOnClick = value(.revealsOnClick, standard.revealsOnClick)
+        revealsOnScroll = value(.revealsOnScroll, standard.revealsOnScroll)
+        revealPlace = value(.revealPlace, standard.revealPlace)
+        hidesAgainAutomatically = value(.hidesAgainAutomatically, standard.hidesAgainAutomatically)
+        hideAgainDelay = value(.hideAgainDelay, standard.hideAgainDelay)
+        movesOverflowAutomatically = value(.movesOverflowAutomatically, standard.movesOverflowAutomatically)
+    }
+}
+
+/// A shortcut that opens one icon's menu, wherever the icon lives.
+public struct IconShortcut: Codable, Hashable, Sendable {
+    public var icon: IconID
+    public var shortcut: Shortcut
+
+    public init(icon: IconID, shortcut: Shortcut) {
+        self.icon = icon
+        self.shortcut = shortcut
     }
 }
 
@@ -50,14 +113,31 @@ public struct Shortcuts: Codable, Hashable, Sendable {
     public var search: Shortcut?
     public var allDrawer: Shortcut?
     public var focus: Shortcut?
+    public var showEverything: Shortcut?
+    /// At most one shortcut per icon.
+    public var icons: [IconShortcut]
 
-    public init(search: Shortcut? = .defaultSearch, allDrawer: Shortcut? = nil, focus: Shortcut? = .defaultFocus) {
+    public init(search: Shortcut? = .defaultSearch, allDrawer: Shortcut? = nil, focus: Shortcut? = .defaultFocus,
+                showEverything: Shortcut? = nil, icons: [IconShortcut] = []) {
         self.search = search
         self.allDrawer = allDrawer
         self.focus = focus
+        self.showEverything = showEverything
+        self.icons = icons
     }
 
-    private enum CodingKeys: String, CodingKey { case search, allDrawer, focus }
+    /// The shortcut that opens this icon, if any.
+    public func shortcut(for icon: IconID) -> Shortcut? {
+        icons.first { $0.icon == icon }?.shortcut
+    }
+
+    /// Gives an icon a shortcut, or takes it away with nil.
+    public mutating func setShortcut(_ shortcut: Shortcut?, for icon: IconID) {
+        icons.removeAll { $0.icon == icon }
+        if let shortcut { icons.append(IconShortcut(icon: icon, shortcut: shortcut)) }
+    }
+
+    private enum CodingKeys: String, CodingKey { case search, allDrawer, focus, showEverything, icons }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -65,6 +145,11 @@ public struct Shortcuts: Codable, Hashable, Sendable {
         search = container.contains(.search) ? try? container.decodeIfPresent(Shortcut.self, forKey: .search) : .defaultSearch
         allDrawer = try? container.decodeIfPresent(Shortcut.self, forKey: .allDrawer)
         focus = container.contains(.focus) ? try? container.decodeIfPresent(Shortcut.self, forKey: .focus) : .defaultFocus
+        showEverything = try? container.decodeIfPresent(Shortcut.self, forKey: .showEverything)
+        // One unreadable entry costs that entry only; a second shortcut for the same icon is dropped.
+        let entries = (try? container.decodeIfPresent([FailableIconShortcut].self, forKey: .icons)) ?? []
+        var seen: Set<IconID> = []
+        icons = entries.compactMap(\.value).filter { seen.insert($0.icon).inserted }
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -72,6 +157,13 @@ public struct Shortcuts: Codable, Hashable, Sendable {
         try container.encode(search, forKey: .search)
         try container.encode(allDrawer, forKey: .allDrawer)
         try container.encode(focus, forKey: .focus)
+        try container.encode(showEverything, forKey: .showEverything)
+        try container.encode(icons, forKey: .icons)
+    }
+
+    private struct FailableIconShortcut: Decodable {
+        let value: IconShortcut?
+        init(from decoder: Decoder) throws { value = try? IconShortcut(from: decoder) }
     }
 }
 
@@ -81,7 +173,7 @@ public enum SortStrategy: String, Codable, Sendable, CaseIterable {
     case purpose
     /// One drawer per developer: Google, Proton, Microsoft…
     case developer
-    /// Everything behind one drawer.
+    /// Every icon in one drawer.
     case justOne
 }
 

@@ -3,100 +3,6 @@ import SwiftUI
 import TansuCore
 import TansuSystem
 
-/// Settings, Appearance (spec 6.3): the menu bar's tint, border and shadow, with a preview.
-struct AppearancePane: View {
-    @Bindable var model: InterfaceModel
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 18) {
-            preview
-            SettingsGroup(title: Strings.menuBarTint) {
-                SettingRow(title: Strings.menuBarTint) {
-                    Picker("", selection: appearance(\.tint)) {
-                        Text(verbatim: Strings.tintNone).tag(Appearance.Tint.none)
-                        Text(verbatim: Strings.tintColor).tag(Appearance.Tint.color)
-                        Text(verbatim: Strings.tintGradient).tag(Appearance.Tint.gradient)
-                    }
-                    .pickerStyle(.segmented)
-                    .labelsHidden()
-                    .frame(width: 260)
-                }
-                if model.settings.appearance.tint != .none {
-                    SettingRow(title: Strings.tintColor) {
-                        ColorPicker("", selection: color(\.color), supportsOpacity: false).labelsHidden()
-                    }
-                    if model.settings.appearance.tint == .gradient {
-                        SettingRow(title: Strings.gradientEnd) {
-                            ColorPicker("", selection: color(\.gradientEnd), supportsOpacity: false).labelsHidden()
-                        }
-                    }
-                    SettingRow(title: Strings.strength) {
-                        Slider(value: appearance(\.opacity), in: 0.05...1).frame(width: 220)
-                    }
-                }
-                SettingRow(title: Strings.hairlineBorder) {
-                    Toggle("", isOn: appearance(\.border)).labelsHidden().toggleStyle(.switch)
-                }
-                SettingRow(title: Strings.softShadow) {
-                    Toggle("", isOn: appearance(\.shadow)).labelsHidden().toggleStyle(.switch)
-                }
-            }
-            Text(verbatim: Strings.tintNote).font(.system(size: 11)).foregroundStyle(Theme.tertiaryText)
-        }
-    }
-
-    /// The menu bar strip, tinted as it will be, over a warm desktop.
-    private var preview: some View {
-        let appearance = model.settings.appearance
-        return VStack(spacing: 0) {
-            ZStack {
-                switch appearance.tint {
-                case .none: Color.clear
-                case .color: Color(appearance.color).opacity(appearance.opacity)
-                case .gradient:
-                    LinearGradient(colors: [Color(appearance.color).opacity(appearance.opacity), Color(appearance.gradientEnd).opacity(appearance.opacity)],
-                                   startPoint: .leading, endPoint: .trailing)
-                }
-                HStack(spacing: 12) {
-                    Spacer()
-                    ForEach(model.settings.layout.drawers.prefix(4)) { MarkView($0.mark, size: 13) }
-                    Image(systemName: "wifi").font(.system(size: 12, weight: .semibold))
-                    Image(systemName: "battery.75percent").font(.system(size: 13))
-                    Text(verbatim: "9:41").font(.system(size: 12, weight: .semibold)).monospacedDigit()
-                }
-                .foregroundStyle(.white)
-                .padding(.horizontal, 14)
-            }
-            .frame(height: 30)
-            .overlay(alignment: .bottom) {
-                if appearance.border { Rectangle().fill(Color.white.opacity(0.18)).frame(height: 1) }
-            }
-            LinearGradient(colors: appearance.shadow ? [Color.black.opacity(0.22), .clear] : [.clear, .clear], startPoint: .top, endPoint: .bottom)
-                .frame(height: 12)
-            Spacer(minLength: 0)
-        }
-        .frame(height: 110)
-        .background(LinearGradient(colors: [Color(red: 0.36, green: 0.22, blue: 0.1), Color(red: 0.1, green: 0.07, blue: 0.05)], startPoint: .topLeading, endPoint: .bottomTrailing))
-        .clipShape(RoundedRectangle(cornerRadius: Theme.cardRadius, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: Theme.cardRadius, style: .continuous).strokeBorder(Theme.cardStroke))
-        .accessibilityLabel(Text(verbatim: Strings.preview))
-    }
-
-    private func appearance<Value>(_ keyPath: WritableKeyPath<Appearance, Value>) -> Binding<Value> {
-        Binding(get: { model.settings.appearance[keyPath: keyPath] }, set: { value in
-            model.update { $0.appearance[keyPath: keyPath] = value }
-        })
-    }
-
-    private func color(_ keyPath: WritableKeyPath<Appearance, RGBA>) -> Binding<Color> {
-        Binding(get: { Color(model.settings.appearance[keyPath: keyPath]) }, set: { color in
-            guard let rgb = NSColor(color).usingColorSpace(.sRGB) else { return }
-            let value = RGBA(red: rgb.redComponent, green: rgb.greenComponent, blue: rgb.blueComponent)
-            model.update { $0.appearance[keyPath: keyPath] = value }
-        })
-    }
-}
-
 /// Settings, Behavior (spec 6.3).
 struct BehaviorPane: View {
     @Bindable var model: InterfaceModel
@@ -104,7 +10,7 @@ struct BehaviorPane: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             SettingsGroup(title: Strings.newIcons) {
-                Picker("", selection: Binding(get: { model.settings.layout.newIconPolicy }, set: { value in
+                Picker(Strings.newIcons, selection: Binding(get: { model.settings.layout.newIconPolicy }, set: { value in
                     model.update { $0.layout.newIconPolicy = value }
                 })) {
                     Text(verbatim: Strings.sortIntoTheirDrawer).tag(NewIconPolicy.sortIntoDrawer)
@@ -117,27 +23,61 @@ struct BehaviorPane: View {
             }
             SettingsGroup {
                 SettingRow(title: Strings.openOnHover) {
-                    Toggle("", isOn: behavior(\.opensOnHover)).labelsHidden().toggleStyle(.switch)
+                    Toggle(Strings.openOnHover, isOn: behavior(\.opensOnHover)).labelsHidden().toggleStyle(.switch)
                 }
                 if model.settings.behavior.opensOnHover {
                     SettingRow(title: Strings.hoverDelay) {
                         HStack {
-                            Slider(value: behavior(\.hoverDelay), in: Behavior.hoverDelayRange).frame(width: 180)
+                            Slider(value: behavior(\.hoverDelay), in: Behavior.hoverDelayRange).frame(width: 180).accessibilityLabel(Text(verbatim: Strings.hoverDelay))
                             Text(verbatim: Strings.seconds(String(format: "%.2g", model.settings.behavior.hoverDelay))).monospacedDigit().frame(width: 44)
                         }
                     }
                 }
                 SettingRow(title: Strings.returnIconsAfter, note: Strings.returnIconsNote) {
                     HStack {
-                        Slider(value: behavior(\.rehideDelay), in: 0...5, step: 0.5).frame(width: 180)
+                        Slider(value: behavior(\.rehideDelay), in: 0...5, step: 0.5).frame(width: 180).accessibilityLabel(Text(verbatim: Strings.returnIconsAfter))
                         Text(verbatim: Strings.seconds(String(format: "%.1f", model.settings.behavior.rehideDelay))).monospacedDigit().frame(width: 44)
                     }
                 }
-                SettingRow(title: Strings.optionClickShowsEverything) {
-                    Toggle("", isOn: behavior(\.showsEverythingWithOption)).labelsHidden().toggleStyle(.switch)
-                }
                 SettingRow(title: Strings.showTansuIcon, note: Strings.showTansuIconNote) {
-                    Toggle("", isOn: behavior(\.showsTansuIcon)).labelsHidden().toggleStyle(.switch)
+                    Toggle(Strings.showTansuIcon, isOn: behavior(\.showsTansuIcon)).labelsHidden().toggleStyle(.switch)
+                }
+                SettingRow(title: Strings.keepItemsAtRightEnd, note: Strings.keepItemsAtRightEndNote) {
+                    Toggle(Strings.keepItemsAtRightEnd, isOn: behavior(\.keepsItemsAtRightEnd)).labelsHidden().toggleStyle(.switch)
+                }
+            }
+            SettingsGroup(title: Strings.revealSection) {
+                SettingRow(title: Strings.optionClickShowsEverything) {
+                    Toggle(Strings.optionClickShowsEverything, isOn: behavior(\.showsEverythingWithOption)).labelsHidden().toggleStyle(.switch)
+                }
+                SettingRow(title: Strings.revealOnHover) {
+                    Toggle(Strings.revealOnHover, isOn: behavior(\.revealsOnHover)).labelsHidden().toggleStyle(.switch)
+                }
+                SettingRow(title: Strings.revealOnClick, note: Strings.revealEmptyNote) {
+                    Toggle(Strings.revealOnClick, isOn: behavior(\.revealsOnClick)).labelsHidden().toggleStyle(.switch)
+                }
+                SettingRow(title: Strings.revealOnScroll, note: Strings.revealOnScrollNote) {
+                    Toggle(Strings.revealOnScroll, isOn: behavior(\.revealsOnScroll)).labelsHidden().toggleStyle(.switch)
+                }
+                SettingRow(title: Strings.revealPlace, note: model.hasNotch ? Strings.revealPlaceNotchNote : nil) {
+                    Picker(Strings.revealPlace, selection: behavior(\.revealPlace)) {
+                        Text(verbatim: Strings.revealInMenuBar).tag(Behavior.RevealPlace.menuBar)
+                        Text(verbatim: Strings.revealInAllDrawer).tag(Behavior.RevealPlace.allDrawer)
+                    }
+                    .pickerStyle(.segmented)
+                    .labelsHidden()
+                    .fixedSize()
+                }
+                SettingRow(title: Strings.hideAgainAutomatically, note: Strings.hideAgainNote) {
+                    Toggle(Strings.hideAgainAutomatically, isOn: behavior(\.hidesAgainAutomatically)).labelsHidden().toggleStyle(.switch)
+                }
+                if model.settings.behavior.hidesAgainAutomatically {
+                    SettingRow(title: Strings.hoverDelay) {
+                        HStack {
+                            Slider(value: behavior(\.hideAgainDelay), in: Behavior.hideAgainDelayRange, step: 1).frame(width: 180).accessibilityLabel(Text(verbatim: Strings.hideAgainAutomatically))
+                            Text(verbatim: Strings.seconds(String(format: "%.0f", model.settings.behavior.hideAgainDelay))).monospacedDigit().frame(width: 44)
+                        }
+                    }
                 }
             }
             SettingsGroup(title: Strings.engine) {
@@ -174,27 +114,81 @@ struct BehaviorPane: View {
     }
 }
 
-/// Settings, Shortcuts (spec 6.3).
+/// Settings, Shortcuts (spec 6.3): Tansu's own shortcuts, then one per icon.
 struct ShortcutsPane: View {
     @Bindable var model: InterfaceModel
 
     var body: some View {
-        SettingsGroup {
-            SettingRow(title: Strings.searchIconsShortcut) {
-                ShortcutRecorder(shortcut: shortcut(\.search), problem: problem("search"))
+        VStack(alignment: .leading, spacing: 18) {
+            SettingsGroup {
+                SettingRow(title: Strings.searchIconsShortcut) {
+                    ShortcutRecorder(shortcut: shortcut(\.search), problem: problem("search"))
+                }
+                SettingRow(title: Strings.openAllDrawers) {
+                    ShortcutRecorder(shortcut: shortcut(\.allDrawer), problem: problem("allDrawer"))
+                }
+                SettingRow(title: Strings.showEveryIconShortcut, note: Strings.showEveryIconShortcutNote) {
+                    ShortcutRecorder(shortcut: shortcut(\.showEverything), problem: problem("showEverything"))
+                }
+                SettingRow(title: Strings.focusShortcut, note: Strings.focusShortcutNote) {
+                    ShortcutRecorder(shortcut: shortcut(\.focus), problem: problem("focus"))
+                }
             }
-            SettingRow(title: Strings.openAllDrawers) {
-                ShortcutRecorder(shortcut: shortcut(\.allDrawer), problem: problem("allDrawer"))
-            }
-            SettingRow(title: Strings.focusShortcut, note: Strings.focusShortcutNote) {
-                ShortcutRecorder(shortcut: shortcut(\.focus), problem: problem("focus"))
+            SettingsGroup(title: Strings.iconShortcutsSection) {
+                Text(verbatim: Strings.iconShortcutsNote).font(.system(size: 11)).foregroundStyle(Theme.tertiaryText)
+                    .padding(.vertical, 4)
+                if iconRows.isEmpty {
+                    Text(verbatim: Strings.noIconShortcuts).font(.system(size: 13)).foregroundStyle(Theme.secondaryText)
+                        .padding(.vertical, 6)
+                }
+                ForEach(iconRows) { row in
+                    HStack(spacing: 10) {
+                        Image(nsImage: row.appIcon).resizable().interpolation(.high).frame(width: 20, height: 20)
+                        VStack(alignment: .leading, spacing: 1) {
+                            Text(verbatim: row.name).font(.system(size: 13)).lineLimit(1)
+                            Text(verbatim: model.placeName(of: row)).font(.system(size: 11)).foregroundStyle(Theme.tertiaryText)
+                        }
+                        Spacer(minLength: 12)
+                        ShortcutRecorder(shortcut: iconShortcut(row.id), problem: problem("icon:\(row.id.description)"),
+                                         startsRecording: model.pendingIconShortcut == row.id)
+                    }
+                    .padding(.vertical, 5)
+                }
+                Menu {
+                    ForEach(model.icons.filter { $0.isMovable && model.settings.shortcuts.shortcut(for: $0.id) == nil && $0.id != model.pendingIconShortcut }) { row in
+                        Button(row.name) { model.pendingIconShortcut = row.id }
+                    }
+                } label: {
+                    Text(verbatim: Strings.addIconShortcut)
+                }
+                .menuStyle(.button)
+                .buttonStyle(PillButtonStyle(.secondary))
+                .fixedSize()
+                .padding(.vertical, 6)
+                .disabled(model.icons.isEmpty)
             }
         }
+    }
+
+    /// Icons with a shortcut, then the one waiting for its keys.
+    private var iconRows: [IconRow] {
+        var rows = model.settings.shortcuts.icons.compactMap { model.row($0.icon) }
+        if let pending = model.pendingIconShortcut, !rows.contains(where: { $0.id == pending }), let row = model.row(pending) {
+            rows.append(row)
+        }
+        return rows
     }
 
     private func shortcut(_ keyPath: WritableKeyPath<Shortcuts, Shortcut?>) -> Binding<Shortcut?> {
         Binding(get: { model.settings.shortcuts[keyPath: keyPath] }, set: { value in
             model.update { $0.shortcuts[keyPath: keyPath] = value }
+        })
+    }
+
+    private func iconShortcut(_ id: IconID) -> Binding<Shortcut?> {
+        Binding(get: { model.settings.shortcuts.shortcut(for: id) }, set: { value in
+            if model.pendingIconShortcut == id { model.pendingIconShortcut = nil }
+            model.update { $0.shortcuts.setShortcut(value, for: id) }
         })
     }
 
@@ -212,7 +206,7 @@ struct GeneralPane: View {
         VStack(alignment: .leading, spacing: 18) {
             SettingsGroup {
                 SettingRow(title: Strings.openAtLogin, note: model.loginItemStatus == .needsApproval ? Strings.loginNeedsApproval : nil) {
-                    Toggle("", isOn: Binding(get: { model.loginItemStatus == .enabled || model.loginItemStatus == .needsApproval },
+                    Toggle(Strings.openAtLogin, isOn: Binding(get: { model.loginItemStatus == .enabled || model.loginItemStatus == .needsApproval },
                                              set: { model.actions.setOpenAtLogin($0) }))
                         .labelsHidden().toggleStyle(.switch)
                 }
@@ -236,7 +230,7 @@ struct GeneralPane: View {
             }
             SettingsGroup(title: Strings.updates) {
                 SettingRow(title: Strings.checkAutomatically) {
-                    Toggle("", isOn: Binding(get: { model.automaticUpdates }, set: { model.actions.setAutomaticUpdates($0) }))
+                    Toggle(Strings.checkAutomatically, isOn: Binding(get: { model.automaticUpdates }, set: { model.actions.setAutomaticUpdates($0) }))
                         .labelsHidden().toggleStyle(.switch)
                 }
                 SettingRow(title: Strings.checkForUpdates) {
@@ -245,10 +239,24 @@ struct GeneralPane: View {
                         .disabled(!model.canCheckForUpdates)
                 }
             }
-            SettingsGroup {
+            SettingsGroup(title: Strings.settingsFileSection) {
+                SettingRow(title: Strings.settingsFileRow, note: Strings.settingsFileNote) {
+                    HStack(spacing: 8) {
+                        Button(Strings.exportSettings) { model.actions.exportSettings() }.buttonStyle(PillButtonStyle(.secondary))
+                        Button(Strings.importSettings) { model.actions.importSettings() }.buttonStyle(PillButtonStyle(.secondary))
+                    }
+                }
+            }
+            SettingsGroup(title: Strings.helpSection) {
                 SettingRow(title: Strings.pauseTansu) {
-                    Toggle("", isOn: Binding(get: { model.isShowingEverything }, set: { _ in model.actions.toggleShowEverything() }))
+                    Toggle(Strings.pauseTansu, isOn: Binding(get: { model.isShowingEverything }, set: { _ in model.actions.toggleShowEverything() }))
                         .labelsHidden().toggleStyle(.switch)
+                }
+                SettingRow(title: Strings.reportProblemRow, note: Strings.diagnosticsNote) {
+                    Button(Strings.copyDiagnostics) { model.actions.copyDiagnostics() }.buttonStyle(PillButtonStyle(.secondary))
+                }
+                SettingRow(title: Strings.welcomeRow, note: Strings.welcomeRowNote) {
+                    Button(Strings.showAgain) { model.actions.showWelcomeAgain() }.buttonStyle(PillButtonStyle(.secondary))
                 }
             }
             HStack(spacing: 10) {

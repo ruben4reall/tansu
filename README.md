@@ -45,7 +45,9 @@ in one click, and asks for one permission.
 - **Focus.** ⌃⌥⌘F leaves only the clock and Control Center, for a presentation or a screen share.
 - **Beside the notch.** Settings draws your menu bar with the notch, measures the room left, says when icons no longer
   fit, and moves the overflow into a drawer in one click.
-- **Appearance.** A tint for the menu bar, a color or a gradient, a hairline and a soft shadow.
+- **Appearance.** A tint for the menu bar, a color or a gradient, a hairline and a soft shadow: edge to edge, as a
+  floating bar, or split in two, one piece behind the app menus and one behind the icons. Dark Mode can have a look of
+  its own.
 - **Profiles.** Save the whole setup of your menu bar (the drawers, where each icon goes, the appearance) under a
   name, and switch from Tansu's menu or with a shortcut: one for work, one for a talk.
 - **Triggers.** While an app is open or in front, on battery or below a battery level, with an external display, during

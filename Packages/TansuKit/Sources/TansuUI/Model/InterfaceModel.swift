@@ -73,6 +73,11 @@ public struct InterfaceActions {
     public var quit: () -> Void = {}
     /// Switches to a profile by hand; the menu bar follows at once.
     public var switchProfile: (UUID) -> Void = { _ in }
+    public var exportSettings: () -> Void = {}
+    public var importSettings: () -> Void = {}
+    public var showWelcomeAgain: () -> Void = {}
+    public var copyDiagnostics: () -> Void = {}
+    public var setIconSpacing: (IconSpacing) -> Void = { _ in }
 
     public init() {}
 }
@@ -109,12 +114,18 @@ public final class InterfaceModel {
     public var isInApplications = true
     public var appVersion = "1.0.0"
     public var settingsPane: SettingsPane = .layout
-    /// Shortcuts macOS refused because another app holds them: "search", "allDrawer", "focus", or a drawer's id.
+    /// Shortcuts macOS refused because another app holds them: "search", "allDrawer", "focus", "showEverything", a
+    /// drawer's id, or "icon:" and an icon's description.
     public var refusedShortcuts: Set<String> = []
     /// The drawer Settings shows in the Drawers pane.
     public var selectedDrawer: UUID?
     /// Triggers whose condition holds now: Settings marks them "Active now".
     public var activeTriggers: Set<UUID> = []
+    /// An icon about to get a shortcut: the Shortcuts pane shows its recorder, waiting for the keys.
+    public var pendingIconShortcut: IconID?
+    /// The room macOS leaves between icons, and whether it changed since the last login.
+    public var iconSpacing: IconSpacing = .standard
+    public var iconSpacingChanged = false
     public var actions = InterfaceActions()
 
     public init(settings: TansuSettings = .defaults) {
