@@ -51,26 +51,94 @@ public struct RGBA: Codable, Hashable, Sendable {
     }
 }
 
-/// How Tansu dresses the menu bar (spec 6.3, Appearance).
+/// How Tansu dresses the menu bar (spec 6.3, Appearance): a shape, and a look drawn in it, with a second look for
+/// Dark Mode when the person wants one.
 public struct Appearance: Codable, Hashable, Sendable {
     public enum Tint: String, Codable, Sendable, CaseIterable {
         case none, color, gradient
     }
 
+    /// The outline of what Tansu draws over the menu bar, the same in Light and Dark Mode.
+    public enum Shape: String, Codable, Sendable, CaseIterable {
+        /// Edge to edge, like the menu bar itself.
+        case full
+        /// One rounded bar, inset from the screen's edges.
+        case floating
+        /// Two rounded pieces, one behind the app menus and one behind the icons, with the desktop between them.
+        case split
+    }
+
+    /// What the menu bar shows in one of the system's appearances: its tint, hairline and shadow.
+    public struct Look: Codable, Hashable, Sendable {
+        public var tint: Tint
+        public var color: RGBA
+        /// The right end of a gradient, which starts from `color` on the left.
+        public var gradientEnd: RGBA
+        /// How strongly the tint shows, from 0 to 1.
+        public var opacity: Double
+        /// A hairline along the edge of what is drawn.
+        public var border: Bool
+        /// A soft shadow under what is drawn.
+        public var shadow: Bool
+
+        public init(
+            tint: Tint = .none, color: RGBA = RGBA(hex: "#FFB938")!, gradientEnd: RGBA = RGBA(hex: "#FF8A1F")!,
+            opacity: Double = 0.35, border: Bool = false, shadow: Bool = false
+        ) {
+            self.tint = tint
+            self.color = color
+            self.gradientEnd = gradientEnd
+            self.opacity = opacity
+            self.border = border
+            self.shadow = shadow
+        }
+
+        public static let standard = Look()
+
+        /// Whether this look draws anything at all.
+        public var isVisible: Bool { tint != .none || border || shadow }
+
+        public var clamped: Look {
+            var copy = self
+            copy.color = color.clamped
+            copy.gradientEnd = gradientEnd.clamped
+            copy.opacity = opacity.clamped(to: 0...1)
+            return copy
+        }
+
+        private enum CodingKeys: String, CodingKey { case tint, color, gradientEnd, opacity, border, shadow }
+
+        public init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let standard = Look()
+            tint = (try? container.decodeIfPresent(Tint.self, forKey: .tint)) ?? standard.tint
+            color = (try? container.decodeIfPresent(RGBA.self, forKey: .color)) ?? standard.color
+            gradientEnd = (try? container.decodeIfPresent(RGBA.self, forKey: .gradientEnd)) ?? standard.gradientEnd
+            opacity = (try? container.decodeIfPresent(Double.self, forKey: .opacity)) ?? standard.opacity
+            border = (try? container.decodeIfPresent(Bool.self, forKey: .border)) ?? standard.border
+            shadow = (try? container.decodeIfPresent(Bool.self, forKey: .shadow)) ?? standard.shadow
+        }
+    }
+
+    // The main look, kept in flat fields as Tansu 1.0 saved it; `look` gathers them.
     public var tint: Tint
     public var color: RGBA
     /// The right end of a gradient, which starts from `color` on the left.
     public var gradientEnd: RGBA
     /// How strongly the tint shows, from 0 to 1.
     public var opacity: Double
-    /// A hairline along the bottom of the menu bar.
+    /// A hairline along the edge of what is drawn.
     public var border: Bool
-    /// A soft shadow under the menu bar.
+    /// A soft shadow under what is drawn.
     public var shadow: Bool
+    public var shape: Shape
+    /// The look while the Mac is in Dark Mode; nil when the main look serves in both.
+    public var darkLook: Look?
 
     public init(
-        tint: Tint = .none, color: RGBA = RGBA(hex: "#FFB938")!, gradientEnd: RGBA = RGBA(hex: "#FF8A1F")!,
-        opacity: Double = 0.35, border: Bool = false, shadow: Bool = false
+        tint: Tint = .none, color: RGBA = Look.standard.color, gradientEnd: RGBA = Look.standard.gradientEnd,
+        opacity: Double = Look.standard.opacity, border: Bool = false, shadow: Bool = false, shape: Shape = .full,
+        darkLook: Look? = nil
     ) {
         self.tint = tint
         self.color = color
@@ -78,32 +146,50 @@ public struct Appearance: Codable, Hashable, Sendable {
         self.opacity = opacity
         self.border = border
         self.shadow = shadow
+        self.shape = shape
+        self.darkLook = darkLook
     }
 
     public static let standard = Appearance()
 
-    /// Whether anything is drawn over the menu bar at all.
-    public var isVisible: Bool { tint != .none || border || shadow }
+    /// The main look: the one shown in Light Mode, and in Dark Mode too without a dark look.
+    public var look: Look {
+        get { Look(tint: tint, color: color, gradientEnd: gradientEnd, opacity: opacity, border: border, shadow: shadow) }
+        set {
+            tint = newValue.tint
+            color = newValue.color
+            gradientEnd = newValue.gradientEnd
+            opacity = newValue.opacity
+            border = newValue.border
+            shadow = newValue.shadow
+        }
+    }
+
+    /// The look to show while the Mac is in Dark Mode or not.
+    public func look(inDarkMode isDark: Bool) -> Look {
+        isDark ? darkLook ?? look : look
+    }
+
+    /// Whether anything is drawn over the menu bar, in either mode.
+    public var isVisible: Bool { look.isVisible || darkLook?.isVisible == true }
 
     public var clamped: Appearance {
         var copy = self
-        copy.color = color.clamped
-        copy.gradientEnd = gradientEnd.clamped
-        copy.opacity = opacity.clamped(to: 0...1)
+        copy.look = look.clamped
+        copy.darkLook = darkLook?.clamped
         return copy
     }
 
-    private enum CodingKeys: String, CodingKey { case tint, color, gradientEnd, opacity, border, shadow }
+    private enum CodingKeys: String, CodingKey { case tint, color, gradientEnd, opacity, border, shadow, shape, darkLook }
 
     public init(from decoder: Decoder) throws {
+        self.init()
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let standard = Appearance()
-        tint = (try? container.decodeIfPresent(Tint.self, forKey: .tint)) ?? standard.tint
-        color = (try? container.decodeIfPresent(RGBA.self, forKey: .color)) ?? standard.color
-        gradientEnd = (try? container.decodeIfPresent(RGBA.self, forKey: .gradientEnd)) ?? standard.gradientEnd
-        opacity = (try? container.decodeIfPresent(Double.self, forKey: .opacity)) ?? standard.opacity
-        border = (try? container.decodeIfPresent(Bool.self, forKey: .border)) ?? standard.border
-        shadow = (try? container.decodeIfPresent(Bool.self, forKey: .shadow)) ?? standard.shadow
+        // Tansu 1.0 saved the main look in flat fields, and neither a shape nor a dark look: such settings read as
+        // they were, edge to edge and the same in both modes.
+        look = try Look(from: decoder)
+        shape = (try? container.decodeIfPresent(Shape.self, forKey: .shape)) ?? Self.standard.shape
+        darkLook = try? container.decodeIfPresent(Look.self, forKey: .darkLook)
     }
 }
 

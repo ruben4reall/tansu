@@ -76,7 +76,7 @@ public final class StatusItemsController {
         return (frame, ScreenCoordinates.windowServerRect(fromAppKit: frame))
     }
 
-    /// The frames of Tansu's own items on screen, in AppKit coordinates.
+    /// The frames of Tansu's own items that show, in AppKit coordinates.
     public var itemFrames: [CGRect] {
         ([main].compactMap { $0 } + Array(drawerItems.values)).compactMap { item in
             guard item.isVisible, let frame = item.button?.window?.frame, frame.width > 0 else { return nil }

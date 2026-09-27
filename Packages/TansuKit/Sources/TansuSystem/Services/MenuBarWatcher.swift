@@ -127,16 +127,28 @@ public final class MenuBarWatcher {
         return !occupied.contains { $0.insetBy(dx: -4, dy: -2).contains(point) }
     }
 
-    /// Where the front app's menus end, read through Accessibility (its menu bar's items). The x axis is the same in
+    /// Where the front app's menus end, read through Accessibility away from the main actor. The x axis is the same in
     /// AppKit's and the window server's coordinates.
     private func measureMenus() {
         guard let app = NSWorkspace.shared.frontmostApplication else {
             menusEnd = nil
             return
         }
-        let frames = AXElement.application(app.processIdentifier).element(kAXMenuBarAttribute)?.children.compactMap(\.frame) ?? []
-        guard let last = frames.max(by: { $0.maxX < $1.maxX }),
-              let screen = NSScreen.screens.first(where: { $0.frame.minX <= last.minX && last.minX < $0.frame.maxX }) else {
+        let pid = app.processIdentifier
+        Task.detached { [weak self] in
+            let frames = AppMenus.frames(of: pid)
+            await MainActor.run { self?.menusMeasured(frames) }
+        }
+    }
+
+    private func menusMeasured(_ frames: [CGRect]) {
+        guard let last = frames.max(by: { $0.maxX < $1.maxX }) else {
+            menusEnd = nil
+            return
+        }
+        let appKit = ScreenCoordinates.appKitRect(fromWindowServer: last)
+        let middle = CGPoint(x: appKit.midX, y: appKit.midY)
+        guard let screen = NSScreen.screens.first(where: { NSMouseInRect(middle, $0.frame, false) }) else {
             menusEnd = nil
             return
         }
