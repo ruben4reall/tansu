@@ -81,6 +81,7 @@ public struct DrawerView: View {
         .padding(14)
         .frame(width: target == .all ? Self.chestWidth : CGFloat(columns) * (Self.tileWidth + 6) + 22)
         .glassEffect(.regular, in: RoundedRectangle(cornerRadius: Theme.panelRadius, style: .continuous))
+        .shadow(color: .black.opacity(0.28), radius: 16, y: 8)
         .scaleEffect(appeared || reduceMotion ? 1 : 0.94, anchor: .top)
         .opacity(appeared ? 1 : 0)
         .focusable()
