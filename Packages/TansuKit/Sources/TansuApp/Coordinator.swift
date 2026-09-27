@@ -6,6 +6,8 @@ import TansuUI
 
 /// Wires the engine, the settings, the menu bar items, the drawers, search and the windows together (spec 8). Every
 /// change of the layout saves the settings and asks the engine to make the menu bar match, once per burst of changes.
+/// Triggers reach the engine through the same plan: what they show is planned on top of the layout, which they never
+/// rewrite; only a trigger's profile switch changes the settings, as a switch by hand would.
 @MainActor
 public final class Coordinator {
     public let interface: InterfaceModel
@@ -26,12 +28,19 @@ public final class Coordinator {
     private let appObserver = AppObserver()
     private let displayObserver = DisplayObserver()
     private let loginItem = LoginItem()
+    private let triggerSensors = TriggerSensors()
     private var shortcuts: ShortcutCenter?
     private var updater: UpdateChecking?
 
     private var snapshot = MenuBarSnapshot.empty
     private var categories: [IconID: CategoryID] = [:]
+    /// The person's own mode: Focus or Show Every Icon, which win over triggers.
     private var mode: LayoutPlanner.Mode = .normal
+    /// Which triggers hold, in the order they started.
+    private var triggerState = TriggerState()
+    /// What the triggers that hold ask of the menu bar.
+    private var triggerEffect = TriggerEffect.none
+    private var isEvaluatingTriggers = false
     private var saved: TansuSettings
     private var pendingApply: Task<Void, Never>?
     private var isApplyingNow = false
@@ -76,6 +85,7 @@ public final class Coordinator {
             Task { await self.refresh(apply: false) }
         }
         engine.onStatusChange = { [weak self] status in self?.interface.engineStatus = status }
+        triggerSensors.onChange = { [weak self] in self?.evaluateTriggers() }
         updater?.start()
 
         await engine.start()
@@ -88,6 +98,8 @@ public final class Coordinator {
         interface.automaticUpdates = updater?.automaticallyChecksForUpdates ?? false
         interface.canCheckForUpdates = updater?.canCheckForUpdates ?? false
         applyBehavior()
+        syncTriggerSensors()
+        evaluateTriggers(apply: false)
 
         await refresh(apply: interface.settings.hasCompletedWelcome)
         if options.demo, options.welcomeStep == nil, interface.settings.layout.drawers.isEmpty {
@@ -123,6 +135,7 @@ public final class Coordinator {
         statusItems.removeAll()
         overlay.removeAll()
         shortcuts?.unregisterAll()
+        triggerSensors.stopAll()
     }
 
     // MARK: Reading the menu bar
@@ -217,8 +230,10 @@ public final class Coordinator {
         var report = ApplyReport.nothing
         repeat {
             needsAnotherApply = false
+            let planning = self.planning
             let plan = LayoutPlanner.plan(layout: interface.settings.layout, snapshot: snapshot, granularity: engine.granularity,
-                                          categories: categories, mode: mode)
+                                          categories: categories, mode: planning.mode, shownIcons: planning.icons,
+                                          shownDrawers: planning.drawers)
             interface.isApplying = true
             report = await engine.apply(plan)
             interface.isApplying = false
@@ -244,8 +259,15 @@ public final class Coordinator {
         let layout = interface.settings.layout
         var counts: [UUID: Int] = [:]
         for drawer in layout.drawers { counts[drawer.id] = interface.members(of: drawer.id).count }
+        // A trigger's Focus shows like the person's own: the moon, and no drawer.
+        let planned = planning.mode
         statusItems.update(drawers: layout.drawers, counts: counts, showsMain: interface.settings.behavior.showsTansuIcon,
-                           isFocusOn: mode == .focus, isShowingEverything: mode == .showEverything)
+                           isFocusOn: planned == .focus, isShowingEverything: planned == .showEverything)
+    }
+
+    /// What the planner is given: the person's mode, or the triggers' Focus and shown icons when the person has none.
+    private var planning: TriggerEffect.Planning {
+        triggerEffect.planning(over: mode)
     }
 
     private func syncChrome() {
@@ -270,6 +292,7 @@ public final class Coordinator {
             case .allDrawer: "allDrawer"
             case .focus: "focus"
             case .drawer(let id): id.uuidString
+            case .profile(let id): id.uuidString
             }
         })
     }
@@ -280,6 +303,7 @@ public final class Coordinator {
         case .allDrawer: openDrawer(.all)
         case .focus: toggleFocus()
         case .drawer(let id): openDrawer(.drawer(id))
+        case .profile(let id): switchProfile(to: id)
         }
     }
 
@@ -298,6 +322,7 @@ public final class Coordinator {
             self?.toggleShowEverything()
         })
         menu.addItem(ActionItem(title: mode == .focus ? Strings.endFocus : Strings.focus) { [weak self] in self?.toggleFocus() })
+        if !interface.settings.profiles.isEmpty { menu.addItem(profilesItem()) }
         menu.addItem(.separator())
         menu.addItem(ActionItem(title: Strings.settingsMenuItem) { [weak self] in self?.openSettings(nil) })
         if updater != nil {
@@ -306,6 +331,19 @@ public final class Coordinator {
         menu.addItem(.separator())
         menu.addItem(ActionItem(title: Strings.quitTansu) { NSApp.terminate(nil) })
         return menu
+    }
+
+    /// The profiles, the active one checked; choosing one switches to it.
+    private func profilesItem() -> NSMenuItem {
+        let submenu = NSMenu(title: Strings.profilesMenu)
+        for profile in interface.settings.profiles {
+            let item = ActionItem(title: Strings.name(of: profile)) { [weak self] in self?.switchProfile(to: profile.id) }
+            item.state = profile.id == interface.settings.activeProfile ? .on : .off
+            submenu.addItem(item)
+        }
+        let item = NSMenuItem(title: Strings.profilesMenu, action: nil, keyEquivalent: "")
+        item.submenu = submenu
+        return item
     }
 
     // MARK: Drawers, search, icons
@@ -360,6 +398,7 @@ public final class Coordinator {
         mode = mode == .focus ? .normal : .focus
         interface.isFocusOn = mode == .focus
         interface.isShowingEverything = false
+        evaluateTriggers(apply: false)
         syncStatusItems()
         Task { await applyNow() }
     }
@@ -368,8 +407,62 @@ public final class Coordinator {
         mode = mode == .showEverything ? .normal : .showEverything
         interface.isShowingEverything = mode == .showEverything
         interface.isFocusOn = false
+        evaluateTriggers(apply: false)
         syncStatusItems()
         Task { await applyNow() }
+    }
+
+    // MARK: Profiles
+
+    /// Switches to a profile by hand, from Settings, Tansu's menu or a shortcut. The person's own Focus or Show Every
+    /// Icon ends, and the menu bar follows at once, the way a Smart Sort result applies.
+    func switchProfile(to id: UUID) {
+        guard interface.settings.profile(id) != nil else { return }
+        mode = .normal
+        interface.isFocusOn = false
+        interface.isShowingEverything = false
+        interface.update { $0.switchProfile(to: id) }
+        evaluateTriggers(apply: false)
+        applyAfterProfileSwitch()
+    }
+
+    /// Makes the menu bar match a profile that was just switched to, without waiting for the burst of changes to end.
+    private func applyAfterProfileSwitch() {
+        pendingApply?.cancel()
+        syncStatusItems()
+        updateCapacity()
+        guard interface.settings.hasCompletedWelcome else { return }
+        Task { await applyNow() }
+    }
+
+    // MARK: Triggers
+
+    /// Starts the sensors the enabled triggers need and stops the others: with no trigger, none runs.
+    private func syncTriggerSensors() {
+        let triggers = interface.settings.triggers
+        triggerSensors.watch(TriggerSchedule.needs(of: triggers), boundaries: TriggerSchedule.boundaries(of: triggers))
+    }
+
+    /// Evaluates the triggers against what the sensors see: marks those that hold, takes in a change of profile and
+    /// the memory for next time, and, when `apply` allows, makes the menu bar follow.
+    private func evaluateTriggers(apply: Bool = true) {
+        guard !isEvaluatingTriggers else { return }
+        isEvaluatingTriggers = true
+        defer { isEvaluatingTriggers = false }
+        let outcome = TriggerEvaluator.evaluate(interface.settings, facts: triggerSensors.facts(), state: triggerState,
+                                                isSuspended: mode != .normal)
+        triggerState = outcome.state
+        if interface.activeTriggers != outcome.active { interface.activeTriggers = outcome.active }
+        interface.update { $0.apply(outcome) }
+        let effectChanged = outcome.effect != triggerEffect
+        triggerEffect = outcome.effect
+        guard apply else { return }
+        if outcome.profileChange != nil {
+            applyAfterProfileSwitch()
+        } else if effectChanged {
+            syncStatusItems()
+            if interface.settings.hasCompletedWelcome { scheduleApply() }
+        }
     }
 
     // MARK: Windows
@@ -413,8 +506,16 @@ public final class Coordinator {
             syncStatusItems()
             updateCapacity()
         }
-        if settings.shortcuts != previous.shortcuts || settings.layout.drawers.map(\.shortcut) != previous.layout.drawers.map(\.shortcut) {
+        if ShortcutCenter.wanted(from: settings) != ShortcutCenter.wanted(from: previous) {
             registerShortcuts()
+        }
+        if settings.triggers != previous.triggers { syncTriggerSensors() }
+        // Whether a trigger can act depends on the profiles and drawers that exist, and a profile switched by hand
+        // overrules the triggers holding.
+        if settings.triggers != previous.triggers || settings.activeProfile != previous.activeProfile
+            || settings.profiles.map(\.id) != previous.profiles.map(\.id)
+            || settings.layout.drawers.map(\.id) != previous.layout.drawers.map(\.id) {
+            evaluateTriggers()
         }
     }
 
@@ -436,6 +537,7 @@ public final class Coordinator {
         mode = .normal
         interface.isFocusOn = false
         interface.isShowingEverything = false
+        evaluateTriggers(apply: false)
         syncStatusItems()
         return await applyNow()
     }
@@ -448,6 +550,10 @@ public final class Coordinator {
         interface.settings = fresh
         interface.isFocusOn = false
         interface.isShowingEverything = false
+        triggerState = TriggerState()
+        triggerEffect = .none
+        interface.activeTriggers = []
+        syncTriggerSensors()
         syncChrome()
         Task {
             _ = await engine.apply(.showEverything)
@@ -490,6 +596,7 @@ public final class Coordinator {
         }
         actions.refreshMemory = { [weak self] in self?.interface.memoryBytes = MemoryUse.footprintBytes() }
         actions.quit = { NSApp.terminate(nil) }
+        actions.switchProfile = { [weak self] id in self?.switchProfile(to: id) }
         interface.actions = actions
     }
 }
