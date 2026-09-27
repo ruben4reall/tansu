@@ -16,6 +16,8 @@ public struct LaunchOptions: Sendable {
     public var search: String?
     /// Show windows without taking the keyboard or bringing Tansu to the front, for captures while someone works.
     public var quiet: Bool
+    /// In demo mode, a picture to show behind Tansu's windows, so the glass of captures shows it and nothing else.
+    public var backdrop: String?
 
     public static func current(_ defaults: UserDefaults = .standard) -> LaunchOptions {
         LaunchOptions(
@@ -24,7 +26,8 @@ public struct LaunchOptions: Sendable {
             settingsPane: defaults.string(forKey: "TansuSettingsPane").flatMap(SettingsPane.init(rawValue:)),
             openDrawer: defaults.string(forKey: "TansuOpenDrawer") == "all" ? -1 : integer("TansuOpenDrawer", in: defaults),
             search: defaults.string(forKey: "TansuSearch"),
-            quiet: defaults.bool(forKey: "TansuQuiet"))
+            quiet: defaults.bool(forKey: "TansuQuiet"),
+            backdrop: defaults.string(forKey: "TansuBackdrop"))
     }
 
     /// A number given on the command line arrives as text (`-TansuOpenDrawer 0`), one set with `defaults write` as a
@@ -32,6 +35,26 @@ public struct LaunchOptions: Sendable {
     static func integer(_ key: String, in defaults: UserDefaults) -> Int? {
         if let number = defaults.object(forKey: key) as? Int { return number }
         return defaults.string(forKey: key).flatMap { Int($0.trimmingCharacters(in: .whitespaces)) }
+    }
+}
+
+/// A still picture behind Tansu's windows, for captures in demo mode only: the glass then shows the picture, never
+/// the windows of whoever runs the capture.
+@MainActor
+enum Backdrop {
+    static func show(imageAt path: String) -> NSWindow? {
+        guard let image = NSImage(contentsOfFile: path), let screen = NSScreen.main else { return nil }
+        let window = NSWindow(contentRect: screen.frame, styleMask: .borderless, backing: .buffered, defer: false)
+        window.level = .normal
+        window.isReleasedWhenClosed = false
+        window.ignoresMouseEvents = true
+        window.collectionBehavior = [.canJoinAllSpaces, .ignoresCycle]
+        let view = NSImageView(frame: CGRect(origin: .zero, size: screen.frame.size))
+        view.image = image
+        view.imageScaling = .scaleAxesIndependently
+        window.contentView = view
+        window.orderFrontRegardless()
+        return window
     }
 }
 

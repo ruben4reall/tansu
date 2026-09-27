@@ -158,8 +158,9 @@ public struct DrawerView: View {
         .padding(.vertical, 18)
     }
 
+    /// The drawer's icons; fewer icons than columns sit in the middle.
     private func grid(_ rows: [IconRow]) -> some View {
-        LazyVGrid(columns: Array(repeating: GridItem(.fixed(Self.tileWidth), spacing: 6), count: columns), alignment: .leading, spacing: 6) {
+        LazyVGrid(columns: Array(repeating: GridItem(.fixed(Self.tileWidth), spacing: 6), count: max(1, min(rows.count, columns))), alignment: .leading, spacing: 6) {
             ForEach(rows) { row in
                 let index = flatRows.firstIndex(of: row)
                 IconTile(row: row, isSelected: index != nil && index == selection)
@@ -167,6 +168,7 @@ public struct DrawerView: View {
                     .contextMenu { contextMenu(for: row) }
             }
         }
+        .frame(maxWidth: .infinity)
     }
 
     @ViewBuilder
