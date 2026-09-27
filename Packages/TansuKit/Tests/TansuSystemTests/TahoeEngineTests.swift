@@ -51,6 +51,32 @@ import TansuCore
         #expect(self.divider.isExpanded)
     }
 
+    /// Seen on a real menu bar: two neighbours hidden together came back swapped once Tansu quit.
+    @Test func iconsHiddenTogetherKeepTheirOrder() async {
+        await engine.start()
+        let before = bar.order.filter { $0 != "|" }
+        _ = await engine.apply(plan(hiding: ["ch.rubencatalao.pli", "com.anthropic.claudefordesktop"]))
+        #expect(bar.order == ["ch.rubencatalao.pli", "com.anthropic.claudefordesktop", "|", "com.protonmail.bridge", "com.google.drivefs"])
+        // Quitting takes the divider away: every icon shows, in the order it had.
+        divider.remove()
+        #expect(bar.order == before)
+    }
+
+    @Test func anIconOpenedFromADrawerGoesBackToItsOwnPlace() async throws {
+        bar.entries.insert(SimulatedBar.Entry(windowID: 50, bundleID: "ch.rubencatalao.tansu", key: "drawer", width: 30, pid: 1), at: 2)
+        await engine.start()
+        _ = await engine.apply(plan(hiding: ["ch.rubencatalao.pli", "com.anthropic.claudefordesktop"]))
+        let hidden = bar.order
+        bar.openMenuOwners = [2003]
+        try await engine.open(IconID(bundleID: "ch.rubencatalao.pli"), anchor: bar.frame(50)!)
+        bar.openMenuOwners = []
+        let deadline = ContinuousClock.now + .seconds(3)
+        while bar.order != hidden, ContinuousClock.now < deadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        #expect(bar.order == hidden, "back next to the divider, not at the far left of the hidden icons")
+    }
+
     @Test func iconsAlreadyInPlaceAreNotMovedAgain() async {
         await engine.start()
         _ = await engine.apply(plan(hiding: ["com.google.drivefs"]))
@@ -127,12 +153,13 @@ import TansuCore
         try await engine.open(IconID(bundleID: "com.google.drivefs"), anchor: anchor)
         #expect(icons.pressed == ["com.google.drivefs"])
         let drive = bar.frame(100)!, drawer = bar.frame(50)!
-        #expect(drive.maxX <= drawer.minX + 1, "the icon sits just left of its drawer while its menu is open")
+        #expect(drive.maxX <= drawer.minX + 1 && drive.maxX >= drawer.minX - 1,
+                "the icon sits right next to its drawer, on screen, while its menu is open")
         // The menu closes: the icon goes back behind the divider.
         bar.openMenuOwners = []
-        for _ in 0..<40 where bar.order.firstIndex(of: "com.google.drivefs")! > bar.order.firstIndex(of: "|")! {
-            await Task.yield()
-            try await Task.sleep(for: .milliseconds(5))
+        let deadline = ContinuousClock.now + .seconds(3)
+        while bar.order.firstIndex(of: "com.google.drivefs")! > bar.order.firstIndex(of: "|")!, ContinuousClock.now < deadline {
+            try await Task.sleep(for: .milliseconds(10))
         }
         #expect(bar.order.firstIndex(of: "com.google.drivefs")! < bar.order.firstIndex(of: "|")!)
         #expect(divider.isExpanded)

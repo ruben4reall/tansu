@@ -28,7 +28,7 @@ public final class TahoeEngine: MenuBarEngine {
     private var windowOwners: [UInt32: pid_t] = [:]
     private var lastSnapshot = MenuBarSnapshot.empty
     private var wantsConcealed = false
-    private var shown: (icon: IconID, task: Task<Void, Never>)?
+    private var shown: (icon: IconID, task: Task<Void, Never>, beside: IconID?)?
 
     /// While Tansu moves icons, the divider is this wide, so a drop can land on either side of it.
     static let arrangingLength: CGFloat = 24
@@ -140,6 +140,9 @@ public final class TahoeEngine: MenuBarEngine {
             }
         }
         if wantsConcealed { divider.expand() } else { divider.relax() }
+        if !report.moved.isEmpty || !report.failed.isEmpty {
+            Log.engine.notice("applied: \(report.moved.count) moved, \(report.failed.count) failed")
+        }
         return report
     }
 
@@ -165,15 +168,17 @@ public final class TahoeEngine: MenuBarEngine {
             try await press(icon)
             return
         }
-        // Bring the icon next to the drawer's mark, open it there, and put it back once its menu has closed.
+        // Bring the icon next to the drawer's mark, open it there, and put it back once its menu has closed, beside the
+        // concealed icon that was its right neighbour.
         if let anchor, let anchorWindow = windows.statusWindows().first(where: { Self.sameWindow($0.frame, anchor) }) {
+            let neighbour = Self.rightNeighbour(of: icon, in: snapshot, dividerFrame: dividerFrame)
             do {
                 try await mover.move(windowID: windowID, ownerPID: windowOwners[windowID] ?? icon.pid,
                                      to: .leftOf(anchorWindow.frame, windowID: anchorWindow.id))
                 await pause(.milliseconds(90))
                 let moved = await scan().icon(id) ?? icon
                 try await press(moved)
-                watchUntilClosed(moved, thenPutBack: true)
+                watchUntilClosed(moved, thenPutBack: true, beside: neighbour)
                 return
             } catch EngineError.personIsBusy {
                 throw EngineError.personIsBusy
@@ -189,7 +194,7 @@ public final class TahoeEngine: MenuBarEngine {
             throw EngineError.cannotOpen(id)
         }
         try await press(revealed)
-        watchUntilClosed(revealed, thenPutBack: false)
+        watchUntilClosed(revealed, thenPutBack: false, beside: nil)
     }
 
     private func press(_ icon: MenuBarIcon) async throws {
@@ -202,7 +207,7 @@ public final class TahoeEngine: MenuBarEngine {
 
     /// Checks four times a second, only while an icon is shown, whether its menu is still open; once it has been
     /// closed for `rehideDelay` and no button is held, the icon goes back.
-    private func watchUntilClosed(_ icon: MenuBarIcon, thenPutBack: Bool) {
+    private func watchUntilClosed(_ icon: MenuBarIcon, thenPutBack: Bool, beside neighbour: IconID?) {
         shown?.task.cancel()
         var owners: Set<pid_t> = [icon.pid]
         if let windowID = icon.windowID, let owner = windowOwners[windowID] { owners.insert(owner) }
@@ -226,30 +231,42 @@ public final class TahoeEngine: MenuBarEngine {
                 await self.pause(.milliseconds(250))
             }
             guard !Task.isCancelled else { return }
-            await self.finishShowing(icon, putBack: thenPutBack)
+            await self.finishShowing(icon, putBack: thenPutBack, beside: neighbour)
         }
-        shown = (icon.id, task)
+        shown = (icon.id, task, neighbour)
     }
 
-    private func finishShowing(_ icon: MenuBarIcon, putBack: Bool) async {
+    private func finishShowing(_ icon: MenuBarIcon, putBack: Bool, beside neighbour: IconID?) async {
         shown = nil
         guard let divider else { return }
-        if putBack, let current = await scan().icon(icon.id), let windowID = current.windowID, let dividerFrame = divider.frame {
-            let dividerWindow = windows.statusWindows().first { Self.sameWindow($0.frame, dividerFrame) }?.id
-            do {
-                try await mover.move(windowID: windowID, ownerPID: windowOwners[windowID] ?? current.pid,
-                                     to: .leftOf(dividerFrame, windowID: dividerWindow))
-            } catch {
-                // The divider is wide and its left edge off screen: narrow it, move, widen again.
-                setArranging(divider)
-                await pause(.milliseconds(220))
-                if let frame = divider.frame, let again = await scan().icon(icon.id), let id = again.windowID {
-                    let window = windows.statusWindows().first { Self.sameWindow($0.frame, frame) }?.id
-                    _ = try? await mover.move(windowID: id, ownerPID: windowOwners[id] ?? again.pid, to: .leftOf(frame, windowID: window))
+        if putBack {
+            // The wide divider's left edge is off screen: narrow it so the icon can go right next to it, in the place
+            // it had among the concealed icons, then widen it again.
+            setArranging(divider)
+            await pause(.milliseconds(220))
+            let snapshot = await scan()
+            if let frame = divider.frame, let current = snapshot.icon(icon.id), let windowID = current.windowID {
+                let dividerWindow = windows.statusWindows().first { Self.sameWindow($0.frame, frame) }?.id
+                var destination = ItemMover.Destination.leftOf(frame, windowID: dividerWindow)
+                if let neighbour, let beside = snapshot.icon(neighbour), let besideWindow = beside.windowID,
+                   beside.frame.maxX <= frame.minX + ItemMover.slack {
+                    destination = .leftOf(beside.frame, windowID: besideWindow)
+                }
+                do {
+                    try await mover.move(windowID: windowID, ownerPID: windowOwners[windowID] ?? current.pid, to: destination)
+                } catch {
+                    Log.engine.error("an icon opened from a drawer could not go back")
                 }
             }
         }
         if wantsConcealed { divider.expand() } else { divider.relax() }
+    }
+
+    /// The concealed icon right of `icon`, which it goes back beside; nil when the divider comes first.
+    static func rightNeighbour(of icon: MenuBarIcon, in snapshot: MenuBarSnapshot, dividerFrame: CGRect) -> IconID? {
+        snapshot.icons
+            .filter { $0.id != icon.id && $0.frame.minX >= icon.frame.maxX - ItemMover.slack && $0.frame.maxX <= dividerFrame.minX + ItemMover.slack }
+            .min { $0.frame.minX < $1.frame.minX }?.id
     }
 
     /// An icon still shown from a drawer goes back before another one opens.
@@ -258,7 +275,7 @@ public final class TahoeEngine: MenuBarEngine {
         shown.task.cancel()
         self.shown = nil
         if let icon = lastSnapshot.icon(shown.icon) {
-            await finishShowing(icon, putBack: true)
+            await finishShowing(icon, putBack: true, beside: shown.beside)
         }
     }
 
