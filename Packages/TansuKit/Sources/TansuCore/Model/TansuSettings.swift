@@ -100,11 +100,19 @@ public struct TansuSettings: Codable, Hashable, Sendable {
     public var pinned: Set<IconID>
     public var sortStrategy: SortStrategy
     public var hasCompletedWelcome: Bool
+    /// Saved setups of the menu bar, in the order Settings and Tansu's menu list them.
+    public var profiles: [Profile]
+    /// The profile in use, which follows every change of the layout and the appearance; nil when none is.
+    public var activeProfile: UUID?
+    public var triggers: [Trigger]
+    /// What the triggers keep between two launches.
+    public var triggerMemory: TriggerMemory
 
     public init(
         layout: Layout = .empty, appearance: Appearance = .standard, behavior: Behavior = Behavior(),
         shortcuts: Shortcuts = Shortcuts(), userCategories: [String: CategoryID] = [:], pinned: Set<IconID> = [],
-        sortStrategy: SortStrategy = .purpose, hasCompletedWelcome: Bool = false
+        sortStrategy: SortStrategy = .purpose, hasCompletedWelcome: Bool = false, profiles: [Profile] = [],
+        activeProfile: UUID? = nil, triggers: [Trigger] = [], triggerMemory: TriggerMemory = .empty
     ) {
         schemaVersion = Self.currentSchemaVersion
         self.layout = layout
@@ -115,21 +123,31 @@ public struct TansuSettings: Codable, Hashable, Sendable {
         self.pinned = pinned
         self.sortStrategy = sortStrategy
         self.hasCompletedWelcome = hasCompletedWelcome
+        self.profiles = profiles
+        self.activeProfile = activeProfile
+        self.triggers = triggers
+        self.triggerMemory = triggerMemory
     }
 
     public static let defaults = TansuSettings()
 
-    /// Every value brought inside its range, every drawer name and mark cleaned.
+    /// Every value brought inside its range, every drawer and profile name and mark cleaned, one profile per identity,
+    /// and no active profile that does not exist.
     public var clamped: TansuSettings {
         var copy = self
         copy.appearance = appearance.clamped
         copy.behavior = behavior.clamped
         copy.layout.drawers = layout.drawers.map(\.clamped)
+        var seen = Set<UUID>()
+        copy.profiles = profiles.filter { seen.insert($0.id).inserted }.map(\.clamped)
+        if let active = activeProfile, !seen.contains(active) { copy.activeProfile = nil }
+        copy.triggers = triggers.map(\.clamped)
         return copy
     }
 
     private enum CodingKeys: String, CodingKey {
         case schemaVersion, layout, appearance, behavior, shortcuts, userCategories, pinned, sortStrategy, hasCompletedWelcome
+        case profiles, activeProfile, triggers, triggerMemory
     }
 
     public init(from decoder: Decoder) throws {
@@ -145,6 +163,11 @@ public struct TansuSettings: Codable, Hashable, Sendable {
         pinned = (try? container.decodeIfPresent(Set<IconID>.self, forKey: .pinned)) ?? []
         sortStrategy = (try? container.decodeIfPresent(SortStrategy.self, forKey: .sortStrategy)) ?? standard.sortStrategy
         hasCompletedWelcome = (try? container.decodeIfPresent(Bool.self, forKey: .hasCompletedWelcome)) ?? false
+        // A profile or a trigger that cannot be read is skipped, never the whole settings.
+        profiles = ((try? container.decodeIfPresent([Failable<Profile>].self, forKey: .profiles)) ?? []).compactMap(\.value)
+        activeProfile = try? container.decodeIfPresent(UUID.self, forKey: .activeProfile)
+        triggers = ((try? container.decodeIfPresent([Failable<Trigger>].self, forKey: .triggers)) ?? []).compactMap(\.value)
+        triggerMemory = (try? container.decodeIfPresent(TriggerMemory.self, forKey: .triggerMemory)) ?? .empty
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -158,5 +181,18 @@ public struct TansuSettings: Codable, Hashable, Sendable {
         try container.encode(pinned.sorted(), forKey: .pinned)
         try container.encode(sortStrategy, forKey: .sortStrategy)
         try container.encode(hasCompletedWelcome, forKey: .hasCompletedWelcome)
+        try container.encode(profiles, forKey: .profiles)
+        try container.encodeIfPresent(activeProfile, forKey: .activeProfile)
+        try container.encode(triggers, forKey: .triggers)
+        try container.encode(triggerMemory, forKey: .triggerMemory)
+    }
+}
+
+/// Decodes an element of a list, or nothing when that element cannot be read, so that the rest of the list survives.
+struct Failable<Value: Decodable>: Decodable {
+    var value: Value?
+
+    init(from decoder: Decoder) throws {
+        value = try? Value(from: decoder)
     }
 }

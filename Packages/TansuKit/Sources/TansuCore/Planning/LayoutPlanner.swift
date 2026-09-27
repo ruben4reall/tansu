@@ -57,9 +57,12 @@ public enum LayoutPlanner {
         case focus
     }
 
+    /// - Parameters:
+    ///   - shownIcons: icons that show in the menu bar in the normal mode, whatever their place (a trigger's effect).
+    ///   - shownDrawers: drawers whose icons show in the menu bar in the normal mode (a trigger's effect).
     public static func plan(
         layout: Layout, snapshot: MenuBarSnapshot, granularity: Granularity, categories: [IconID: CategoryID],
-        mode: Mode = .normal
+        mode: Mode = .normal, shownIcons: Set<IconID> = [], shownDrawers: Set<UUID> = []
     ) -> VisibilityPlan {
         var visible = Set<IconID>()
         var concealed = Set<IconID>()
@@ -68,7 +71,17 @@ public enum LayoutPlanner {
             switch mode {
             case .showEverything: conceal = false
             case .focus: conceal = icon.isMovable
-            case .normal: conceal = icon.isMovable && layout.placement(of: icon.id, category: categories[icon.id]).isConcealed
+            case .normal:
+                let placement = layout.placement(of: icon.id, category: categories[icon.id])
+                let isShown: Bool
+                if shownIcons.contains(icon.id) {
+                    isShown = true
+                } else if case .drawer(let drawer) = placement {
+                    isShown = shownDrawers.contains(drawer)
+                } else {
+                    isShown = false
+                }
+                conceal = icon.isMovable && placement.isConcealed && !isShown
             }
             if conceal { concealed.insert(icon.id) } else { visible.insert(icon.id) }
         }
