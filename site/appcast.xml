@@ -1,11 +1,30 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><!-- sparkle-sign-warning:
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<!-- sparkle-sign-warning:
 IMPORTANT: This file was signed by Sparkle. Any modifications to this file requires re-signing this file with generate_appcast or sign_update! The signed signature will be embedded at the end of this file.
---><rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+-->
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>Tansu</title>
         <link>https://gettansu.vercel.app/</link>
         <description>Updates of Tansu. The first release adds its item here.</description>
         <language>en</language>
+        <item>
+            <title>1.0.1</title>
+            <pubDate>Mon, 28 Sep 2026 20:08:52 +0200</pubDate>
+            <link>https://gettansu.vercel.app</link>
+            <sparkle:fullReleaseNotesLink>https://github.com/ruben4reall/tansu/releases</sparkle:fullReleaseNotesLink>
+            <sparkle:version>1.0.1</sparkle:version>
+            <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[### Fixed
+
+- **An icon opened from a drawer goes back to its own place**, even when that place is beside the notch. It used to
+  go right behind the divider instead, and the order of the hidden icons could change, which showed the day Tansu quit.
+  Now the icons that belong on its right step out and go back after it, and every drop stays clear of the notch.
+- **Tests leave no file behind** in `~/Library/Preferences`, for anyone who builds Tansu.
+]]></description>
+            <enclosure url="https://github.com/ruben4reall/tansu/releases/download/v1.0.1/Tansu-1.0.1.dmg" length="5693264" type="application/octet-stream" sparkle:edSignature="lJL98/nsUr56yKc3jULfWuVqu5PJshRybj9u2InwlUz76rbkeOZpoXjz0dgXFTVTcYnJSdSCZ4JsfnzzNszkCg=="/>
+        </item>
         <item>
             <title>1.0.0</title>
             <pubDate>Mon, 28 Sep 2026 00:43:08 +0200</pubDate>
@@ -40,10 +59,11 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
 - **Ten languages.** English, French, German, Italian, Spanish, Brazilian Portuguese, Dutch, Japanese, Korean and Simplified Chinese, in the words macOS itself uses for the menu bar, Control Center and System Settings in each. Tansu follows the Mac's language, or the one chosen for it in System Settings.
 - **Updates.** Sparkle checks for new versions, signed with Tansu's EdDSA key and notarized by Apple. Homebrew: `brew install --cask ruben4reall/tap/tansu`.
 ]]></description>
-            <enclosure url="https://github.com/ruben4reall/tansu/releases/download/v1.0.0/Tansu-1.0.0.dmg" length="5676265" type="application/octet-stream" sparkle:edSignature="E6dZcKGLL9RMqMGEJyp7GAPEunA2Po5cLg5hkrA0BoeHozME31Vp9gJIiDkYLIBv9VOy2A3q2jOA+tRpuCvdCQ=="></enclosure>
+            <enclosure url="https://github.com/ruben4reall/tansu/releases/download/v1.0.0/Tansu-1.0.0.dmg" length="5676265" type="application/octet-stream" sparkle:edSignature="E6dZcKGLL9RMqMGEJyp7GAPEunA2Po5cLg5hkrA0BoeHozME31Vp9gJIiDkYLIBv9VOy2A3q2jOA+tRpuCvdCQ=="/>
         </item>
     </channel>
-</rss><!-- sparkle-signatures:
-edSignature: fIrtL+iUHS226xzPYNyZwhNhnaftV3NDFijokN5biKihTQaagfekiind/VhoJzWtYhi/2zcUlMb0dhdEyE+tBQ==
-length: 6955
+</rss>
+<!-- sparkle-signatures:
+edSignature: mbD9kuW0go3b1DwvsIId2qzsYL/qi09QFBRhnqiYTjLnNVWTbXryTa65lXEI7lnFPA1EbVkSIU25pzLkyLYXCQ==
+length: 8249
 -->
