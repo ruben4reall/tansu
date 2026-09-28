@@ -2,6 +2,15 @@
 
 Every release of Tansu. Versions follow semantic versioning; each one is signed, notarized, and offered to installed copies through Sparkle.
 
+## 1.0.1 (2026-09-28)
+
+### Fixed
+
+- **An icon opened from a drawer goes back to its own place**, even when that place is beside the notch. It used to
+  go right behind the divider instead, and the order of the hidden icons could change, which showed the day Tansu quit.
+  Now the icons that belong on its right step out and go back after it, and every drop stays clear of the notch.
+- **Tests leave no file behind** in `~/Library/Preferences`, for anyone who builds Tansu.
+
 ## 1.0.0 (2026-09-28)
 
 Tansu 1.0: your menu bar, in drawers. Free and open source, for macOS 26 Tahoe and macOS 27.

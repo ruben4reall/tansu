@@ -205,7 +205,8 @@ public final class TahoeEngine: MenuBarEngine {
         return try await body()
     }
 
-    private func arrange(_ plan: VisibilityPlan) async -> ApplyReport {
+    /// With `settles` false, the divider keeps its arranging width at the end, for more moves right after.
+    private func arrange(_ plan: VisibilityPlan, settles: Bool = true) async -> ApplyReport {
         guard let divider else { return .nothing }
         defer { hasArranged = true }
         lastPlan = plan
@@ -290,7 +291,7 @@ public final class TahoeEngine: MenuBarEngine {
         report.failed.sort()
         report.postponed.sort()
         keepsNarrow = stranded
-        settleDivider()
+        if settles { settleDivider() }
         if !stranded, !planned.isEmpty { divider.rememberPlace() }
 
         if !report.postponed.isEmpty {
@@ -550,22 +551,73 @@ public final class TahoeEngine: MenuBarEngine {
                     isBack = (try? await mover.move(windowID: windowID, ownerPID: owner,
                                                     to: .leftOf(beside.frame, windowID: besideWindow))) != nil
                 }
-                if !isBack, let plan = lastPlan {
-                    // Its own place is beside the notch, or the drop missed: an arrangement puts it behind the divider,
-                    // taking the divider away from the notch first when it has to.
-                    let report = await arrange(plan)
-                    if report.failed.contains(icon.id) { Log.engine.error("an icon opened from a drawer could not go back") }
-                    return
-                } else if !isBack {
-                    do {
-                        try await conceal(windowID: windowID, ownerPID: owner)
-                    } catch {
-                        Log.engine.error("an icon opened from a drawer could not go back")
+                if !isBack {
+                    // Its own place is beside the notch, or the drop missed: it goes right behind the divider first,
+                    // through an arrangement that takes the divider away from the notch when it has to, then back to
+                    // its own place among the concealed icons.
+                    if let plan = lastPlan {
+                        let report = await arrange(plan, settles: false)
+                        if report.failed.contains(icon.id) { Log.engine.error("an icon opened from a drawer could not go back") }
+                    } else {
+                        do {
+                            try await conceal(windowID: windowID, ownerPID: owner)
+                        } catch {
+                            Log.engine.error("an icon opened from a drawer could not go back")
+                        }
                     }
+                    if let neighbour { await restoreOrder(of: icon.id, before: neighbour) }
                 }
             }
         }
         settleDivider()
+    }
+
+    /// Puts an icon opened from a drawer back left of `neighbour`, its right neighbour among the concealed icons, when it
+    /// went right behind the divider instead because its own place is beside the notch. The icons between them come out
+    /// one by one, each dropped right next to the divider, then the divider steps back over all of them: every drop
+    /// lands next to the divider, away from the notch, and the concealed icons end in the order they had. Nothing moves
+    /// when one of those drops would not be clear of the notch.
+    private func restoreOrder(of id: IconID, before neighbour: IconID) async {
+        await waitForStillBar()
+        let snapshot = await scan()
+        let frames = Dictionary(windows.statusWindows().map { ($0.id, $0.frame) }, uniquingKeysWith: { first, _ in first })
+        guard let divider = dividerWindow(), let iconWindow = snapshot.icon(id)?.windowID, let iconFrame = frames[iconWindow],
+              let besideFrame = snapshot.icon(neighbour)?.windowID.flatMap({ frames[$0] }),
+              iconFrame.midX < divider.frame.maxX, iconFrame.minX > besideFrame.minX else { return }
+        // The icons that belong on its right: from its neighbour up to it, left to right.
+        let between = snapshot.icons
+            .compactMap { item -> (icon: MenuBarIcon, window: UInt32, frame: CGRect)? in
+                guard item.id != id, item.isMovable, let window = item.windowID, let frame = frames[window],
+                      frame.minX >= besideFrame.minX - ItemMover.slack, frame.maxX <= iconFrame.minX + ItemMover.slack
+                else { return nil }
+                return (item, window, frame)
+            }
+            .sorted { $0.frame.minX < $1.frame.minX }
+        guard let last = between.last else { return }
+        // Each icon that comes out moves the divider left by its width: every drop must still be clear of the notch.
+        var edge = divider.frame.maxX
+        for entry in between.reversed() {
+            guard isSafeDrop(edge - 2) else {
+                Log.engine.notice("an icon opened from a drawer stays right behind the divider: its own place is out of reach")
+                return
+            }
+            edge -= entry.frame.width
+        }
+        do {
+            for entry in between.reversed() {
+                guard let current = dividerWindow() else { throw EngineError.notReady(status) }
+                try await mover.move(windowID: entry.window, ownerPID: windowOwners[entry.window] ?? entry.icon.pid,
+                                     to: .rightOf(current.frame, windowID: current.id))
+            }
+            guard let current = dividerWindow(), let lastFrame = mover.frame(of: last.window) else { throw EngineError.notReady(status) }
+            try await mover.move(windowID: current.id, ownerPID: windowOwners[current.id] ?? getpid(),
+                                 to: .rightOf(lastFrame, windowID: last.window))
+            Log.engine.notice("an icon opened from a drawer is back in its own place")
+        } catch {
+            // Whatever came out and should hide goes back behind the divider.
+            Log.engine.error("the concealed icons could not be put back in their order")
+            if let plan = lastPlan { _ = await arrange(plan, settles: false) }
+        }
     }
 
     /// Carries an icon behind the divider without ever dropping on the divider's left, where the notch, or an app drawn

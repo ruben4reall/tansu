@@ -51,7 +51,8 @@ letters, with its name and count if you like. A click opens a glass panel right 
 and typing work in every drawer; a right-click moves an icon to another drawer, keeps it in the menu bar or hides it.
 
 When you open an app from a drawer, its real icon comes right next to the drawer's for the time its menu is open, then
-goes back. Menus, popovers, panels and full-screen windows all count as open.
+goes back to its own place among the hidden icons, even beside the notch. Menus, popovers, panels and full-screen
+windows all count as open.
 
 ### Smart Sort
 
@@ -125,6 +126,7 @@ Settings, Menu Bar).
 - Tansu waits for a pause of your pointer and keyboard before it moves an icon, and never fights you for the pointer.
 - It never hides an icon that should show: if one cannot be moved, every icon stays in view and Tansu tries again.
 - It keeps its place from one launch to the next, so a restart moves nothing.
+- An icon opened from a drawer goes back to its own place, so the order of your icons stays as it was.
 - It stays clear of the notch and of the apps drawn around it, where macOS drops icons unpredictably.
 - Quit it, or let it crash, and every icon is back in the menu bar.
 
@@ -189,7 +191,7 @@ macOS changed how the menu bar is built between 26 and 27, so Tansu has two engi
 | Hiding an icon | An invisible divider pushes the icons on its left off screen | macOS is asked to leave the app out of the menu bar |
 | What can be hidden | Any icon, one by one | Whole apps: an app with two icons hides both |
 | Arranging | Command-drags, the way you would do it yourself; the pointer is hidden while an icon moves | Nothing moves |
-| Opening an icon from a drawer | It comes next to the drawer's icon while its menu is open, then goes back | It is let through for the time its menu is open |
+| Opening an icon from a drawer | It comes next to the drawer's icon while its menu is open, then goes back to its own place | It is let through for the time its menu is open |
 | While icons are hidden | Nothing else changes | macOS also hides Focus and the camera and microphone indicators |
 
 On macOS 26, the divider remembers its place between launches, and one drag of the divider replaces many drags of
