@@ -8,7 +8,7 @@ import Testing
         let name = "ch.rubencatalao.tansu.tests.\(UUID().uuidString)"
         let defaults: UserDefaults
         init() { defaults = UserDefaults(suiteName: name)! }
-        deinit { defaults.removePersistentDomain(forName: name) }
+        deinit { discardDefaults(name) }
     }
 
     @Test func nothingStoredGivesTheDefaults() {

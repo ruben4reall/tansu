@@ -25,7 +25,7 @@ import Testing
     @Test func settingsSavedByOnePointZeroLoadUnchanged() {
         let name = "ch.rubencatalao.tansu.tests.\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: name)!
-        defer { defaults.removePersistentDomain(forName: name) }
+        defer { discardDefaults(name) }
         defaults.set(Data(Self.settingsSavedByOnePointZero.utf8), forKey: "settings")
         let (settings, outcome) = SettingsStore(defaults: defaults).load()
         #expect(outcome == .loaded)
