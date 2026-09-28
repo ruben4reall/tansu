@@ -5,7 +5,7 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-const root = new URL('../Packages/TansuKit/Sources/TansuUI/', import.meta.url);
+const root = new URL('../Packages/TiroirKit/Sources/TiroirUI/', import.meta.url);
 const design = new URL('Design/', root);
 const catalogURL = new URL('Resources/Localizable.xcstrings', root);
 

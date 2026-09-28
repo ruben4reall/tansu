@@ -1,6 +1,6 @@
 // Draws the placeholder pictures the page needs until the real ones exist: the captures of the app (CAPTURES.md
 // says what each real one must show), the favicon, the Apple touch icon and the social picture. Every placeholder
-// carries the PNG text "tansu-placeholder" (tools/png.mjs), so the release test can tell it from a real picture.
+// carries the PNG text "tiroir-placeholder" (tools/png.mjs), so the release test can tell it from a real picture.
 // A file that exists and is not a placeholder is never overwritten.
 // Usage: node tools/placeholders.mjs   (needs Google Chrome; set CHROME_PATH to use another)
 import { existsSync } from 'node:fs';
@@ -156,7 +156,7 @@ async function ogHtml() {
     .tag { margin-top: 26px; color: #9D968B; font-size: 46px; letter-spacing: -0.5px; }
     .fine { margin-top: 26px; color: #908980; font-size: 26px; }
     .art { position: absolute; right: 80px; top: 150px; }
-  </style></head><body><div class="og"><div class="copy"><div class="name">Tansu</div><div class="tag">Your menu bar, in drawers.</div><div class="fine">Free and open source, for macOS 26 and 27</div></div><div class="art">${bar}</div></div></body></html>`;
+  </style></head><body><div class="og"><div class="copy"><div class="name">Tiroir</div><div class="tag">Your menu bar, in drawers.</div><div class="fine">Free and open source, for macOS 26 and 27</div></div><div class="art">${bar}</div></div></body></html>`;
 }
 
 const JOBS = [

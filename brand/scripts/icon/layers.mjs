@@ -1,7 +1,7 @@
-// Writes Tansu's app icon, an Icon Composer document (brand/Tansu.icon), from brand/tokens/tokens.json.
+// Writes Tiroir's app icon, an Icon Composer document (brand/Tiroir.icon), from brand/tokens/tokens.json.
 //   node brand/scripts/icon/layers.mjs [icon-dir]
 // A small chest of three drawers in Liquid Glass on warm black: the top and bottom drawers frosted, the middle one
-// pulled toward you and lit in honey, the way a drawer of Tansu opens under the menu bar. Icon Composer renders SVG
+// pulled toward you and lit in honey, the way a drawer of Tiroir opens under the menu bar. Icon Composer renders SVG
 // without filters, so every soft effect is a gradient. Groups are listed from the front to the back. Run
 // brand/scripts/export-icon.sh afterwards for the previews. Running it twice writes identical files.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -13,7 +13,7 @@ const color = (group, name) => tokens.color[group][name].$value;
 const NIGHT = color('dark', 'night'), LACQUER = color('dark', 'lacquer'), RICE = color('dark', 'rice');
 const HONEY = color('dark', 'honey'), EMBER = color('dark', 'ember'), INK = color('light', 'ink');
 
-const OUT = process.argv[2] || fileURLToPath(new URL('../../Tansu.icon', import.meta.url));
+const OUT = process.argv[2] || fileURLToPath(new URL('../../Tiroir.icon', import.meta.url));
 mkdirSync(join(OUT, 'Assets'), { recursive: true });
 
 const svg = (defs, body) =>

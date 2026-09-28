@@ -1,33 +1,33 @@
 #!/bin/bash
-# scripts/release.sh [--check]: builds Tansu for distribution and packs it in a branded disk image (the brand's light
-# background, Tansu on the left, Applications on the right, the volume icon), then hands over to
+# scripts/release.sh [--check]: builds Tiroir for distribution and packs it in a branded disk image (the brand's light
+# background, Tiroir on the left, Applications on the right, the volume icon), then hands over to
 # scripts/finish-release.sh. Adapted from Pli's release script.
 #
-# On macOS 27 Tansu must run from /Applications: MenuBarAgent only honours apps there, and the app offers to move itself
+# On macOS 27 Tiroir must run from /Applications: MenuBarAgent only honours apps there, and the app offers to move itself
 # at launch. Nothing changes for packaging: the disk image already asks for a drag to Applications, and Homebrew
 # installs there.
 #
 # Two ways to sign:
-# - Developer ID, notarized (what people download): set TANSU_TEAM_ID to your Apple team, be signed in to Xcode with the
+# - Developer ID, notarized (what people download): set TIROIR_TEAM_ID to your Apple team, be signed in to Xcode with the
 #   team's Account Holder (Xcode signs with a cloud-managed Developer ID certificate), and give notarytool an App Store
 #   Connect API key through NOTARY_KEY_ID, NOTARY_ISSUER_ID and NOTARY_KEY_PATH (the .p8 file). The app, then the disk
 #   image, are notarized and stapled. None of these values belongs in this repository.
-# - Ad hoc (anyone, no Apple account): leave TANSU_TEAM_ID unset. For local testing only: macOS asks to confirm the
+# - Ad hoc (anyone, no Apple account): leave TIROIR_TEAM_ID unset. For local testing only: macOS asks to confirm the
 #   first opening, the hardened runtime is off (library validation cannot load Sparkle into ad hoc code), the
 #   Accessibility grant does not survive a rebuild, and nothing is prepared for publication.
 #
 # --check          runs the checks below (with a team, also asks Apple whether the key works), then stops.
 # NOTARIZE_LATER=1 (Developer ID) submits the disk image without waiting; once Apple accepts it, run
 #                  scripts/finish-release.sh <version>.
-# TANSU_APPCAST    the appcast to check against (default site/appcast.xml); the update rehearsal points it elsewhere.
+# TIROIR_APPCAST    the appcast to check against (default site/appcast.xml); the update rehearsal points it elsewhere.
 #
-# Output: dist/Tansu-<version>.dmg and, with a team, dist/build-commit.txt (the commit it was built from).
+# Output: dist/Tiroir-<version>.dmg and, with a team, dist/build-commit.txt (the commit it was built from).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 MODE="${1:-build}"
 VERSION=$(grep -m1 'MARKETING_VERSION:' project.yml | awk '{print $2}' | tr -d '"')
-TEAM="${TANSU_TEAM_ID:-}"
-APPCAST="${TANSU_APPCAST:-site/appcast.xml}"
+TEAM="${TIROIR_TEAM_ID:-}"
+APPCAST="${TIROIR_APPCAST:-site/appcast.xml}"
 BACKGROUND=packaging/dmg-background.png
 WORK=.build/release-work
 SPM=.build/spm
@@ -51,9 +51,9 @@ case "$MODE" in
   --check)
     if [ -n "$TEAM" ]; then
       notary history >/dev/null 2>&1 || fail "Apple refused the App Store Connect key (notarytool history)"
-      echo "Checks passed: Tansu $VERSION, Developer ID team $TEAM, notarization key accepted."
+      echo "Checks passed: Tiroir $VERSION, Developer ID team $TEAM, notarization key accepted."
     else
-      echo "Checks passed: Tansu $VERSION, ad hoc."
+      echo "Checks passed: Tiroir $VERSION, ad hoc."
     fi
     exit 0 ;;
   build) ;;
@@ -93,7 +93,7 @@ check_signed() {   # check_signed <app>: every executable inside is signed by th
     echo "  signed: ${file#"$1"/}"
     count=$((count + 1))
   done < <(find "$1" -type f -perm -u+x -print0)
-  [ "$count" -ge 2 ] || fail "expected Tansu and Sparkle's helpers among the executables, found $count"
+  [ "$count" -ge 2 ] || fail "expected Tiroir and Sparkle's helpers among the executables, found $count"
   codesign --verify --deep --strict "$1"
 }
 
@@ -102,10 +102,10 @@ xcodegen generate --quiet
 
 # 1. The app. No index store, as in scripts/build.sh: nothing reads it outside an Xcode window, and it costs disk space.
 if [ -n "$TEAM" ]; then
-  echo "Developer ID build of Tansu $VERSION for team $TEAM"
+  echo "Developer ID build of Tiroir $VERSION for team $TEAM"
   git rev-parse HEAD > dist/build-commit.txt
-  xcodebuild -project Tansu.xcodeproj -scheme Tansu -configuration Release -destination 'generic/platform=macOS' \
-    -archivePath "$WORK/Tansu.xcarchive" -derivedDataPath "$WORK/dd" -clonedSourcePackagesDirPath "$SPM" \
+  xcodebuild -project Tiroir.xcodeproj -scheme Tiroir -configuration Release -destination 'generic/platform=macOS' \
+    -archivePath "$WORK/Tiroir.xcarchive" -derivedDataPath "$WORK/dd" -clonedSourcePackagesDirPath "$SPM" \
     -allowProvisioningUpdates CODE_SIGN_STYLE=Automatic DEVELOPMENT_TEAM="$TEAM" CODE_SIGN_IDENTITY="Apple Development" \
     COMPILER_INDEX_STORE_ENABLE=NO archive > "$WORK/archive.log" 2>&1 || { tail -n 30 "$WORK/archive.log" >&2; exit 1; }
   cat > "$WORK/export.plist" <<PLIST
@@ -119,35 +119,35 @@ if [ -n "$TEAM" ]; then
 </dict></plist>
 PLIST
   # The Developer ID certificate is cloud-managed: the export signs with the account signed in to Xcode.
-  xcodebuild -exportArchive -archivePath "$WORK/Tansu.xcarchive" -exportPath "$WORK/export" \
+  xcodebuild -exportArchive -archivePath "$WORK/Tiroir.xcarchive" -exportPath "$WORK/export" \
     -exportOptionsPlist "$WORK/export.plist" -allowProvisioningUpdates > "$WORK/export.log" 2>&1 \
     || { tail -n 30 "$WORK/export.log" >&2; exit 1; }
-  APP="$WORK/export/Tansu.app"
+  APP="$WORK/export/Tiroir.app"
   check_signed "$APP"
   /usr/libexec/PlistBuddy -c 'Print :CFBundleIconName' "$APP/Contents/Info.plist" >/dev/null 2>&1 \
     || /usr/libexec/PlistBuddy -c 'Print :CFBundleIconFile' "$APP/Contents/Info.plist" >/dev/null 2>&1 \
-    || fail "the app has no icon: brand/Tansu.icon is not in the Tansu target"
+    || fail "the app has no icon: brand/Tiroir.icon is not in the Tiroir target"
   if [ -z "${NOTARIZE_LATER:-}" ]; then
-    ditto -c -k --keepParent "$APP" "$WORK/Tansu.zip"
-    notarize "$WORK/Tansu.zip"
+    ditto -c -k --keepParent "$APP" "$WORK/Tiroir.zip"
+    notarize "$WORK/Tiroir.zip"
     xcrun stapler staple "$APP" >/dev/null
     spctl -a -t exec "$APP" || fail "Gatekeeper still rejects the app"
   fi
 else
-  echo "No TANSU_TEAM_ID: ad hoc build of Tansu $VERSION, for local testing only."
+  echo "No TIROIR_TEAM_ID: ad hoc build of Tiroir $VERSION, for local testing only."
   # Ad hoc code has no team, and library validation (part of the hardened runtime) only loads frameworks signed by the
   # app's own team: with it on, Sparkle would not load. Published builds keep it (Developer ID, above).
-  xcodebuild -project Tansu.xcodeproj -scheme Tansu -configuration Release -destination 'generic/platform=macOS' \
+  xcodebuild -project Tiroir.xcodeproj -scheme Tiroir -configuration Release -destination 'generic/platform=macOS' \
     -derivedDataPath "$WORK/dd" -clonedSourcePackagesDirPath "$SPM" ENABLE_HARDENED_RUNTIME=NO \
     COMPILER_INDEX_STORE_ENABLE=NO build > "$WORK/build.log" 2>&1 || { tail -n 30 "$WORK/build.log" >&2; exit 1; }
-  APP="$WORK/dd/Build/Products/Release/Tansu.app"
+  APP="$WORK/dd/Build/Products/Release/Tiroir.app"
   codesign --verify --deep --strict "$APP"
 fi
 
 # 2. A read-write disk image with the background and the volume icon. The committed background is the one people see;
 #    without it, a fresh one is drawn straight into the image, so the working tree stays as it was.
 STAGE=$(mktemp -d)
-ditto "$APP" "$STAGE/Tansu.app"   # ditto keeps the signature and the stapled ticket intact
+ditto "$APP" "$STAGE/Tiroir.app"   # ditto keeps the signature and the stapled ticket intact
 ln -s /Applications "$STAGE/Applications"
 mkdir -p "$STAGE/.background"
 if [ -f "$BACKGROUND" ]; then
@@ -161,8 +161,8 @@ if [ -n "$ICON" ] && [ -f "$APP/Contents/Resources/${ICON%.icns}.icns" ]; then
 else
   echo "No .icns in the app: the disk image keeps the default volume icon."
 fi
-RW="dist/Tansu-rw.dmg"
-hdiutil create -volname "Tansu" -srcfolder "$STAGE" -ov -format UDRW -fs HFS+ "$RW" >/dev/null
+RW="dist/Tiroir-rw.dmg"
+hdiutil create -volname "Tiroir" -srcfolder "$STAGE" -ov -format UDRW -fs HFS+ "$RW" >/dev/null
 rm -rf "$STAGE"
 
 # 3. The layout, by Finder: icon view, positions matching the background, no toolbar. If Finder automation is denied
@@ -184,7 +184,7 @@ on run argv
       set icon size of theViewOptions to 112
       set text size of theViewOptions to 13
       set background picture of theViewOptions to file ".background:background.png"
-      set position of item "Tansu.app" of container window to {165, 215}
+      set position of item "Tiroir.app" of container window to {165, 215}
       set position of item "Applications" of container window to {495, 215}
       close
       open
@@ -202,18 +202,18 @@ sync
 hdiutil detach "$MOUNT" -quiet || (sleep 2 && hdiutil detach "$MOUNT" -force -quiet)
 
 # 4. A compressed, read-only image.
-hdiutil convert "$RW" -format UDZO -imagekey zlib-level=9 -o "dist/Tansu-$VERSION.dmg" >/dev/null
+hdiutil convert "$RW" -format UDZO -imagekey zlib-level=9 -o "dist/Tiroir-$VERSION.dmg" >/dev/null
 rm -f "$RW"
 if [ -z "$TEAM" ]; then
-  echo "dist/Tansu-$VERSION.dmg (ad hoc, for local testing only)"
+  echo "dist/Tiroir-$VERSION.dmg (ad hoc, for local testing only)"
   exit 0
 fi
 
 # 5. Developer ID: the image is notarized (it holds the app, so with NOTARIZE_LATER one submission covers both).
 if [ -n "${NOTARIZE_LATER:-}" ]; then
-  submit_later "dist/Tansu-$VERSION.dmg"
+  submit_later "dist/Tiroir-$VERSION.dmg"
   echo "Once Apple accepts it (xcrun notarytool info <id> ... says Accepted), run: scripts/finish-release.sh $VERSION"
   exit 0
 fi
-notarize "dist/Tansu-$VERSION.dmg"
+notarize "dist/Tiroir-$VERSION.dmg"
 exec scripts/finish-release.sh "$VERSION"

@@ -17,7 +17,7 @@ export const SIZES = {
 
 // Injected before any page script: layout shifts, CSP violations, uncaught errors and frame times.
 const RECORDER = `(() => {
-  const record = (window.__tansu = { shifts: [], csp: [], errors: [], frames: [] });
+  const record = (window.__tiroir = { shifts: [], csp: [], errors: [], frames: [] });
   addEventListener('securitypolicyviolation', (e) => record.csp.push(e.violatedDirective + ' ' + e.blockedURI));
   addEventListener('error', (e) => record.errors.push(String(e.message)));
   addEventListener('unhandledrejection', (e) => record.errors.push(String(e.reason)));
@@ -61,7 +61,7 @@ class Connection {
 }
 
 export async function launchChrome({ args = [] } = {}) {
-  const profile = await mkdtemp(join(tmpdir(), 'tansu-chrome-'));
+  const profile = await mkdtemp(join(tmpdir(), 'tiroir-chrome-'));
   const proc = spawn(
     CHROME,
     ['--headless=new', '--remote-debugging-port=0', `--user-data-dir=${profile}`, '--no-first-run',

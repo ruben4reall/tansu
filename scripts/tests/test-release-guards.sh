@@ -4,7 +4,7 @@
 source "$(dirname "$0")/lib.sh"
 # Each case names its own signing variables: a team exported in the maintainer's shell would turn the ad hoc cases
 # into Developer ID ones, and the last one into a request to Apple.
-unset TANSU_TEAM_ID NOTARY_KEY_ID NOTARY_ISSUER_ID NOTARY_KEY_PATH NOTARIZE_LATER TANSU_APPCAST
+unset TIROIR_TEAM_ID NOTARY_KEY_ID NOTARY_ISSUER_ID NOTARY_KEY_PATH NOTARIZE_LATER TIROIR_APPCAST
 
 fresh() {   # a throwaway copy of the working tree, committed, with a release-notes section for its version
   rm -rf "$TMP/repo" && mkdir "$TMP/repo"
@@ -20,7 +20,7 @@ fresh() {   # a throwaway copy of the working tree, committed, with a release-no
   git add -A && git commit -q -m "Snapshot"
   touch "$TMP/AuthKey_TEST.p8"
 }
-team() { TANSU_TEAM_ID=TEAMTEST NOTARY_KEY_ID="TEST" NOTARY_ISSUER_ID="TEST" NOTARY_KEY_PATH="$TMP/AuthKey_TEST.p8" scripts/release.sh "$@"; }
+team() { TIROIR_TEAM_ID=TEAMTEST NOTARY_KEY_ID="TEST" NOTARY_ISSUER_ID="TEST" NOTARY_KEY_PATH="$TMP/AuthKey_TEST.p8" scripts/release.sh "$@"; }
 
 fresh; sed -i '' 's/MARKETING_VERSION: .*/MARKETING_VERSION: "1.0"/' project.yml && git commit -qam "Bad version"
 refuses "a malformed version" "is not x.y.z" scripts/release.sh --check
@@ -33,7 +33,7 @@ refuses "a version already in the appcast" "already offers $VERSION" team --chec
 fresh; printf '# Changelog\n' > CHANGELOG.md && git commit -qam "No notes"
 refuses "a version without release notes" "has no '## $VERSION" team --check
 fresh
-refuses "a missing notarization key" "does not name a file" env TANSU_TEAM_ID=TEAMTEST NOTARY_KEY_ID="TEST" NOTARY_ISSUER_ID="TEST" NOTARY_KEY_PATH="$TMP/none.p8" scripts/release.sh --check
-refuses "no notarization key id" "NOTARY_KEY_ID" env -u NOTARY_KEY_ID TANSU_TEAM_ID=TEAMTEST NOTARY_ISSUER_ID="TEST" NOTARY_KEY_PATH="$TMP/AuthKey_TEST.p8" scripts/release.sh --check
+refuses "a missing notarization key" "does not name a file" env TIROIR_TEAM_ID=TEAMTEST NOTARY_KEY_ID="TEST" NOTARY_ISSUER_ID="TEST" NOTARY_KEY_PATH="$TMP/none.p8" scripts/release.sh --check
+refuses "no notarization key id" "NOTARY_KEY_ID" env -u NOTARY_KEY_ID TIROIR_TEAM_ID=TEAMTEST NOTARY_ISSUER_ID="TEST" NOTARY_KEY_PATH="$TMP/AuthKey_TEST.p8" scripts/release.sh --check
 refuses "an unknown option" "usage" scripts/release.sh --publish
 check "an ad hoc check passes" scripts/release.sh --check

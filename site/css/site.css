@@ -1,4 +1,4 @@
-/* Tansu. One dark page in the manner of Apple's Pro pages: warm black and near-black sections, Rice type, large
+/* Tiroir. One dark page in the manner of Apple's Pro pages: warm black and near-black sections, Rice type, large
    system-font headlines, one accent (Honey, a lamp inside a drawer). Colors come from tokens.css, the brand's.
    SF Pro is never shipped: Apple devices render it through -apple-system and BlinkMacSystemFont; everywhere
    else gets Inter, the only webfont. */
@@ -27,18 +27,18 @@
   --narrow: 780px;
   --nav-h: 48px;
   --section: clamp(96px, 12vw, 168px);
-  --font: var(--tansu-font-sans);
+  --font: var(--tiroir-font-sans);
 
-  --bg: var(--tansu-night);
+  --bg: var(--tiroir-night);
   --bg-2: #110F0C;       /* the alternate sections: a shade above Night */
-  --card: var(--tansu-lacquer);
+  --card: var(--tiroir-lacquer);
   --card-2: #1F1C16;     /* a card inside a card */
   --edge: rgb(245 241 234 / 0.08);
-  --text: var(--tansu-rice);
-  --text-2: var(--tansu-ash); /* 6.7:1 on Night, 6.2:1 on Lacquer */
+  --text: var(--tiroir-rice);
+  --text-2: var(--tiroir-ash); /* 6.7:1 on Night, 6.2:1 on Lacquer */
   --text-3: #908980;          /* fine print: 5.7:1 on Night, 5.3:1 on Lacquer */
-  --accent: var(--tansu-honey);
-  --ember: var(--tansu-ember);
+  --accent: var(--tiroir-honey);
+  --ember: var(--tiroir-ember);
 }
 
 @media (max-width: 1068px) {
@@ -193,7 +193,7 @@ kbd { color: var(--text); font: inherit; font-weight: 500; letter-spacing: 0.02e
 /* Content eases in as it scrolls into view. js/reveal.js marks what is already on screen, then turns this on
    (reveal-on); without scripts or with reduced motion, everything simply shows. */
 @media (prefers-reduced-motion: no-preference) {
-  html.reveal-on .reveal { transition: opacity 0.8s var(--tansu-ease-fade), transform 0.8s cubic-bezier(0.33, 1, 0.68, 1); }
+  html.reveal-on .reveal { transition: opacity 0.8s var(--tiroir-ease-fade), transform 0.8s cubic-bezier(0.33, 1, 0.68, 1); }
   html.reveal-on .reveal:not(.in) { opacity: 0; transform: translateY(24px); }
 }
 
@@ -219,7 +219,7 @@ kbd { color: var(--text); font: inherit; font-weight: 500; letter-spacing: 0.02e
   margin-inline: auto;
 }
 
-/* The brand word. A wordmark image can replace the text: <img src="assets/brand/wordmark.svg" alt="Tansu" ...>. */
+/* The brand word. A wordmark image can replace the text: <img src="assets/brand/wordmark.svg" alt="Tiroir" ...>. */
 .nav-brand, .footer-brand {
   display: flex;
   align-items: center;

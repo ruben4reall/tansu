@@ -1,4 +1,4 @@
-// Writes Tansu's wordmark from geometry: brand/wordmark/tansu-wordmark-ink.svg (on light) and -rice.svg (on dark).
+// Writes Tiroir's wordmark from geometry: brand/wordmark/tiroir-wordmark-ink.svg (on light) and -rice.svg (on dark).
 //   node brand/scripts/logo/build.mjs
 // Lowercase monoline letters with round ends, drawn as center lines with one stroke width, on an x-height of 100
 // units. The crossbar of the t is honey: the handle of a drawer, the brand's one accent. Running it twice writes
@@ -45,6 +45,27 @@ const letters = {
       `C${x + 24},${100 - half} ${x + 13},85 ${x + 8},74`,
     ],
   },
+  i: {
+    width: STROKE,
+    // The stem, and a round dot above it: a stroke so short that its round caps make the dot.
+    paths: (x) => [`M${x + half},100V${half}`, `M${x + half},-30V-30.01`],
+  },
+  r: {
+    width: STROKE + R + 10,
+    // Its flag leaves room under it: the next letter comes closer.
+    kern: -12,
+    paths: (x) => {
+      const left = x + half;
+      return [`M${left},100V${half}`, `M${left},50A${R},${R} 0 0,1 ${left + R},${half}H${left + R + 10}`];
+    },
+  },
+  o: {
+    width: 2 * R + STROKE,
+    paths: (x) => {
+      const cx = x + half + R;
+      return [`M${cx + R},50A${R},${R} 0 1,1 ${cx + R},49.99`];
+    },
+  },
   u: {
     width: 2 * R + STROKE,
     paths: (x) => {
@@ -58,16 +79,16 @@ function wordmark(textColor, accent) {
   let x = 0;
   const strokes = [];
   let handle = '';
-  for (const char of 'tansu') {
+  for (const char of 'tiroir') {
     const letter = letters[char];
     strokes.push(...letter.paths(x));
     if (letter.handle) handle = letter.handle(x);
-    x += letter.width + GAP;
+    x += letter.width + GAP + (letter.kern ?? 0);
   }
   const width = x - GAP;
   const top = -38 - half, bottom = 100 + half;
   const view = `${-2} ${top - 2} ${width + 4} ${bottom - top + 4}`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${view}" width="${width + 4}" height="${bottom - top + 4}" role="img" aria-label="Tansu">\n` +
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${view}" width="${width + 4}" height="${bottom - top + 4}" role="img" aria-label="Tiroir">\n` +
     `<g fill="none" stroke-width="${STROKE}" stroke-linecap="round" stroke-linejoin="round">\n` +
     `<path stroke="${textColor}" d="${strokes.join('')}"/>\n` +
     `<path stroke="${accent}" d="${handle}"/>\n` +
@@ -76,6 +97,6 @@ function wordmark(textColor, accent) {
 
 const out = fileURLToPath(new URL('../../wordmark/', import.meta.url));
 mkdirSync(out, { recursive: true });
-writeFileSync(`${out}tansu-wordmark-ink.svg`, wordmark(INK, DEEP));
-writeFileSync(`${out}tansu-wordmark-rice.svg`, wordmark(RICE, HONEY));
+writeFileSync(`${out}tiroir-wordmark-ink.svg`, wordmark(INK, DEEP));
+writeFileSync(`${out}tiroir-wordmark-rice.svg`, wordmark(RICE, HONEY));
 console.log('wrote the wordmarks');

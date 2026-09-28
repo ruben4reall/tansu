@@ -7,11 +7,11 @@ site() {   # a minimal site that passes, in $TMP/site
   rm -rf "$TMP/site" && mkdir -p "$TMP/site/js"
   cat > "$TMP/site/index.html" <<'EOF'
 <!doctype html><html lang="en"><head><script type="module" src="js/main.js"></script></head><body>
-<a href="https://github.com/ruben4reall/tansu/releases/latest/download/Tansu.dmg">Download Tansu</a>
-<p class="fine">Or install it with Homebrew: <code>brew install --cask ruben4reall/tap/tansu</code></p>
+<a href="https://github.com/ruben4reall/tiroir/releases/latest/download/Tiroir.dmg">Download Tiroir</a>
+<p class="fine">Or install it with Homebrew: <code>brew install --cask ruben4reall/tap/tiroir</code></p>
 </body></html>
 EOF
-  printf "export const ENDPOINT = 'https://ruben-analytics.vercel.app/api/hit';\nJSON.stringify({ site: 'tansu' });\n" > "$TMP/site/js/beacon.js"
+  printf "export const ENDPOINT = 'https://ruben-analytics.vercel.app/api/hit';\nJSON.stringify({ site: 'tiroir' });\n" > "$TMP/site/js/beacon.js"
   cat > "$TMP/site/vercel.json" <<'EOF'
 { "headers": [
   { "source": "/(.*)", "headers": [{ "key": "Content-Security-Policy", "value": "default-src 'none'; connect-src 'self' https://ruben-analytics.vercel.app" }] },
@@ -20,30 +20,30 @@ EOF
 EOF
   cat > "$TMP/site/appcast.xml" <<'EOF'
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"><channel><title>Tansu</title>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"><channel><title>Tiroir</title>
 <item><title>1.0.1</title><sparkle:version>1.0.1</sparkle:version>
-<enclosure url="https://github.com/ruben4reall/tansu/releases/download/v1.0.1/Tansu-1.0.1.dmg" length="4" type="application/octet-stream" sparkle:edSignature="AA=="/></item>
+<enclosure url="https://github.com/ruben4reall/tiroir/releases/download/v1.0.1/Tiroir-1.0.1.dmg" length="4" type="application/octet-stream" sparkle:edSignature="AA=="/></item>
 <item><title>1.0.0</title><sparkle:version>1.0.0</sparkle:version>
-<enclosure url="https://github.com/ruben4reall/tansu/releases/download/v1.0.0/Tansu-1.0.0.dmg" length="4" type="application/octet-stream" sparkle:edSignature="AA=="/></item>
+<enclosure url="https://github.com/ruben4reall/tiroir/releases/download/v1.0.0/Tiroir-1.0.0.dmg" length="4" type="application/octet-stream" sparkle:edSignature="AA=="/></item>
 </channel></rss>
 EOF
 }
-checked() { TANSU_SITE_DIR="$TMP/site" scripts/check-site.sh --offline "$@"; }
+checked() { TIROIR_SITE_DIR="$TMP/site" scripts/check-site.sh --offline "$@"; }
 
 site; check "a complete site passes" checked 1.0.1
 site; refuses "an older newest item" "newest item is '1.0.1', not 1.0.2" checked 1.0.2
-site; sed -i '' 's#releases/download/v1.0.1/Tansu-1.0.1.dmg#releases/download/v1.0.1/Pli-1.0.1.dmg#' "$TMP/site/appcast.xml"
+site; sed -i '' 's#releases/download/v1.0.1/Tiroir-1.0.1.dmg#releases/download/v1.0.1/Pli-1.0.1.dmg#' "$TMP/site/appcast.xml"
 refuses "a newest item that downloads another file" "the newest item downloads" checked 1.0.1
-site; sed -i '' 's#releases/latest/download/Tansu.dmg#releases#' "$TMP/site/index.html"
+site; sed -i '' 's#releases/latest/download/Tiroir.dmg#releases#' "$TMP/site/index.html"
 refuses "no latest download link" "latest download" checked 1.0.1
-site; sed -i '' 's#brew install --cask ruben4reall/tap/tansu#brew#' "$TMP/site/index.html"
+site; sed -i '' 's#brew install --cask ruben4reall/tap/tiroir#brew#' "$TMP/site/index.html"
 refuses "no Homebrew command" "Homebrew" checked 1.0.1
 site; printf '<script>alert(1)</script>\n' >> "$TMP/site/index.html"
 refuses "an inline script" "inline <script>" checked 1.0.1
 site; rm "$TMP/site/js/beacon.js"
 refuses "no beacon" "beacon" checked 1.0.1
-site; sed -i '' "s#site: 'tansu'#site: 'pli'#" "$TMP/site/js/beacon.js"
-refuses "a beacon that counts visits for another site" "site 'tansu'" checked 1.0.1
+site; sed -i '' "s#site: 'tiroir'#site: 'pli'#" "$TMP/site/js/beacon.js"
+refuses "a beacon that counts visits for another site" "site 'tiroir'" checked 1.0.1
 site; sed -i '' 's# https://ruben-analytics.vercel.app##' "$TMP/site/vercel.json"
 refuses "a CSP that blocks the beacon" "vercel.json" checked 1.0.1
 site; rm "$TMP/site/appcast.xml"

@@ -92,5 +92,5 @@ export async function startServer({ port = 0, siteDir = SITE_DIR } = {}) {
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const { url } = await startServer({ port: Number(process.argv[2] ?? 4173) });
-  console.log(`Tansu site on ${url} (Ctrl-C to stop)`);
+  console.log(`Tiroir site on ${url} (Ctrl-C to stop)`);
 }

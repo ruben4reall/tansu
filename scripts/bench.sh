@@ -1,21 +1,21 @@
 #!/bin/bash
 # scripts/bench.sh [pid] [seconds]: memory footprint and average processor use of a process over a quiet period
-# (60 seconds by default), the numbers the README reports. Without a pid it measures the running Tansu. Adapted from
+# (60 seconds by default), the numbers the README reports. Without a pid it measures the running Tiroir. Adapted from
 # Islet's.
 #
-# Tansu's budget at rest is under 30 MB and under 0.01 % of one core. At that level ps, which counts processor time in
+# Tiroir's budget at rest is under 30 MB and under 0.01 % of one core. At that level ps, which counts processor time in
 # hundredths of a second, cannot tell 0.01 % from nothing over a minute, so the processor time comes from the kernel's
 # own counters (proc_pid_rusage), in nanoseconds, read before and after the same interval. Leave the Mac alone while it
-# runs: moving the pointer over the menu bar is work for Tansu. Measuring Tansu itself, the script fails when a number
+# runs: moving the pointer over the menu bar is work for Tiroir. Measuring Tiroir itself, the script fails when a number
 # is over the budget.
 set -euo pipefail
 PID="${1:-}"
 SECONDS_IDLE="${2:-60}"
 fail() { echo "bench: $*" >&2; exit 1; }
 if [ -z "$PID" ]; then
-  PID=$(pgrep -x Tansu || true)
-  [ -n "$PID" ] || fail "Tansu is not running: start it, or pass the pid of the process to measure"
-  [[ "$PID" =~ ^[0-9]+$ ]] || fail "several processes are called Tansu ($(echo $PID)): pass the pid to measure"
+  PID=$(pgrep -x Tiroir || true)
+  [ -n "$PID" ] || fail "Tiroir is not running: start it, or pass the pid of the process to measure"
+  [[ "$PID" =~ ^[0-9]+$ ]] || fail "several processes are called Tiroir ($(echo $PID)): pass the pid to measure"
 fi
 [[ "$PID" =~ ^[0-9]+$ ]] && [[ "$SECONDS_IDLE" =~ ^[0-9]+$ ]] && [ "$SECONDS_IDLE" -gt 0 ] \
   || fail "usage: scripts/bench.sh [pid] [seconds]"
@@ -48,7 +48,7 @@ SWIFT
 ) || fail "cannot read the processor time of $PID (it quit, or it belongs to another user)"
 
 REPORT=$(footprint -f bytes --noCategories -p "$PID" 2>/dev/null) || fail "footprint cannot read $PID"
-# The report, in bytes: "Tansu [123]: 64-bit    Footprint: 14680064 B (...)" and "phys_footprint_peak: 15728640 B".
+# The report, in bytes: "Tiroir [123]: 64-bit    Footprint: 14680064 B (...)" and "phys_footprint_peak: 15728640 B".
 FOOTPRINT=$(awk '{ for (i = 1; i < NF; i++) if ($i == "Footprint:") { printf "%.1f", $(i + 1) / 1048576; exit } }' <<<"$REPORT")
 PEAK=$(awk '$1 == "phys_footprint_peak:" { printf "%.1f", $2 / 1048576; exit }' <<<"$REPORT")
 [ -n "$FOOTPRINT" ] || fail "no footprint in the report of $PID"
@@ -56,10 +56,10 @@ echo "footprint: $FOOTPRINT MB"
 [ -z "$PEAK" ] || echo "peak: $PEAK MB"
 echo "cpu: $CPU %"
 
-if [ "$NAME" = Tansu ]; then
+if [ "$NAME" = Tiroir ]; then
   if awk -v memory="$FOOTPRINT" -v cpu="$CPU" 'BEGIN { exit !(memory < 30 && cpu < 0.01) }'; then
-    echo "Within Tansu's budget at rest: under 30 MB and 0.01 % of one core."
+    echo "Within Tiroir's budget at rest: under 30 MB and 0.01 % of one core."
   else
-    fail "over Tansu's budget at rest: under 30 MB and 0.01 % of one core"
+    fail "over Tiroir's budget at rest: under 30 MB and 0.01 % of one core"
   fi
 fi

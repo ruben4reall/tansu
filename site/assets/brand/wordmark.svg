@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -51 564 164" width="69" height="20" role="img" aria-label="Tansu">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -51 480 164" width="59" height="20" role="img" aria-label="Tiroir">
 <g fill="none" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
-<path stroke="#F5F1EA" d="M20,-38V64C20,90 32,100 53,100M183,50A39,39 0 1,1 183,49.99M183,11V100M235,100V11M235,50A39,39 0 0,1 313,50V100M422,26C416,15 405,11 392,11C376,11 365,19 365,31C365,45 378,49 393,52C408,55 419,60 419,73C419,86 407,89 392,89C378,89 367,85 362,74M471,11V50A39,39 0 0,0 549,50M549,11V100"/>
+<path stroke="#F5F1EA" d="M20,-38V64C20,90 32,100 53,100M105,100V11M105,-30V-30.01M157,100V11M157,50A39,39 0 0,1 196,11H206M324,50A39,39 0 1,1 324,49.99M376,100V11M376,-30V-30.01M428,100V11M428,50A39,39 0 0,1 467,11H477"/>
 <path stroke="#FFB938" d="M11,0H53"/>
 </g>
 </svg>

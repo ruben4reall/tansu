@@ -66,6 +66,6 @@ for heading in "## What it does" "## Install" "## Permissions" "## Privacy" "## 
                "## Build from source" "## Credits" "## License"; do
   check "README has '$heading'" grep -qxF "$heading" README.md
 done
-check "README links the latest disk image" grep -qF "https://github.com/ruben4reall/tansu/releases/latest/download/Tansu.dmg" README.md
-check "README gives the Homebrew command" grep -qF "brew install --cask ruben4reall/tap/tansu" README.md
-check "README says Tansu is not affiliated with Apple" grep -qF "Tansu is not affiliated with Apple." README.md
+check "README links the latest disk image" grep -qF "https://github.com/ruben4reall/tiroir/releases/latest/download/Tiroir.dmg" README.md
+check "README gives the Homebrew command" grep -qF "brew install --cask ruben4reall/tap/tiroir" README.md
+check "README says Tiroir is not affiliated with Apple" grep -qF "Tiroir is not affiliated with Apple." README.md

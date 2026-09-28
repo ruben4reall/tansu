@@ -3,7 +3,7 @@
 import { crc32 } from 'node:zlib';
 
 const SIGNATURE = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
-export const PLACEHOLDER_TEXT = 'Comment\0tansu-placeholder';
+export const PLACEHOLDER_TEXT = 'Comment\0tiroir-placeholder';
 
 export function isPng(buffer) {
   return buffer.length > 33 && buffer.subarray(0, 8).equals(SIGNATURE);
@@ -53,7 +53,7 @@ export function icoPng(ico) {
   return ico.subarray(ico.readUInt32LE(18), ico.readUInt32LE(18) + ico.readUInt32LE(14));
 }
 
-/** The same picture with a tEXt chunk "Comment: tansu-placeholder" right after IHDR. */
+/** The same picture with a tEXt chunk "Comment: tiroir-placeholder" right after IHDR. */
 export function markPlaceholder(buffer) {
   if (isPlaceholder(buffer)) return buffer;
   const type = Buffer.from('tEXt', 'latin1');

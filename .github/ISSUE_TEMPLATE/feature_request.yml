@@ -1,5 +1,5 @@
 name: Idea
-description: Something that would make Tansu better
+description: Something that would make Tiroir better
 labels: [idea]
 body:
   - type: textarea
@@ -12,13 +12,13 @@ body:
   - type: textarea
     id: idea
     attributes:
-      label: What you would like Tansu to do
+      label: What you would like Tiroir to do
     validations:
       required: true
   - type: checkboxes
     id: promises
     attributes:
-      label: Tansu's promises
+      label: Tiroir's promises
       options:
         - label: My idea needs no permission beyond Accessibility, takes no picture of the screen, and adds no telemetry and no network connection.
           required: true

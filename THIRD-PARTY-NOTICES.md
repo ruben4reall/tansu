@@ -1,13 +1,13 @@
 # Third-party notices
 
-Tansu is released under the MIT License (see LICENSE). This file lists the third-party software Tansu ships and the work
-it builds on. It travels with every copy of Tansu: in the repository, and inside the app at
-`Tansu.app/Contents/Resources/THIRD-PARTY-NOTICES.md`.
+Tiroir is released under the MIT License (see LICENSE). This file lists the third-party software Tiroir ships and the work
+it builds on. It travels with every copy of Tiroir: in the repository, and inside the app at
+`Tiroir.app/Contents/Resources/THIRD-PARTY-NOTICES.md`.
 
 ## Sparkle 2.10.0
 
 The software update framework, <https://sparkle-project.org>, shipped inside the app as
-`Tansu.app/Contents/Frameworks/Sparkle.framework`. Its license, with the licenses of the code it includes:
+`Tiroir.app/Contents/Frameworks/Sparkle.framework`. Its license, with the licenses of the code it includes:
 
 ```text
 Copyright (c) 2006-2013 Andy Matuschak.
@@ -146,17 +146,17 @@ IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 ```
 
-## Credits: the work Tansu builds on
+## Credits: the work Tiroir builds on
 
-Tansu includes no code from the projects below: its code was written for Tansu. They are credited here for the
-techniques Tansu rewrote, and their licenses are reproduced as a courtesy.
+Tiroir includes no code from the projects below: its code was written for Tiroir. They are credited here for the
+techniques Tiroir rewrote, and their licenses are reproduced as a courtesy.
 
 ### MenuBarHider (MIT)
 
 How to hide menu bar icons on macOS 27 through MenuBarAgent's assessment mode restriction
 (`MBAssessmentModeConfiguration`, `MBAssessmentModeAssertion` in the private `MenuBarClientCore` framework), and how
-to keep Notification Center working by lifting the restriction while the pointer rests on the clock. Tansu's version
-is rewritten in `Packages/TansuKit/Sources/TansuSystem/PrivateAPI.swift` and the macOS 27 engine.
+to keep Notification Center working by lifting the restriction while the pointer rests on the clock. Tiroir's version
+is rewritten in `Packages/TiroirKit/Sources/TiroirSystem/PrivateAPI.swift` and the macOS 27 engine.
 <https://github.com/happy666End/MenuBarHider>
 
 ```text
@@ -187,11 +187,11 @@ SOFTWARE.
 
 How to read the macOS 27 menu bar from MenuBarAgent's Accessibility tree (one window per display, one slot per icon,
 the owner from the slot's process, the `«` overflow button), how to wait until its layout settles, and how to open a
-hidden app's icon by letting it through the restriction and pressing it. Tansu's version is rewritten.
+hidden app's icon by letting it through the restriction and pressing it. Tiroir's version is rewritten.
 <https://github.com/ronny/ellipsis>, Copyright 2026 Ronny Haryanto, licensed under the Apache License, Version 2.0
 (<https://www.apache.org/licenses/LICENSE-2.0>).
 
 ### Hidden Bar (MIT)
 
-The divider: a status item that grows wide enough to push the icons on its left off the screen, the technique Tansu
+The divider: a status item that grows wide enough to push the icons on its left off the screen, the technique Tiroir
 uses on macOS 26. <https://github.com/dwarvesf/hidden>, Copyright (c) 2019 Dwarves Foundation, MIT License.
