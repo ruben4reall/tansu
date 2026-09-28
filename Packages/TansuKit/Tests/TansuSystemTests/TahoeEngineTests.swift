@@ -272,6 +272,70 @@ import TansuCore
         #expect(divider.isExpanded)
     }
 
+    /// The engine of `anIconGoesBack…` tests, with drops refused left of `safeFrom`, like beside a notch.
+    func engineBesideTheNotch(safeFrom: CGFloat) -> TahoeEngine {
+        let divider = self.divider
+        return TahoeEngine(icons: icons, windows: bar, poster: bar, activity: IdlePerson(), makeDivider: { divider },
+                           isOnScreen: { $0.maxX > 0 && $0.minX < SimulatedBar.screenWidth }, isSafeDrop: { $0 >= safeFrom },
+                           pause: instant)
+    }
+
+    /// Opens `id` from the drawer at window 50, closes its menu, and waits until the divider is wide again.
+    func openAndClose(_ id: IconID, pid: pid_t, with engine: TahoeEngine) async throws {
+        let bar = self.bar
+        icons.onPress = { _ in bar.openMenuOwners = [pid] }
+        try await engine.open(id, anchor: bar.frame(50)!)
+        #expect(bar.order.firstIndex(of: id.bundleID)! > bar.order.firstIndex(of: "|")!, "shown next to its drawer")
+        bar.openMenuOwners = []
+        let deadline = ContinuousClock.now + .seconds(5)
+        while !(bar.order.firstIndex(of: id.bundleID)! < bar.order.firstIndex(of: "|")! && divider.isExpanded),
+              ContinuousClock.now < deadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+    }
+
+    /// Seen on a real, crowded menu bar: Pli's own place, left of Claude, was beside the notch; it came back right
+    /// behind the divider, and Claude and Pli swapped. Claude now comes out and goes back behind it: the order holds.
+    @Test func anIconGoesBackToItsExactPlaceEvenBesideTheNotch() async throws {
+        bar.entries.insert(SimulatedBar.Entry(windowID: 50, bundleID: "ch.rubencatalao.tansu", key: "drawer", width: 30, pid: 1), at: 2)
+        let engine = engineBesideTheNotch(safeFrom: 1200)
+        await engine.start()
+        _ = await engine.apply(plan(hiding: ["ch.rubencatalao.pli", "com.anthropic.claudefordesktop"]))
+        let hidden = bar.order
+        #expect(hidden == ["ch.rubencatalao.pli", "com.anthropic.claudefordesktop", "|", "com.protonmail.bridge", "com.google.drivefs",
+                           "ch.rubencatalao.tansu"])
+        try await openAndClose(IconID(bundleID: "ch.rubencatalao.pli"), pid: 2003, with: engine)
+        #expect(bar.order == hidden, "back left of Claude, not right behind the divider")
+        #expect(divider.isExpanded)
+    }
+
+    @Test func everyIconBetweenComesOutAndGoesBackInOrder() async throws {
+        bar.entries.insert(SimulatedBar.Entry(windowID: 50, bundleID: "ch.rubencatalao.tansu", key: "drawer", width: 30, pid: 1), at: 2)
+        let engine = engineBesideTheNotch(safeFrom: 1200)
+        await engine.start()
+        _ = await engine.apply(plan(hiding: ["ch.rubencatalao.pli", "com.anthropic.claudefordesktop", "com.protonmail.bridge"]))
+        let hidden = bar.order
+        #expect(hidden == ["ch.rubencatalao.pli", "com.anthropic.claudefordesktop", "com.protonmail.bridge", "|", "com.google.drivefs",
+                           "ch.rubencatalao.tansu"])
+        try await openAndClose(IconID(bundleID: "ch.rubencatalao.pli"), pid: 2003, with: engine)
+        #expect(bar.order == hidden)
+        #expect(divider.isExpanded)
+    }
+
+    /// When even the drops next to the divider would be beside the notch, the icon stays right behind the divider:
+    /// hidden as it should be, and nothing that shows moves.
+    @Test func anOrderOutOfReachLeavesTheIconHiddenRightBehindTheDivider() async throws {
+        bar.entries.insert(SimulatedBar.Entry(windowID: 50, bundleID: "ch.rubencatalao.tansu", key: "drawer", width: 30, pid: 1), at: 2)
+        let engine = engineBesideTheNotch(safeFrom: 1250)
+        await engine.start()
+        _ = await engine.apply(plan(hiding: ["ch.rubencatalao.pli", "com.anthropic.claudefordesktop"]))
+        try await openAndClose(IconID(bundleID: "ch.rubencatalao.pli"), pid: 2003, with: engine)
+        let order = bar.order, divided = order.firstIndex(of: "|")!
+        #expect(Set(order.prefix(divided)) == ["ch.rubencatalao.pli", "com.anthropic.claudefordesktop"])
+        #expect(order.suffix(from: divided + 1) == ["com.protonmail.bridge", "com.google.drivefs", "ch.rubencatalao.tansu"])
+        #expect(divider.isExpanded)
+    }
+
     /// Some apps keep a window up at all times (an island around the notch, a floating panel): it is not what the
     /// press opened, and does not keep the icon out.
     @Test func aWindowTheAppAlreadyHadDoesNotKeepItsIconOut() async throws {
