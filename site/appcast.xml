@@ -1,9 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><!-- sparkle-sign-warning:
+IMPORTANT: This file was signed by Sparkle. Any modifications to this file requires re-signing this file with generate_appcast or sign_update! The signed signature will be embedded at the end of this file.
+--><rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>Tiroir</title>
         <link>https://gettiroir.vercel.app/</link>
         <description>Updates of Tiroir. The first release adds its item here.</description>
         <language>en</language>
+        <item>
+            <title>1.1.0</title>
+            <pubDate>Mon, 28 Sep 2026 21:41:08 +0200</pubDate>
+            <link>https://gettiroir.vercel.app</link>
+            <sparkle:fullReleaseNotesLink>https://github.com/ruben4reall/tiroir/releases</sparkle:fullReleaseNotesLink>
+            <sparkle:version>1.1.0</sparkle:version>
+            <sparkle:shortVersionString>1.1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <description sparkle:format="markdown"><![CDATA[Tansu is now **Tiroir**, French for drawer: each drawer holds one kind of thing.
+
+### New
+
+- **A new name and a new icon.** The icon shows what Tiroir does: a drawer's icon in the menu bar, and the glass
+  panel that opens right under it.
+- **A new address.** The website is https://gettiroir.vercel.app, the source is https://github.com/ruben4reall/tiroir,
+  and Homebrew installs it with `brew install --cask ruben4reall/tap/tiroir`.
+
+Tansu 1.0 does not become Tiroir by itself: install Tiroir, then move Tansu to the Trash.
+]]></description>
+            <enclosure url="https://github.com/ruben4reall/tiroir/releases/download/v1.1.0/Tiroir-1.1.0.dmg" length="5769544" type="application/octet-stream" sparkle:edSignature="dhAlJULzPabpTFmsJKPNfS64A4AAnKXfOhkdscEOxmbtPo3tSWJgZIrHqugB5lKXu2eyjPoRhHFzcOMdfKeHDA=="></enclosure>
+        </item>
     </channel>
-</rss>
+</rss><!-- sparkle-signatures:
+edSignature: xCXN39sfD+Rf+aGOKu3fwJ7BChaQ2TwTu6L7PyRpxAVxGar1NynyZq6NBIpal0zo+u4y04aDKQb222Exnf+tAA==
+length: 2013
+-->
