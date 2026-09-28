@@ -47,10 +47,10 @@ func honey(x: ClosedRange<Double>, y: ClosedRange<Double>) -> Bool {
 }
 
 // Finder draws each 112-point icon centered at y = 215 and its label under it, in black: the ground must be light
-// there, for the black labels and for Tansu's dark icon.
+// there, for the black labels and for Tiroir's dark icon.
 for x in [165.0, 495.0] {
     for y in [165.0, 180.0, 215.0, 250.0, 283.0, 292.0] where luminance(x, y) < 0.9 {
-        fail("the ground at (\(x), \(y)) is too dark for Finder's black labels and Tansu's icon")
+        fail("the ground at (\(x), \(y)) is too dark for Finder's black labels and Tiroir's icon")
     }
 }
 let ground = luminance(240, 215)

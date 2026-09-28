@@ -1,8 +1,8 @@
 import AppKit
 import Sparkle
-import TansuApp
+import TiroirApp
 
-/// Tansu's only network code: Sparkle reads the update feed on the website and installs EdDSA-signed disk images from
+/// Tiroir's only network code: Sparkle reads the update feed on the website and installs EdDSA-signed disk images from
 /// GitHub Releases. The welcome asks whether to check automatically. Debug builds never start it, so a development
 /// copy is never replaced by a release.
 @MainActor
@@ -42,7 +42,7 @@ private final class UpdateReminders: NSObject, @preconcurrency SPUStandardUserDr
 }
 
 /// The package's delegate, with Sparkle as its updater and the move to Applications (only this target links Sparkle).
-final class TansuShellDelegate: TansuAppDelegate {
+final class TiroirShellDelegate: TiroirAppDelegate {
     override func makeUpdater() -> UpdateChecking? {
         SparkleUpdater()
     }

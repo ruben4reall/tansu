@@ -7,6 +7,6 @@ refuses "an unknown step" "usage" scripts/publish.sh deploy 1.0.0
 refuses "a malformed version" "usage" scripts/publish.sh release 1.0
 refuses "no confirmation outside a terminal" "not confirmed" scripts/publish.sh release 1.0.0
 refuses "a confirmation for another version" "not confirmed" scripts/publish.sh release 1.0.0 --confirm 1.0.1
-refuses "a site deploy without the Vercel scope" "TANSU_VERCEL_SCOPE" env -u TANSU_VERCEL_SCOPE scripts/publish.sh site 1.0.0 --confirm 1.0.0
+refuses "a site deploy without the Vercel scope" "TIROIR_VERCEL_SCOPE" env -u TIROIR_VERCEL_SCOPE scripts/publish.sh site 1.0.0 --confirm 1.0.0
 refuses "a release from an incomplete dist/" "dist/ is incomplete" scripts/publish.sh release 9.9.9 --confirm 9.9.9
-refuses "a tap push without the cask of that version" "Casks/tansu.rb is" scripts/publish.sh tap 9.9.9 --confirm 9.9.9
+refuses "a tap push without the cask of that version" "Casks/tiroir.rb is" scripts/publish.sh tap 9.9.9 --confirm 9.9.9

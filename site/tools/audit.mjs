@@ -6,7 +6,7 @@
 // Usage: node tools/audit.mjs [--only desktop|laptop|tablet|phone] [--no-shots] [--path /page] [--wrapped] [--url <site>]
 // --wrapped checks the page inside the skeleton a preview host puts around it (light colours on body, img max-width);
 //   the skeleton's styles are a file of their own, since the CSP forbids inline styles.
-// --url https://gettansu.vercel.app checks the published site instead of site/ served locally.
+// --url https://gettiroir.vercel.app checks the published site instead of site/ served locally.
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -84,7 +84,7 @@ const INSPECT = `(() => {
   }
   if (low.size) out.push('low contrast: ' + [...low].slice(0, 8).join('; ') + (low.size > 8 ? ' and ' + (low.size - 8) + ' more' : ''));
   if (checked < 100 && document.querySelector('[data-scene]')) out.push('contrast checked on ' + checked + ' texts only');
-  out.push(...window.__tansu.csp.map((c) => 'CSP: ' + c), ...window.__tansu.errors.map((e) => 'error: ' + e));
+  out.push(...window.__tiroir.csp.map((c) => 'CSP: ' + c), ...window.__tiroir.errors.map((e) => 'error: ' + e));
   return out;
 })()`;
 

@@ -11,9 +11,9 @@ import { pngSize } from '../tools/png.mjs';
 const SITE = fileURLToPath(new URL('..', import.meta.url));
 const REPO_ROOT = resolve(SITE, '..');
 const TEXT = new Set(['.html', '.css', '.js', '.mjs', '.svg', '.json', '.txt', '.xml', '.md', '.sh']);
-const HOST = 'gettansu.vercel.app';
-const REPO = 'https://github.com/ruben4reall/tansu';
-const DOWNLOAD = `${REPO}/releases/latest/download/Tansu.dmg`;
+const HOST = 'gettiroir.vercel.app';
+const REPO = 'https://github.com/ruben4reall/tiroir';
+const DOWNLOAD = `${REPO}/releases/latest/download/Tiroir.dmg`;
 const EM_DASH = String.fromCharCode(0x2014);
 const APPLE_LOGO = String.fromCharCode(0xf8ff); // the private-use glyph Apple fonts draw as their logo
 const PAGES = ['index.html', '404.html'];
@@ -65,11 +65,11 @@ test('the required words are on the page', () => {
   for (const words of [
     'Your menu bar, in drawers.',
     'A place for every icon.',
-    'A tansu is a Japanese chest of drawers',
+    'Tiroir is French for drawer',
     'Made in Switzerland',
-    'Tansu is not affiliated with Apple.',
+    'Tiroir is not affiliated with Apple.',
     'Bartender, Ice, Thaw and Hidden Bar belong to their authors.',
-    'brew install --cask ruben4reall/tap/tansu',
+    'brew install --cask ruben4reall/tap/tiroir',
     'Free and open source', 'Version 1.0', 'macOS 26 and 27', 'One permission',
   ]) assert.ok(visible.includes(words), `missing: ${words}`);
   assert.ok(html.split(DOWNLOAD).length - 1 >= 3, 'the download link appears in the nav, the hero and the download section');
@@ -163,8 +163,8 @@ test('no SF Pro file, no Apple logo, Inter as the only webfont', async () => {
   assert.ok(existsSync(join(SITE, 'assets/fonts/LICENSE-Inter.txt')), 'Inter ships with its license');
   const css = await read('css/site.css');
   assert.deepEqual([...css.matchAll(/font-family:\s*'([^']+)';/g)].map(([, family]) => family), ['Inter', 'Inter']);
-  assert.match(css, /--font: var\(--tansu-font-sans\);/);
-  assert.match(await read('css/tokens.css'), /--tansu-font-sans: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;/);
+  assert.match(css, /--font: var\(--tiroir-font-sans\);/);
+  assert.match(await read('css/tokens.css'), /--tiroir-font-sans: -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;/);
 });
 
 test('every file the pages and their styles reference exists', async () => {
@@ -229,11 +229,11 @@ test('the appcast is a valid Sparkle feed: empty before the first release, every
   const feed = await read('appcast.xml');
   assert.match(feed, /^<\?xml version="1\.0" encoding="utf-8"( standalone="yes")?\?>/);
   assert.match(feed, /<rss (version="2\.0" xmlns:sparkle="http:\/\/www\.andymatuschak\.org\/xml-namespaces\/sparkle"|xmlns:sparkle="http:\/\/www\.andymatuschak\.org\/xml-namespaces\/sparkle" version="2\.0")>/);
-  assert.match(feed, /<channel>\s*<title>Tansu<\/title>\s*<link>https:\/\/gettansu\.vercel\.app\/<\/link>\s*<description>[^<]+<\/description>/);
+  assert.match(feed, /<channel>\s*<title>Tiroir<\/title>\s*<link>https:\/\/gettiroir\.vercel\.app\/<\/link>\s*<description>[^<]+<\/description>/);
   const items = [...feed.matchAll(/<item>([\s\S]*?)<\/item>/g)].map((match) => match[1]);
   for (const item of items) {
     // Each update comes from a GitHub release, with its size and its EdDSA signature.
-    assert.match(item, /<enclosure url="https:\/\/github\.com\/ruben4reall\/tansu\/releases\/download\/v\d+\.\d+\.\d+\/Tansu-\d+\.\d+\.\d+\.dmg" length="\d+" type="application\/octet-stream" sparkle:edSignature="[A-Za-z0-9+/]{86}=="/);
+    assert.match(item, /<enclosure url="https:\/\/github\.com\/ruben4reall\/tiroir\/releases\/download\/v\d+\.\d+\.\d+\/Tiroir-\d+\.\d+\.\d+\.dmg" length="\d+" type="application\/octet-stream" sparkle:edSignature="[A-Za-z0-9+/]{86}=="/);
   }
   // With items, the whole feed is signed too: the app requires a signed feed.
   if (items.length > 0) assert.match(feed, /<!-- sparkle-signatures:\nedSignature: [A-Za-z0-9+/]{86}==\nlength: \d+\n-->\s*$/);

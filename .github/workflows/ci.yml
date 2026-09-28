@@ -10,8 +10,8 @@ jobs:
     runs-on: macos-26
     steps:
       - uses: actions/checkout@v7
-      - name: Test TansuKit
-        run: swift test --package-path Packages/TansuKit
+      - name: Test TiroirKit
+        run: swift test --package-path Packages/TiroirKit
   app:
     if: ${{ !github.event.repository.private }}
     runs-on: macos-26
@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v7
       - name: Install XcodeGen
         run: brew install xcodegen
-      - name: Build Tansu.app (ad hoc signature)
+      - name: Build Tiroir.app (ad hoc signature)
         run: scripts/build.sh Debug
   scripts:
     if: ${{ !github.event.repository.private }}

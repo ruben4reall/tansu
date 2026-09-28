@@ -1,7 +1,7 @@
 import AppKit
-import TansuUI
+import TiroirUI
 
-/// Offers, once, to move Tansu into Applications when it was opened from somewhere else, such as the disk image or
+/// Offers, once, to move Tiroir into Applications when it was opened from somewhere else, such as the disk image or
 /// Downloads: login items and updates need it to stay in one place, and macOS 27 lets only apps in /Applications change
 /// the menu bar. Pattern from Islet.
 @MainActor
@@ -35,7 +35,7 @@ enum ApplicationsFolder {
         moveNow()
     }
 
-    /// Copies Tansu to /Applications (the copy already there goes to the Trash), opens the copy and quits.
+    /// Copies Tiroir to /Applications (the copy already there goes to the Trash), opens the copy and quits.
     static func moveNow() {
         let bundle = Bundle.main.bundleURL
         let destination = URL(fileURLWithPath: "/Applications").appendingPathComponent(bundle.lastPathComponent)

@@ -13,17 +13,17 @@ function fakeWindow(hostname, { accept = true } = {}) {
   };
 }
 
-test('one anonymous view from gettansu.vercel.app, counted as tansu', () => {
-  assert.equal(PRODUCTION_HOST, 'gettansu.vercel.app');
+test('one anonymous view from gettiroir.vercel.app, counted as tiroir', () => {
+  assert.equal(PRODUCTION_HOST, 'gettiroir.vercel.app');
   const win = fakeWindow(PRODUCTION_HOST);
   assert.equal(startBeacon({ referrer: 'https://example.com/' }, win), true);
   assert.equal(win.sent.length, 1);
   assert.equal(win.sent[0].url, 'https://ruben-analytics.vercel.app/api/hit');
-  assert.deepEqual(JSON.parse(win.sent[0].body), { site: 'tansu', path: '/', ref: 'https://example.com/' });
+  assert.deepEqual(JSON.parse(win.sent[0].body), { site: 'tiroir', path: '/', ref: 'https://example.com/' });
 });
 
 test('nothing from a local copy, a preview deployment or another site', () => {
-  for (const host of ['localhost', '127.0.0.1', '', 'tansu-git-main-ruben.vercel.app', 'getpli.vercel.app', 'gettansu.vercel.app.example.com']) {
+  for (const host of ['localhost', '127.0.0.1', '', 'tiroir-git-main-ruben.vercel.app', 'getpli.vercel.app', 'gettiroir.vercel.app.example.com']) {
     const win = fakeWindow(host);
     assert.equal(startBeacon({ referrer: '' }, win), false, host);
     assert.deepEqual(win.sent, [], host);

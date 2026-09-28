@@ -2,7 +2,7 @@
 # scripts/bench.sh measures what it is given, and refuses what it cannot measure.
 source "$(dirname "$0")/lib.sh"
 cd "$ROOT"
-refuses "a malformed pid" "usage" scripts/bench.sh tansu
+refuses "a malformed pid" "usage" scripts/bench.sh tiroir
 refuses "a malformed duration" "usage" scripts/bench.sh 1 soon
 refuses "a zero duration" "usage" scripts/bench.sh 1 0
 refuses "a process that does not exist" "no process" scripts/bench.sh 99999999 1

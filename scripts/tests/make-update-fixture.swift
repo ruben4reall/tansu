@@ -1,5 +1,5 @@
 // swift scripts/tests/make-update-fixture.swift <dir>: a fake release signed the way Sparkle signs one (Ed25519 over
-// the whole file): <dir>/Info.plist (SUPublicEDKey), <dir>/Tansu-1.0.0.dmg (4096 bytes of "A"), <dir>/appcast.xml.
+// the whole file): <dir>/Info.plist (SUPublicEDKey), <dir>/Tiroir-1.0.0.dmg (4096 bytes of "A"), <dir>/appcast.xml.
 import CryptoKit
 import Foundation
 
@@ -8,19 +8,19 @@ try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: tr
 let key = Curve25519.Signing.PrivateKey()
 let archive = Data(repeating: 0x41, count: 4096)
 let signature = try key.signature(for: archive).base64EncodedString()
-try archive.write(to: dir.appendingPathComponent("Tansu-1.0.0.dmg"))
+try archive.write(to: dir.appendingPathComponent("Tiroir-1.0.0.dmg"))
 let plist: [String: Any] = ["SUPublicEDKey": key.publicKey.rawRepresentation.base64EncodedString()]
 try PropertyListSerialization.data(fromPropertyList: plist, format: .xml, options: 0).write(to: dir.appendingPathComponent("Info.plist"))
 let appcast = """
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
   <channel>
-    <title>Tansu</title>
+    <title>Tiroir</title>
     <item>
       <title>1.0.0</title>
       <sparkle:version>1.0.0</sparkle:version>
       <sparkle:shortVersionString>1.0.0</sparkle:shortVersionString>
-      <enclosure url="https://github.com/ruben4reall/tansu/releases/download/v1.0.0/Tansu-1.0.0.dmg" length="\(archive.count)" type="application/octet-stream" sparkle:edSignature="\(signature)"/>
+      <enclosure url="https://github.com/ruben4reall/tiroir/releases/download/v1.0.0/Tiroir-1.0.0.dmg" length="\(archive.count)" type="application/octet-stream" sparkle:edSignature="\(signature)"/>
     </item>
   </channel>
 </rss>

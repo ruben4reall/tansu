@@ -1,12 +1,12 @@
 # Captures and numbers the site still needs
 
-Every picture of Tansu on the site is a real capture of the app. Until each one exists, its slot holds a placeholder drawn by `node tools/placeholders.mjs`: a neutral skeleton marked inside the PNG with the text `tansu-placeholder`. The tool never overwrites a real picture, and `TANSU_RELEASE=1 node --test tests/*.test.mjs` fails while a placeholder or an empty number is left.
+Every picture of Tiroir on the site is a real capture of the app. Until each one exists, its slot holds a placeholder drawn by `node tools/placeholders.mjs`: a neutral skeleton marked inside the PNG with the text `tiroir-placeholder`. The tool never overwrites a real picture, and `TIROIR_RELEASE=1 node --test tests/*.test.mjs` fails while a placeholder or an empty number is left.
 
 ## How to capture
 
 1. Build the Debug app (`scripts/build.sh`) and use demo mode: generic icons, a tinted floating bar, two profiles and three triggers, and nothing in your own menu bar moves.
-2. Pass the options as separate arguments (in zsh, an array: `"${OPTIONS[@]}"`, never one string): `-TansuDemo YES -TansuBackdrop <picture> -AppleLanguages '(en)' -AppleLocale en_US -AppleAccentColor 99`, then one of `-TansuSettingsPane <pane>`, `-TansuWelcomeStep 2`, `-TansuOpenDrawer 0` or `all`, `-TansuSearch cl`. `-AppleAccentColor 99` shows the app's own accent, as on a Mac left with the default Multicolor accent.
-3. Windows: click once on the title bar so the window draws as the one in front, then capture it by window ID, without the system shadow: `screencapture -x -o -l <window id> <name>@2x.png`. Panels (drawers, search) take `-TansuQuiet YES` and need no click. Never the whole screen.
+2. Pass the options as separate arguments (in zsh, an array: `"${OPTIONS[@]}"`, never one string): `-TiroirDemo YES -TiroirBackdrop <picture> -AppleLanguages '(en)' -AppleLocale en_US -AppleAccentColor 99`, then one of `-TiroirSettingsPane <pane>`, `-TiroirWelcomeStep 2`, `-TiroirOpenDrawer 0` or `all`, `-TiroirSearch cl`. `-AppleAccentColor 99` shows the app's own accent, as on a Mac left with the default Multicolor accent.
+3. Windows: click once on the title bar so the window draws as the one in front, then capture it by window ID, without the system shadow: `screencapture -x -o -l <window id> <name>@2x.png`. Panels (drawers, search) take `-TiroirQuiet YES` and need no click. Never the whole screen.
 4. Make the 1x file from the 2x one: `sips --resampleHeightWidth <h/2> <w/2> <name>@2x.png --out <name>.png`.
 5. `drawer-files` is cropped to the glass (44 pixels off each side of the 2x capture): the hero draws its own shadow.
 6. Keep the file names. If a capture comes out at another size, change the `width` and `height` of its `<img>` in `index.html` to the 1x size: the tests compare all three.
@@ -17,7 +17,7 @@ Every picture of Tansu on the site is a real capture of the app. Until each one 
 | File, with its @2x twin | Size at 1x (px) | Where on the page | What it shows |
 |---|---|---|---|
 | `assets/app/drawer-files.png` | 280 × 125 | Hero: it drops under the cloud drawer's icon | The Files & Cloud drawer's glass alone, two icons with their names. |
-| `assets/app/welcome-sort.png` | 680 × 632 | Smart Sort | The welcome at its Smart Sort step: "Tansu found 16 icons", By Purpose selected, the drawers proposed, Sort My Menu Bar. |
+| `assets/app/welcome-sort.png` | 680 × 632 | Smart Sort | The welcome at its Smart Sort step: "Tiroir found 16 icons", By Purpose selected, the drawers proposed, Sort My Menu Bar. |
 | `assets/app/drawer-all.png` | 456 × 525 | Drawers, left | The All drawer: one row per drawer, its mark and name, its icons. |
 | `assets/app/search.png` | 604 × 233 | Drawers, right | Search with "cl" typed and three results, the first one selected. |
 | `assets/app/settings-profiles.png` | 960 × 700 | Profiles and triggers, left | Settings at Profiles: Laptop (active) and Desk. |
@@ -32,7 +32,7 @@ Every picture of Tansu on the site is a real capture of the app. Until each one 
 | `assets/brand/favicon-32.png` | 32 × 32 | Browser tab | The app icon at 32 pixels (`brand/icon-previews/default-32.png`); `node tools/placeholders.mjs` rebuilds `favicon.ico` from it. |
 | `assets/brand/apple-touch-icon.png` | 180 × 180 | Home screen of a phone | The app icon on an opaque Night square, rendered with `brand/scripts/render-html.sh`. |
 | `assets/brand/og.png` | 1280 × 640 | Link previews | `docs/brand/social-preview.png`: the icon, the wordmark and "Your menu bar, in drawers." |
-| `assets/brand/wordmark.svg` | 20 px high on the page | Nav and footer | `brand/wordmark/tansu-wordmark-rice.svg`. |
+| `assets/brand/wordmark.svg` | 20 px high on the page | Nav and footer | `brand/wordmark/tiroir-wordmark-rice.svg`. |
 
 ## Numbers to measure
 
@@ -42,7 +42,7 @@ Every picture of Tansu on the site is a real capture of the app. Until each one 
 
 ## Also check before publishing
 
-- The macOS 27 card keeps "Beta" until Tansu has run on macOS 27.
+- The macOS 27 card keeps "Beta" until Tiroir has run on macOS 27.
 - The comparison table is dated September 2026; every "Not verified" is an invitation to check and correct.
-- The GitHub links point to `main`: `LICENSE`, `Packages/TansuKit`, `PrivateAPI.swift`, the `Tests` folder and `Catalog.json` must exist there when the repository becomes public.
+- The GitHub links point to `main`: `LICENSE`, `Packages/TiroirKit`, `PrivateAPI.swift`, the `Tests` folder and `Catalog.json` must exist there when the repository becomes public.
 - `appcast.xml` is an empty feed until the first release writes its item.

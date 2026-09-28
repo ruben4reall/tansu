@@ -1,12 +1,12 @@
 // swift scripts/make-dmg-background.swift [output.png]
 //
 // The installer window's background: 660 x 400 points, rendered at 2x, written to packaging/dmg-background.png unless
-// another path is given. scripts/release.sh copies it into the disk image and places Tansu's icon at (165, 215) and
+// another path is given. scripts/release.sh copies it into the disk image and places Tiroir's icon at (165, 215) and
 // Applications at (495, 215), in Finder's coordinates (points from the top left), with 112-point icons.
 //
 // Light on purpose, like Pli's. Finder draws the labels under the icons in black on any window with a background
-// picture, whatever the appearance, so a Night ground would hide "Tansu" and "Applications"; Paper and Rice keep them
-// legible, and Tansu's warm black icon stands out on them. The brand comes back as the icon's own drawer, drawn here
+// picture, whatever the appearance, so a Night ground would hide "Tiroir" and "Applications"; Paper and Rice keep them
+// legible, and Tiroir's warm black icon stands out on them. The brand comes back as the icon's own drawer, drawn here
 // with shapes rather than read from brand/, so the script needs nothing but the palette: it hangs from a bar at the top
 // edge, the way a drawer drops from the menu bar, with one compartment lit in Honey.
 import AppKit
@@ -87,7 +87,7 @@ for row in 0..<rows {
     }
 }
 
-// 4. The arrow from Tansu to Applications, at icon height, in the accent for light grounds.
+// 4. The arrow from Tiroir to Applications, at icon height, in the accent for light grounds.
 let arrow = NSBezierPath()
 arrow.lineWidth = 3
 arrow.lineCapStyle = .round
@@ -105,14 +105,14 @@ NSGradient(colors: [hairline.withAlphaComponent(0), hairline, hairline, hairline
            atLocations: [0, 0.2, 0.8, 1], colorSpace: .sRGB)!
     .draw(in: NSRect(x: 90, y: 92, width: 480, height: 1), angle: 0)
 
-// 6. What to do, then who Tansu is not.
+// 6. What to do, then who Tiroir is not.
 func centered(_ text: String, size: CGFloat, weight: NSFont.Weight, color: NSColor, y: CGFloat) {
     let attributes: [NSAttributedString.Key: Any] = [.font: NSFont.systemFont(ofSize: size, weight: weight), .foregroundColor: color]
     let textWidth = (text as NSString).size(withAttributes: attributes).width
     (text as NSString).draw(at: NSPoint(x: (width - textWidth) / 2, y: y), withAttributes: attributes)
 }
-centered("Drag Tansu to Applications.", size: 13, weight: .medium, color: ink, y: 54)
-centered("Tansu is not affiliated with Apple.", size: 10.5, weight: .regular, color: graphite, y: 22)
+centered("Drag Tiroir to Applications.", size: 13, weight: .medium, color: ink, y: 54)
+centered("Tiroir is not affiliated with Apple.", size: 10.5, weight: .regular, color: graphite, y: 22)
 NSGraphicsContext.restoreGraphicsState()
 
 guard let png = rep.representation(using: .png, properties: [:]) else { fail("no PNG") }

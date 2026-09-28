@@ -1,6 +1,19 @@
 # Changelog
 
-Every release of Tansu. Versions follow semantic versioning; each one is signed, notarized, and offered to installed copies through Sparkle.
+Every release of Tiroir. Versions follow semantic versioning; each one is signed, notarized, and offered to installed copies through Sparkle. Versions before 1.1.0 were called Tansu.
+
+## 1.1.0 (2026-09-28)
+
+Tansu is now **Tiroir**, French for drawer: each drawer holds one kind of thing.
+
+### New
+
+- **A new name and a new icon.** The icon shows what Tiroir does: a drawer's icon in the menu bar, and the glass
+  panel that opens right under it.
+- **A new address.** The website is https://gettiroir.vercel.app, the source is https://github.com/ruben4reall/tiroir,
+  and Homebrew installs it with `brew install --cask ruben4reall/tap/tiroir`.
+
+Tansu 1.0 does not become Tiroir by itself: install Tiroir, then move Tansu to the Trash.
 
 ## 1.0.1 (2026-09-28)
 

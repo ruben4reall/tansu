@@ -33,10 +33,10 @@ test('css/tokens.css is the brand file, copied', () => {
 
 test('every color of tokens.json reaches the site with its value', () => {
   const declared = declaredTokens(siteCss);
-  for (const [name, value] of Object.entries(palette())) assert.equal(declared[`--tansu-${name}`], value, name);
+  for (const [name, value] of Object.entries(palette())) assert.equal(declared[`--tiroir-${name}`], value, name);
   const glow = tokens.gradient.glow.$value.map((stop) => resolveValue(tokens, stop.color));
   assert.deepEqual(glow, [BRIEF.honey, BRIEF.ember]);
-  assert.deepEqual([declared['--tansu-glow-1'], declared['--tansu-glow-2']], glow);
+  assert.deepEqual([declared['--tiroir-glow-1'], declared['--tiroir-glow-2']], glow);
 });
 
 test('the drawer spring is the app\'s, settles, and barely overshoots', () => {
@@ -47,7 +47,7 @@ test('the drawer spring is the app\'s, settles, and barely overshoots', () => {
   assert.equal(points.at(-1), 1);
   assert.ok(Math.max(...points) < 1.01, 'overshoot under 1 %');
   assert.ok(seconds > 0.3 && seconds < 0.6, `${seconds}s`);
-  assert.equal(declaredTokens(siteCss)['--tansu-spring-drawer'], easing);
+  assert.equal(declaredTokens(siteCss)['--tiroir-spring-drawer'], easing);
 });
 
 test('text colors keep at least 4.5:1 on the backgrounds they are meant for', () => {

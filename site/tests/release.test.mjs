@@ -1,5 +1,5 @@
 // Before publishing: no placeholder picture and no empty number may be left. Skipped in everyday runs; run it with
-//   TANSU_RELEASE=1 node --test tests/*.test.mjs
+//   TIROIR_RELEASE=1 node --test tests/*.test.mjs
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { join, relative } from 'node:path';
@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { icoPng, isPlaceholder } from '../tools/png.mjs';
 
 const SITE = fileURLToPath(new URL('..', import.meta.url));
-const skip = process.env.TANSU_RELEASE === '1' ? false : 'set TANSU_RELEASE=1 to check before publishing';
+const skip = process.env.TIROIR_RELEASE === '1' ? false : 'set TIROIR_RELEASE=1 to check before publishing';
 
 async function pngs(dir) {
   const out = [];

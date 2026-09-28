@@ -50,7 +50,7 @@ const fontStack = (family) => family.map((name) => (/\s/.test(name) || name === 
 export function renderTokensCss(tokens) {
   const color = (group, title) => [
     `  /* ${title} */`,
-    ...entries(tokens.color[group]).map(([name, t]) => `  --tansu-${name}: ${t.$value}; /* ${t.$description} */`),
+    ...entries(tokens.color[group]).map(([name, t]) => `  --tiroir-${name}: ${t.$value}; /* ${t.$description} */`),
     '',
   ];
   const glow = tokens.gradient.glow;
@@ -59,12 +59,12 @@ export function renderTokensCss(tokens) {
   const drawer = springEasing(spring.$value);
   const role = (t) => {
     const alias = t.$value.match(/^\{color\.(dark|light)\.(.+)\}$/);
-    if (alias) return `var(--tansu-${alias[2]});`;
+    if (alias) return `var(--tiroir-${alias[2]});`;
     if (/^#[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?$/.test(t.$value)) return `${t.$value.toUpperCase()};${t.$description ? ` /* ${t.$description} */` : ''}`;
     throw new Error(`role value ${t.$value}: neither a palette alias nor a hex color`);
   };
   const css = [
-    '/* Tansu brand tokens.',
+    '/* Tiroir brand tokens.',
     ' * Generated from brand/tokens/tokens.json by brand/scripts/tokens/build.mjs:',
     ' * edit the JSON and run the script, never this file.',
     ' */',
@@ -73,42 +73,42 @@ export function renderTokensCss(tokens) {
     ...color('dark', 'Dark palette: the website and the dark appearance'),
     ...color('light', 'Light palette'),
     `  /* ${glow.$description} */`,
-    ...stops.map((stop, i) => `  --tansu-glow-${i + 1}: ${stop.color};`),
-    `  --tansu-glow: linear-gradient(135deg, ${stops.map((stop, i) => `var(--tansu-glow-${i + 1}) ${Math.round(stop.position * 100)}%`).join(', ')});`,
+    ...stops.map((stop, i) => `  --tiroir-glow-${i + 1}: ${stop.color};`),
+    `  --tiroir-glow: linear-gradient(135deg, ${stops.map((stop, i) => `var(--tiroir-glow-${i + 1}) ${Math.round(stop.position * 100)}%`).join(', ')});`,
     '',
     '  /* Type: SF Pro through the system names, never shipped; Inter as the only webfont.',
-    '     --tansu-<style> is a font shorthand (weight size/line family); set letter-spacing',
-    '     with --tansu-<style>-tracking. */',
-    `  --tansu-font-sans: ${fontStack(tokens.font.family.sans.$value)};`,
-    ...entries(tokens.font.weight).map(([name, t]) => `  --tansu-weight-${name}: ${t.$value};`),
+    '     --tiroir-<style> is a font shorthand (weight size/line family); set letter-spacing',
+    '     with --tiroir-<style>-tracking. */',
+    `  --tiroir-font-sans: ${fontStack(tokens.font.family.sans.$value)};`,
+    ...entries(tokens.font.weight).map(([name, t]) => `  --tiroir-weight-${name}: ${t.$value};`),
   ];
   for (const [name, t] of entries(tokens.type)) {
     const v = t.$value;
     css.push(
-      `  --tansu-${name}-size: ${v.fontSize};`,
-      `  --tansu-${name}-line: ${v.lineHeight};`,
-      `  --tansu-${name}-weight: ${v.fontWeight};`,
-      `  --tansu-${name}-tracking: ${v.letterSpacing};`,
-      `  --tansu-${name}: ${v.fontWeight} ${v.fontSize}/${v.lineHeight} var(--tansu-font-sans);`,
+      `  --tiroir-${name}-size: ${v.fontSize};`,
+      `  --tiroir-${name}-line: ${v.lineHeight};`,
+      `  --tiroir-${name}-weight: ${v.fontWeight};`,
+      `  --tiroir-${name}-tracking: ${v.letterSpacing};`,
+      `  --tiroir-${name}: ${v.fontWeight} ${v.fontSize}/${v.lineHeight} var(--tiroir-font-sans);`,
     );
   }
-  css.push('', '  /* Radii */', ...entries(tokens.radius).map(([name, t]) => `  --tansu-radius-${name}: ${t.$value}; /* ${t.$description} */`));
-  css.push('', '  /* Spacing: 4-point scale, the key is the multiple of 4 */', ...entries(tokens.space).map(([name, t]) => `  --tansu-space-${name}: ${t.$value};`));
+  css.push('', '  /* Radii */', ...entries(tokens.radius).map(([name, t]) => `  --tiroir-radius-${name}: ${t.$value}; /* ${t.$description} */`));
+  css.push('', '  /* Spacing: 4-point scale, the key is the multiple of 4 */', ...entries(tokens.space).map(([name, t]) => `  --tiroir-space-${name}: ${t.$value};`));
   css.push(
     '',
     `  /* Motion. The drawer spring: response ${spring.$value.response}, damping ${spring.$value.dampingFraction}, settled in ${drawer.seconds}s. */`,
-    `  --tansu-spring-drawer: ${drawer.easing};`,
-    `  --tansu-spring-drawer-duration: ${drawer.seconds}s;`,
-    ...entries(tokens.motion.ease).map(([name, t]) => `  --tansu-ease-${name}: cubic-bezier(${t.$value.join(', ')}); /* ${t.$description} */`),
-    ...entries(tokens.motion.duration).map(([name, t]) => `  --tansu-duration-${name}: ${t.$value}; /* ${t.$description} */`),
+    `  --tiroir-spring-drawer: ${drawer.easing};`,
+    `  --tiroir-spring-drawer-duration: ${drawer.seconds}s;`,
+    ...entries(tokens.motion.ease).map(([name, t]) => `  --tiroir-ease-${name}: cubic-bezier(${t.$value.join(', ')}); /* ${t.$description} */`),
+    ...entries(tokens.motion.duration).map(([name, t]) => `  --tiroir-duration-${name}: ${t.$value}; /* ${t.$description} */`),
     '',
     '  /* Roles, dark appearance (the default) */',
-    ...entries(tokens.role.dark).map(([name, t]) => `  --tansu-${name}: ${role(t)}`),
+    ...entries(tokens.role.dark).map(([name, t]) => `  --tiroir-${name}: ${role(t)}`),
     '}',
     '',
-    '/* Roles, light appearance: opt in with data-tansu-theme="light" on any element. */',
-    '[data-tansu-theme="light"] {',
-    ...entries(tokens.role.light).map(([name, t]) => `  --tansu-${name}: ${role(t)}`),
+    '/* Roles, light appearance: opt in with data-tiroir-theme="light" on any element. */',
+    '[data-tiroir-theme="light"] {',
+    ...entries(tokens.role.light).map(([name, t]) => `  --tiroir-${name}: ${role(t)}`),
     '}',
     '',
   );

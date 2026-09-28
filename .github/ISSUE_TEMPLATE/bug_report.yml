@@ -1,12 +1,12 @@
 name: Bug report
-description: Something does not work the way Tansu says it should
+description: Something does not work the way Tiroir says it should
 labels: [bug]
 body:
   - type: textarea
     id: what-happened
     attributes:
       label: What happened
-      description: What you did, and what Tansu did.
+      description: What you did, and what Tiroir did.
     validations:
       required: true
   - type: textarea
@@ -42,22 +42,22 @@ body:
     validations:
       required: true
   - type: input
-    id: tansu
+    id: tiroir
     attributes:
-      label: Tansu version (Settings, About)
+      label: Tiroir version (Settings, About)
       placeholder: "1.0.0"
     validations:
       required: true
   - type: input
     id: engine
     attributes:
-      label: The engine Tansu uses (Settings, Behavior)
+      label: The engine Tiroir uses (Settings, Behavior)
       placeholder: macOS 26
   - type: textarea
     id: log
     attributes:
       label: Log (optional)
       description: |
-        Tansu logs numbers, states and bundle identifiers only, never a window title or an icon's label. Right after the problem, run this in Terminal and paste the output:
-        /usr/bin/log show --last 5m --info --style compact --predicate 'subsystem == "ch.rubencatalao.tansu"'
+        Tiroir logs numbers, states and bundle identifiers only, never a window title or an icon's label. Right after the problem, run this in Terminal and paste the output:
+        /usr/bin/log show --last 5m --info --style compact --predicate 'subsystem == "ch.rubencatalao.tiroir"'
       render: text

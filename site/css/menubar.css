@@ -1,6 +1,6 @@
 /* The menu bar drawn in the page: the hero's close-up of the top-right corner of a Mac, and the small drawings of
    How it works. Every glyph is the page's own (the sprite in index.html); the only picture is the drawer panel, a
-   real capture of Tansu. The drawers show as filled template glyphs (d-*), the icons of other apps as outlines (g-*).
+   real capture of Tiroir. The drawers show as filled template glyphs (d-*), the icons of other apps as outlines (g-*).
    Everything is measured in points of the Mac's screen: --pt is one point at the scene's
    current width, so the drawing scales as one piece.
 
@@ -185,20 +185,20 @@ html[data-motion="full"] .scene:not([data-phase]) .drawer-shot,
 
 /* ----- Sorting: every icon slides into its drawer, each drawer appears as its first icon arrives. ----- */
 
-.scene[data-phase="sorting"] .glyph { animation: tansu-fly 0.95s var(--tansu-ease-sort) calc(var(--i) * 45ms) both; }
-.scene[data-phase="sorting"] .drawer { animation: tansu-pop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1) var(--arrive) both; }
+.scene[data-phase="sorting"] .glyph { animation: tiroir-fly 0.95s var(--tiroir-ease-sort) calc(var(--i) * 45ms) both; }
+.scene[data-phase="sorting"] .drawer { animation: tiroir-pop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1) var(--arrive) both; }
 @supports (animation-timing-function: linear(0, 1)) {
-  .scene[data-phase="sorting"] .drawer { animation-timing-function: var(--tansu-spring-drawer); }
+  .scene[data-phase="sorting"] .drawer { animation-timing-function: var(--tiroir-spring-drawer); }
 }
 
 /* Each icon glides to its drawer at nearly full size, then the drawer takes it in. */
-@keyframes tansu-fly {
+@keyframes tiroir-fly {
   0% { opacity: 1; transform: none; }
   70% { opacity: 1; transform: translateX(calc(var(--dx) * 0.94)) scale(0.82); }
   100% { opacity: 0; transform: translateX(var(--dx)) scale(0.3); }
 }
 
-@keyframes tansu-pop {
+@keyframes tiroir-pop {
   from { opacity: 0; transform: scale(0.5); }
   to { opacity: 1; transform: none; }
 }
@@ -208,11 +208,11 @@ html[data-motion="full"] .scene:not([data-phase]) .drawer-shot,
 .drawer-shot { transition: opacity 0.2s ease-in, transform 0.2s ease-in, filter 0.2s ease-in; }
 .drawer::before { transition: opacity 0.15s ease-out; }
 .scene[data-phase="open"] .drawer-shot {
-  transition: opacity 0.18s ease-out, transform var(--tansu-spring-drawer-duration) cubic-bezier(0.2, 0.9, 0.3, 1), filter 0.24s ease-out;
+  transition: opacity 0.18s ease-out, transform var(--tiroir-spring-drawer-duration) cubic-bezier(0.2, 0.9, 0.3, 1), filter 0.24s ease-out;
 }
 @supports (transition-timing-function: linear(0, 1)) {
   .scene[data-phase="open"] .drawer-shot {
-    transition: opacity 0.18s ease-out, transform var(--tansu-spring-drawer-duration) var(--tansu-spring-drawer), filter 0.24s ease-out;
+    transition: opacity 0.18s ease-out, transform var(--tiroir-spring-drawer-duration) var(--tiroir-spring-drawer), filter 0.24s ease-out;
   }
 }
 

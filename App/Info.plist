@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Tansu</string>
+	<string>Tiroir</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -26,7 +26,7 @@
 		<string>zh-Hans</string>
 	</array>
 	<key>CFBundleName</key>
-	<string>Tansu</string>
+	<string>Tiroir</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -40,11 +40,11 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSHumanReadableCopyright</key>
-	<string>Ruben Catalao. MIT License. Tansu is not affiliated with Apple.</string>
+	<string>Ruben Catalao. MIT License. Tiroir is not affiliated with Apple.</string>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>https://gettansu.vercel.app/appcast.xml</string>
+	<string>https://gettiroir.vercel.app/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>Hw6FHVK3F5noWjlKinBYL+douzFTQ/EMm6J8pXIdTf0=</string>
 	<key>SURequireSignedFeed</key>
