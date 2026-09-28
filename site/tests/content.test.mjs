@@ -70,9 +70,16 @@ test('the required words are on the page', () => {
     'Tiroir is not affiliated with Apple.',
     'Bartender, Ice, Thaw and Hidden Bar belong to their authors.',
     'brew install --cask ruben4reall/tap/tiroir',
-    'Free and open source', 'Version 1.0', 'macOS 26 and 27', 'One permission',
+    'Free and open source', 'macOS 26 and 27', 'One permission',
   ]) assert.ok(visible.includes(words), `missing: ${words}`);
   assert.ok(html.split(DOWNLOAD).length - 1 >= 3, 'the download link appears in the nav, the hero and the download section');
+});
+
+test('the version on the page is the one project.yml builds', async () => {
+  const project = await readFile(join(REPO_ROOT, 'project.yml'), 'utf8');
+  const [, major, minor] = project.match(/MARKETING_VERSION: "(\d+)\.(\d+)\.\d+"/);
+  assert.ok(visible.includes(`Version ${major}.${minor}`), `the page should say Version ${major}.${minor}`);
+  assert.equal((visible.match(/\bVersion \d+\.\d+/g) ?? []).length, 1, 'the page states its version once');
 });
 
 test('the voice: no exclamation mark in what visitors read', async () => {

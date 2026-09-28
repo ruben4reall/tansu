@@ -75,7 +75,7 @@ public final class SystemEventPoster: EventPosting {
     /// Undocumented field that also carries the window under the pointer.
     static let windowUnderPointerField = CGEventField(rawValue: 51)
     /// Marks Tiroir's own events, for anyone watching the event stream.
-    nonisolated static let userDataMarker: Int64 = 0x7A6E_7375 // "tiroir"
+    nonisolated static let userDataMarker: Int64 = 0x7A6E_7375 // "znsu" in ASCII: a value no other app uses
 
     private let source = CGEventSource(stateID: .hidSystemState)
 
