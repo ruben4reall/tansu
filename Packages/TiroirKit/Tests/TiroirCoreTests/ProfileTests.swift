@@ -230,7 +230,7 @@ import Testing
     }
 
     @Test func theStoreDropsAnActiveProfileThatIsGone() {
-        let name = "ch.rubencatalao.tiroir.tests.\(UUID().uuidString)"
+        let name = scratchDefaultsName()
         let defaults = UserDefaults(suiteName: name)!
         defer { discardDefaults(name) }
         let json = #"{"schemaVersion": 1, "activeProfile": "00000000-0000-0000-0000-000000000009", "profiles": []}"#

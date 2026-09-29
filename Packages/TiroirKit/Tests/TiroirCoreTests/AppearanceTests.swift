@@ -23,7 +23,7 @@ import Testing
     }
 
     @Test func settingsSavedByOnePointZeroLoadUnchanged() {
-        let name = "ch.rubencatalao.tiroir.tests.\(UUID().uuidString)"
+        let name = scratchDefaultsName()
         let defaults = UserDefaults(suiteName: name)!
         defer { discardDefaults(name) }
         defaults.set(Data(Self.settingsSavedByOnePointZero.utf8), forKey: "settings")

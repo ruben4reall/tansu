@@ -123,6 +123,17 @@ import Testing
     }
 
     /// Visible text never uses an em dash (house style).
+    /// Tests name their preferences domains with scratchDefaultsName(), in the temporary folder. A domain named like an
+    /// app's leaves a file in ~/Library/Preferences on every run of the tests, however carefully the test removes it.
+    @Test func testsKeepTheirPreferencesInTheTemporaryFolder() {
+        let tests = Self.sources(in: "Tests").filter { !$0.path.hasSuffix("/GuardTests.swift") }
+        #expect(tests.contains { $0.text.contains("scratchDefaultsName()") })
+        for file in tests {
+            #expect(!file.text.contains("UserDefaults(suiteName: \""), "\(file.path) names a preferences domain in place")
+            #expect(!file.text.contains("\"ch.rubencatalao.tiroir."), "\(file.path) names a preferences domain like an app's")
+        }
+    }
+
     @Test func noEmDashInSources() {
         for file in Self.shipped {
             #expect(!file.text.contains("\u{2014}"), "\(file.path) contains an em dash")
