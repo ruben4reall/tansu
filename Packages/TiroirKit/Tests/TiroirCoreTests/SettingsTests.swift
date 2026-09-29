@@ -5,7 +5,7 @@ import Testing
 @Suite struct SettingsTests {
     /// A private preferences domain per test, removed afterwards.
     final class Scratch {
-        let name = "ch.rubencatalao.tiroir.tests.\(UUID().uuidString)"
+        let name = scratchDefaultsName()
         let defaults: UserDefaults
         init() { defaults = UserDefaults(suiteName: name)! }
         deinit { discardDefaults(name) }
@@ -20,6 +20,17 @@ import Testing
         #expect(settings.shortcuts.focus == .defaultFocus)
         #expect(settings.shortcuts.allDrawer == nil)
         #expect(!settings.hasCompletedWelcome)
+    }
+
+    /// A test's preferences live in the temporary folder, never in ~/Library/Preferences, where each run of the tests
+    /// used to leave empty files that cfprefsd wrote back after the test had removed its domain.
+    @Test func scratchPreferencesLiveInTheTemporaryFolder() {
+        let scratch = Scratch()
+        #expect(scratch.name.hasPrefix(FileManager.default.temporaryDirectory.path))
+        #expect(!scratch.name.contains("Library/Preferences"))
+        scratch.defaults.set(true, forKey: "written")
+        CFPreferencesAppSynchronize(scratch.name as CFString)
+        #expect(UserDefaults(suiteName: scratch.name)?.bool(forKey: "written") == true)
     }
 
     @Test func settingsSurviveARoundTrip() {
